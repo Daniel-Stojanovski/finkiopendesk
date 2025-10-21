@@ -1,0 +1,58 @@
+:root {
+  //colors
+  --color-base-0: #faf9f6;
+  --color-base-1: #e1e6e7;
+  --color-base-2: #bebdbb;
+  --color-base-3: #888785;
+  --color-base-4: #232627;
+  --color-main-0: #d8e8f2;
+  --color-main-1: #2a93d1;
+  //variables
+  --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+  --color-base-0: #232627;
+  --color-base-1: #333738;
+  --color-base-2: #474a4b;
+  --color-base-3: #e1e6e7;
+  --color-base-4: #faf9f6;
+}
+
+html,
+body {
+  background-color: var(--color-base-0);
+  color: var(--color-base-4);
+  transition:
+          background-color var(--transition-speed) ease,
+          color var(--transition-speed) ease;
+}
+
+
+$breakpoints: (
+        "xs": 480px,
+        "sm": 768px,
+        "md": 1024px,
+        "lg": 1280px,
+        "xl": 1440px
+);
+
+@mixin media($breakpoint) {
+  $size: map-get($breakpoints, $breakpoint);
+
+  @if $size {
+    @media (max-width: $size) {
+      @content;
+    }
+  } @else {
+    @warn "No value found for breakpoint `#{$breakpoint}`";
+  }
+}
+
+//@mixin themed($property, $light, $dark) {
+//  #{$property}: #{$light};
+//
+//  [data-theme="dark"] & {
+//    #{$property}: #{$dark};
+//  }
+//}
