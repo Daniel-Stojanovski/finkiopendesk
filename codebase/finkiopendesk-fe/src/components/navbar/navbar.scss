@@ -1,0 +1,21 @@
+@use '../../shared/global' as *;
+
+#navbar-desktop {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 48px;
+  justify-content: space-around;
+
+  //debug style
+  box-sizing: border-box;
+  border: 1px solid purple;
+
+  .navbar-searchbar {
+    width: 70%;
+  }
+
+  .navbar-buttons > * {
+    height: 100%;
+  }
+}

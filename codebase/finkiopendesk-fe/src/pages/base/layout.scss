@@ -2,6 +2,11 @@
   display: flex;
   flex-direction: row;
   height: 100vh;
+  box-sizing: border-box;
+
+  .main {
+    flex: 1;
+  }
 
   //debug style
   border: 1px solid darkorange;
