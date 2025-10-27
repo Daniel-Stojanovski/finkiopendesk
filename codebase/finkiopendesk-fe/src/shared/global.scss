@@ -1,5 +1,22 @@
+//scss colors
+$color-base-0: #faf9f6;
+$color-base-1: #e1e6e7;
+$color-base-2: #bebdbb;
+$color-base-3: #888785;
+$color-base-4: #232627;
+$color-main-0: #d8e8f2;
+$color-main-1: #2a93d1;
+//scss gradients
+$gradient-30-70-v: linear-gradient(0deg, rgba($color-main-1, 0.4), var(--color-transparent) 30%);
+$gradient-50-50-v: linear-gradient(0deg, rgba($color-main-1, 0.4), var(--color-transparent) 50%);
+$gradient-70-30-v: linear-gradient(0deg, rgba($color-main-1, 0.4), var(--color-transparent) 70%);
+$gradient-30-70-h: linear-gradient(90deg, rgba($color-main-1, 0.4), var(--color-transparent) 30%);
+$gradient-50-50-h: linear-gradient(90deg, rgba($color-main-1, 0.4), var(--color-transparent) 50%);
+$gradient-70-30-h: linear-gradient(90deg, rgba($color-main-1, 0.4), var(--color-transparent) 70%);
+
 :root {
   //colors
+  --color-transparent: rgba(0,0,0,0);
   --color-base-0: #faf9f6;
   --color-base-1: #e1e6e7;
   --color-base-2: #bebdbb;
@@ -7,8 +24,31 @@
   --color-base-4: #232627;
   --color-main-0: #d8e8f2;
   --color-main-1: #2a93d1;
+  //colors - rgb
+      //--color-base-0-rgb: 250, 249, 246;   /* #faf9f6 */
+      //--color-base-1-rgb: 225, 230, 231;   /* #e1e6e7 */
+      //--color-base-2-rgb: 190, 189, 187;   /* #bebdbb */
+      //--color-base-3-rgb: 136, 135, 133;   /* #888785 */
+      //--color-base-4-rgb: 35, 38, 39;      /* #232627 */
+      //--color-main-0-rgb: 216, 232, 242;   /* #d8e8f2 */
+      //--color-main-1-rgb: 42, 147, 209;    /* #2a93d1 */
+  //gradients
+      //--gradient-30-70-v: linear-gradient(0deg, rgba(--color-main-1-rgb, 0.4), var(--color-transparent) 30%);
+      //--gradient-50-50-v: linear-gradient(0deg, rgba(--color-main-1-rgb, 0.4), var(--color-transparent) 50%);
+      //--gradient-70-30-v: linear-gradient(0deg, rgba(--color-main-1-rgb, 0.4), var(--color-transparent) 70%);
+      //--gradient-30-70-h: linear-gradient(90deg, rgba(--color-main-1-rgb, 0.4), var(--color-transparent) 30%);
+      //--gradient-50-50-h: linear-gradient(90deg, rgba(--color-main-1-rgb, 0.4), var(--color-transparent) 50%);
+      //--gradient-70-30-h: linear-gradient(90deg, rgba(--color-main-1-rgb, 0.4), var(--color-transparent) 70%);
   //variables
   --transition-speed: 0.3s;
+  //sizes
+  --size-0: 0;
+  --size-1: 4px;
+  --size-2: 8px;
+  --size-3: 16px;
+  --size-4: 24px;
+  --size-5: 32px;
+  --size-6: 40px;
 }
 
 [data-theme="dark"] {
