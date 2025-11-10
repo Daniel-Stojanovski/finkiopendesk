@@ -1,5 +1,6 @@
 import './layout.scss';
 
+import {useState} from "react";
 import SideBar from "../../components/sidebar/SideBar";
 import NavBar from "../../components/navbar/NavBar";
 
@@ -8,10 +9,17 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+
+    const [isMobileOpen, setIsMobileOpen] = useState(false);
+    const closeMobileSidebar = () => setIsMobileOpen(false);
+
     return (
         <>
             <div id="layout-page">
-                <SideBar/>
+                <SideBar
+                    isMobileOpen={isMobileOpen}
+                    onCloseMobile={closeMobileSidebar}
+                />
                 <div className="main">
                     <NavBar/>
                     <div className="content">{children}</div>

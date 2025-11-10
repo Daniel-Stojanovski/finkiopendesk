@@ -1,9 +1,21 @@
 @use '../../shared/global' as *;
 
-#sidebar-desktop {
+#sidebar {
   height: 100%;
-  width: 270px;
   box-sizing: border-box;
+
+  .sb-desktop {
+    width: 270px;
+  }
+
+  .sb-desktop-collapsed {
+    width: 70px;
+  }
+
+  .sb-mobile {
+    position: absolute;
+    width: 80%;
+  }
 
   //debug style
   border: 1px solid red;

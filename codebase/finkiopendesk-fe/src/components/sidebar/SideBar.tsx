@@ -1,19 +1,27 @@
-import './sidebar.scss'
+import React from 'react';
+// import {useIsMobile} from "../../shared/hooks";
+import {useBreakpoint} from "../../shared/hooks";
+import SidebarDesktopOpen from './SidebarDesktopOpen';
+import SidebarDesktopCollapsed from './SidebarDesktopCollapsed';
+import SidebarMobile from './SidebarMobile';
 
-const SideBar = () => {
-    return (
-        <>
-            <div id="sidebar-desktop">
-                <h1>Logo</h1>
-                <h3>Category</h3>
-                <ul>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                </ul>
-            </div>
-        </>
-    );
+interface SidebarProps {
+    isMobileOpen: boolean;
+    onCloseMobile: () => void;
 }
 
-export default SideBar;
+const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile }) => {
+    const bp = useBreakpoint();
+
+    if (bp === "xs") {
+        return <SidebarMobile isOpen={isMobileOpen} onClose={onCloseMobile} />;
+    }
+
+    if (bp === "sm" || bp === "md") {
+        return <SidebarDesktopCollapsed />;
+    }
+
+    return <SidebarDesktopOpen />;
+};
+
+export default Sidebar;
