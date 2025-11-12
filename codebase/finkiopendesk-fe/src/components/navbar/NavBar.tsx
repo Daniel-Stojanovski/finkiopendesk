@@ -1,18 +1,16 @@
-import './navbar.scss'
+import React from "react";
+import {useBreakpoint} from "../../shared/hooks";
+import NavbarDesktop from "./NavbarDesktop";
+import NavbarMobile from "./NavbarMobile";
 
 const NavBar = () => {
-    return (
-        <>
-            <div id="navbar-desktop">
-                <p>navbar</p>
-                <input className="navbar-searchbar" placeholder='search'></input>
-                <div className="navbar-buttons">
-                    <button className="navbar-link-button">forum</button>
-                    <button className="navbar-link-button">guide</button>
-                </div>
-            </div>
-        </>
-    );
+    const bp = useBreakpoint();
+
+    if (bp === "xs") {
+        return <NavbarMobile/>;
+    }
+
+    return <NavbarDesktop/>
 }
 
 export default NavBar;

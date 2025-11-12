@@ -1,21 +1,92 @@
 @use '../../shared/global' as *;
 
-#navbar-desktop {
-  display: flex;
-  flex-direction: row;
+#navbar {
+  box-sizing: border-box;
   width: 100%;
   height: 48px;
-  justify-content: space-around;
+
+  @include media(xs) {
+    height: 96px;
+  }
+
+  .nb-desktop {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &-searchbar {
+      margin-left: var(--size-5);
+      flex-grow: 1;
+
+      @include media(lg) {
+        margin-left: var(--size-3);
+      }
+
+      @include media(md) {
+        margin-left: var(--size-4);
+      }
+
+      @include media(sm) {
+        margin-left: var(--size-2);
+      }
+    }
+
+    &-buttons {
+      padding: 0 var(--size-5);
+
+      @include media(lg) {
+        padding: 0 var(--size-3);
+      }
+
+      @include media(md) {
+        padding: 0 var(--size-4);
+      }
+
+      @include media(sm) {
+        padding: 0 var(--size-2);
+      }
+    }
+
+    .nb-link-button {
+      height: 100%;
+      padding: 0 var(--size-4);
+
+      //@include media(lg) {
+      //  padding: 0 var(--size-3);
+      //}
+    }
+
+  }
+
+  .nb-mobile {
+    display: flex;
+    flex-direction: column;
+
+    &-bar {
+      display: flex;
+    }
+
+    &-logo {
+      padding: var(--size-1);
+    }
+
+    &-searchbar {
+      height: var(--size-6);
+      flex-grow: 1;
+    }
+
+    &-buttons {
+      height: var(--size-6);
+      width: 100%;
+
+      .nb-link-button {
+        height: 100%;
+        width: 50%;
+      }
+    }
+  }
 
   //debug style
-  box-sizing: border-box;
   border: 1px solid purple;
-
-  .navbar-searchbar {
-    width: 70%;
-  }
-
-  .navbar-buttons > * {
-    height: 100%;
-  }
 }
