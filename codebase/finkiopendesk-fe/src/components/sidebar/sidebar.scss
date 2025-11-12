@@ -6,15 +6,27 @@
 
   .sb-desktop {
     width: 270px;
-  }
 
-  .sb-desktop-collapsed {
-    width: 70px;
+    &-collapsed {
+      width: 70px;
+    }
   }
 
   .sb-mobile {
     position: absolute;
     width: 80%;
+    background-color: var(--color-base-0);
+
+    &-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    &-close {
+      margin: var(--size-2) var(--size-2) auto auto;
+      height: var(--size-4);
+    }
   }
 
   //debug style

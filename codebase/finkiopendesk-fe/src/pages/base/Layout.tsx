@@ -11,6 +11,8 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
 
     const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+    const openMobileSidebar = () => setIsMobileOpen(true);
     const closeMobileSidebar = () => setIsMobileOpen(false);
 
     return (
@@ -21,7 +23,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     onCloseMobile={closeMobileSidebar}
                 />
                 <div className="main">
-                    <NavBar/>
+                    <NavBar onOpenMobileSidebar={openMobileSidebar} />
                     <div className="content">{children}</div>
                 </div>
             </div>
