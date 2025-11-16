@@ -18,6 +18,11 @@
     height: 100%;
     display: flex;
 
+    &-button {
+      height: 100%;
+      float: right;
+    }
+
     &-search-input {
       flex-grow: 1;
     }

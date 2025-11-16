@@ -10,11 +10,9 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar }) => {
         <div id="navbar">
             <div className="nb-mobile">
                 <div className="nb-mobile-bar">
-                    <img className="nb-mobile-logo"
-                         src="/vite.svg" alt="finkiopendesk_logo"
-                         width="36" height="36"
-                         onClick={onOpenSidebar}
-                    />
+                    <button onClick={onOpenSidebar}>
+                        <img src="/vite.svg" alt="finkiopendesk_logo" width="36" height="36"/>
+                    </button>
                     <SearchBar/>
                 </div>
                 <div className="nb-mobile-buttons">
