@@ -71,9 +71,14 @@
       padding: var(--size-1);
     }
 
-    &-searchbar {
+    &-search-input {
       height: var(--size-6);
       flex-grow: 1;
+    }
+
+    &-search-close {
+      margin: auto;
+      padding: 0 var(--size-3);
     }
 
     &-buttons {

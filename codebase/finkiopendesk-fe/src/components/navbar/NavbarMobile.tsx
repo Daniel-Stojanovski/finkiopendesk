@@ -14,8 +14,8 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar }) => {
                          width="36" height="36"
                          onClick={onOpenSidebar}
                     />
-                    <input className="nb-mobile-searchbar" placeholder="search" />
-                    <span>x</span>
+                    <input className="nb-mobile-search-input" placeholder="search" />
+                    <span className="nb-mobile-search-close">x</span>
                 </div>
                 <div className="nb-mobile-buttons">
                     <button className="nb-link-button">Forum</button>
