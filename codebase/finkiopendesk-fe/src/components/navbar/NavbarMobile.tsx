@@ -1,4 +1,5 @@
 import './navbar.scss';
+import SearchBar from "../search/SearchBar";
 
 interface NavbarMobileProps {
     onOpenSidebar?: () => void;
@@ -14,8 +15,7 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar }) => {
                          width="36" height="36"
                          onClick={onOpenSidebar}
                     />
-                    <input className="nb-mobile-search-input" placeholder="search" />
-                    <span className="nb-mobile-search-close">x</span>
+                    <SearchBar/>
                 </div>
                 <div className="nb-mobile-buttons">
                     <button className="nb-link-button">Forum</button>

@@ -1,0 +1,30 @@
+@use '../../shared/global' as *;
+
+#searchbar {
+  box-sizing: border-box;
+  width: 100%;
+
+  .search-desktop {
+    height: 100%;
+    display: flex;
+
+    &-search-input {
+      margin-left: var(--size-2);
+      flex-grow: 1;
+    }
+  }
+
+  .search-mobile {
+    height: 100%;
+    display: flex;
+
+    &-search-input {
+      flex-grow: 1;
+    }
+
+    &-search-close {
+      margin: auto;
+      padding: 0 var(--size-3);
+    }
+  }
+}

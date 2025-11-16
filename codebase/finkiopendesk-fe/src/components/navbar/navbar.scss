@@ -10,51 +10,31 @@
   }
 
   .nb-desktop {
-    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
-    &-searchbar {
-      margin-left: var(--size-5);
-      flex-grow: 1;
-
-      @include media(lg) {
-        margin-left: var(--size-3);
-      }
-
-      @include media(md) {
-        margin-left: var(--size-4);
-      }
-
-      @include media(sm) {
-        margin-left: var(--size-2);
-      }
-    }
+    height: 100%;
 
     &-buttons {
-      padding: 0 var(--size-5);
+      display: flex;
+      padding: 0 var(--size-3);
 
       @include media(lg) {
-        padding: 0 var(--size-3);
+        padding: 0 var(--size-2);
       }
 
       @include media(md) {
-        padding: 0 var(--size-4);
+        padding: 0 var(--size-3);
       }
 
       @include media(sm) {
         padding: 0 var(--size-2);
       }
-    }
 
-    .nb-link-button {
-      height: 100%;
-      padding: 0 var(--size-4);
-
-      //@include media(lg) {
-      //  padding: 0 var(--size-3);
-      //}
+      .nb-link-button {
+        height: 100%;
+        padding: 0 var(--size-4);
+      }
     }
 
   }
@@ -71,23 +51,14 @@
       padding: var(--size-1);
     }
 
-    &-search-input {
-      height: var(--size-6);
-      flex-grow: 1;
-    }
-
-    &-search-close {
-      margin: auto;
-      padding: 0 var(--size-3);
-    }
-
     &-buttons {
+      display: flex;
       height: var(--size-6);
       width: 100%;
 
       .nb-link-button {
         height: 100%;
-        width: 50%;
+        flex-grow: 1;
       }
     }
   }
