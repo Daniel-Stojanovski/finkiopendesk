@@ -24,7 +24,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 />
                 <div className="main">
                     <NavBar onOpenMobileSidebar={openMobileSidebar} />
-                    <div className="content">{children}</div>
+                    <div id="content">{children}</div>
                 </div>
             </div>
         </>

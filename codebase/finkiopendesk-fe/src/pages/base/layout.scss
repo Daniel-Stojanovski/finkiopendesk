@@ -1,3 +1,5 @@
+@use '../../shared/global' as *;
+
 #layout-page {
   display: flex;
   flex-direction: row;
@@ -6,8 +8,17 @@
 
   .main {
     flex: 1;
+    overflow: hidden;
   }
 
   //debug style
   border: 1px solid darkorange;
+}
+
+#content {
+  flex: 1;
+  padding: 0 var(--size-2);
+  height: 94%;
+  overflow-y: auto;
+  margin: 0;
 }
