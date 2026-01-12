@@ -1,14 +1,39 @@
 import type { RouteDetails } from "./RouteDetails";
 import Layout from "../../pages/base/Layout";
-import ForumAllCards from "../../pages/views/forum/ForumAllCards";
-import GuideAllCards from "../../pages/views/guide/GuideAllCards";
+import GuideProfessionCards from "../../pages/views/guide/GuideProfessionCards";
+import ForumSubjectCards from "../../pages/views/forum/ForumSubjectCards";
+import GuideProfessionSubjectCards from "../../pages/views/guide/GuideProfessionSubjectCards";
 
 export const routesConfig: RouteDetails[] = [
     {
         path: "/",
         element: (
             <Layout>
-                <GuideAllCards/>
+                <GuideProfessionCards/>
+            </Layout>
+        )
+    },
+    {
+        path: "/professions",
+        element: (
+            <Layout>
+                <GuideProfessionCards/>
+            </Layout>
+        )
+    },
+    {
+        path: "/subjects",
+        element: (
+            <Layout>
+                <ForumSubjectCards/>
+            </Layout>
+        )
+    },
+    {
+        path: "/subjects/pid/:pid",
+        element: (
+            <Layout>
+                <GuideProfessionSubjectCards />
             </Layout>
         )
     },

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import api from "../../../shared/axios";
 import '../views.scss'
-import ProfessionCard from "../../../components/blocks/ProfessionCard";
+import ProfessionCard from "../../../components/blocks/ProfessionCard/ProfessionCard";
 
-const GuideAllCards = () => {
+const GuideProfessionCards = () => {
     const [professions, setProfessions] = useState([]);
 
     useEffect(() => {
@@ -19,13 +20,15 @@ const GuideAllCards = () => {
     return (
         <div id="professions-grid">
             {professions.map(profession => (
-                <ProfessionCard
-                    key={profession.professionId}
-                    profession={profession}
-                />
+                <Link to={`/subjects/pid/${profession.professionId}`}>
+                    <ProfessionCard
+                        key={profession.professionId}
+                        profession={profession}
+                    />
+                </Link>
             ))}
         </div>
     );
 }
 
-export default GuideAllCards;
+export default GuideProfessionCards;

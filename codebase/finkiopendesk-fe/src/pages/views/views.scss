@@ -13,3 +13,17 @@
     grid-template-columns: auto;
   }
 }
+
+#subjects-grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 0 var(--size-2);
+
+  @include media(sm) {
+    grid-template-columns: auto auto;
+  }
+
+  @include media(xs) {
+    grid-template-columns: auto;
+  }
+}

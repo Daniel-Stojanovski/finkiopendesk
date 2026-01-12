@@ -1,0 +1,7 @@
+@use '../../../shared/global' as *;
+
+.subject {
+  border: 1px solid black;
+  margin-top: var(--size-2);
+  padding: var(--size-2);
+}
