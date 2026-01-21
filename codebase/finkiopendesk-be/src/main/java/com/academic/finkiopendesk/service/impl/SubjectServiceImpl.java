@@ -7,6 +7,7 @@ import com.academic.finkiopendesk.service.ProfessionService;
 import com.academic.finkiopendesk.service.SubjectService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,7 +35,15 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public List<Subject> findSubjectsByProfessionId(String professionId) {
         Profession profession = professionService.findById(professionId);
-        return profession.getRecommendedSubjects();
+
+        List<Subject> notRecommended =
+                subjectRepository.findAllNotRecommendedForProfession(professionId);
+
+        List<Subject> result = new ArrayList<>();
+        result.addAll(profession.getRecommendedSubjects());
+        result.addAll(notRecommended);
+
+        return result;
     }
 
 }
