@@ -39,6 +39,10 @@ public class Profession {
     )
     private List<Subject> recommendedSubjects = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name = "discussion_id")
+    private ProfessionDiscussion discussion;
+
     public List<Subject> getRecommendedSubjects() {
         return recommendedSubjects;
     }

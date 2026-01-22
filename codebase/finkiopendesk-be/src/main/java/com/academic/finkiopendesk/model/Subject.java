@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "subject")
 @Data
@@ -25,4 +28,7 @@ public class Subject {
     @Column(columnDefinition = "TEXT")
     @JsonProperty("description")
     private String description;
+
+    @OneToMany(mappedBy = "subject")
+    private Set<SubjectTag> subjectTags = new HashSet<>();
 }
