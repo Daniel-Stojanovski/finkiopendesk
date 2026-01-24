@@ -60,6 +60,36 @@ public class SubjectServiceImpl implements SubjectService {
                 .filter(Objects::nonNull)
                 .toList();
     }
+    @Override
+    @Transactional(readOnly = true)
+    public List<Channel> findActiveChannelsBySubjectId(String subjectId) {
+
+        Subject subject = subjectRepository.findById(subjectId)
+                .orElseThrow(() -> new RuntimeException("Subject not found"));
+
+        return subject.getSubjectTags()
+                .stream()
+                .filter(SubjectTag::isActive)
+                .map(SubjectTag::getChannel)
+                .filter(Objects::nonNull)
+                .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Channel> findInactiveChannelsBySubjectId(String subjectId) {
+
+        Subject subject = subjectRepository.findById(subjectId)
+                .orElseThrow(() -> new RuntimeException("Subject not found"));
+
+        return subject.getSubjectTags()
+                .stream()
+                .filter(tag -> Boolean.FALSE.equals(tag.isActive()))
+                .map(SubjectTag::getChannel)
+                .filter(Objects::nonNull)
+                .toList();
+    }
+
 
     @Override
     @Transactional(readOnly = true)

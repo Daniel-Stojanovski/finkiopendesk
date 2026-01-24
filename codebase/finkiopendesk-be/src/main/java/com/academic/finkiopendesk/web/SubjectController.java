@@ -39,4 +39,14 @@ public class SubjectController {
     public List<Channel> getChannelsBySubjectId(@PathVariable String subjectId) {
         return subjectService.findChannelsBySubjectId(subjectId);
     }
+
+    @GetMapping("channels/sid/{subjectId}/active")
+    public List<Channel> getActiveChannelsBySubjectId(@PathVariable String subjectId) {
+        return subjectService.findActiveChannelsBySubjectId(subjectId);
+    }
+
+    @GetMapping("channels/sid/{subjectId}/inactive")
+    public List<Channel> getInactiveChannelsBySubjectId(@PathVariable String subjectId) {
+        return subjectService.findInactiveChannelsBySubjectId(subjectId);
+    }
 }

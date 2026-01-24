@@ -32,7 +32,13 @@ public class SubjectTag {
     @OneToOne(mappedBy = "subjectTag", cascade = CascadeType.ALL)
     private Channel channel;
 
+    @Column(name = "status_active", nullable = false)
+    @JsonProperty("status")
+    private Boolean status;
+
     public Channel getChannel() {
         return channel;
     }
+
+    public Boolean isActive() { return status; }
 }

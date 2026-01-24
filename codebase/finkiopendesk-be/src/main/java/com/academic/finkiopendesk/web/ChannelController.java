@@ -22,4 +22,14 @@ public class ChannelController {
     public List<Channel> getChannels() {
         return channelService.findAll();
     }
+
+    @GetMapping("active")
+    public List<Channel> getActiveChannels() {
+        return channelService.findAllActive();
+    }
+
+    @GetMapping("inactive")
+    public List<Channel> getInactiveChannels() {
+        return channelService.findAllInactive();
+    }
 }

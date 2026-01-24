@@ -15,5 +15,9 @@ public interface SubjectService {
 
     List<Channel> findChannelsBySubjectId(String subjectId);
 
+    List<Channel> findActiveChannelsBySubjectId(String subjectId);
+
+    List<Channel> findInactiveChannelsBySubjectId(String subjectId);
+
     SubjectDiscussion findDiscussionBySubjectId(String subjectId);
 }

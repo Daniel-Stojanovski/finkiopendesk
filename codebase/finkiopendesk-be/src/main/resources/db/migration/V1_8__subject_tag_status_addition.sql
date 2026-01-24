@@ -1,0 +1,2 @@
+ALTER TABLE subject_tag
+    ADD COLUMN status_active BOOLEAN NOT NULL DEFAULT TRUE;

@@ -22,6 +22,16 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
+    public List<Channel> findAllActive() {
+        return channelRepository.findActiveChannels();
+    }
+
+    @Override
+    public List<Channel> findAllInactive() {
+        return channelRepository.findInactiveChannels();
+    }
+
+    @Override
     public Channel findById(String id) {
         return channelRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Channel not found"));

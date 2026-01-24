@@ -10,5 +10,9 @@ public interface ChannelService {
 
     List<Channel> findAll();
 
+    List<Channel> findAllActive();
+
+    List<Channel> findAllInactive();
+
     Channel findById(String id);
 }
