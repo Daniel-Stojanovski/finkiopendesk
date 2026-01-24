@@ -1,6 +1,5 @@
 package com.academic.finkiopendesk.model;
 
-import com.academic.finkiopendesk.model.enums.DiscussionType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,8 +31,8 @@ public class SubjectDiscussion {
     private String description;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "subject_tag_id", unique = true)
-    private SubjectTag subjectTag;
+    @JoinColumn(name = "subject_id", unique = true)
+    private Subject subject;
 
     @OneToMany(mappedBy = "subjectDiscussion", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();

@@ -28,6 +28,10 @@ public class Comment {
     @JoinColumn(name = "profession_discussion_id")
     private ProfessionDiscussion professionDiscussion;
 
+    @ManyToOne
+    @JoinColumn(name = "channel_id")
+    private Channel channel;
+
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 }

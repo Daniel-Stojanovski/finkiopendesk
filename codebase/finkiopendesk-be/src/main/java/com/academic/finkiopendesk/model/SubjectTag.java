@@ -29,10 +29,10 @@ public class SubjectTag {
     @ManyToOne(optional = false)
     private Tag tag;
 
-    @OneToOne(mappedBy = "subjectTag", cascade = CascadeType.ALL, optional = false)
-    private SubjectDiscussion discussion;
+    @OneToOne(mappedBy = "subjectTag", cascade = CascadeType.ALL)
+    private Channel channel;
 
-    public SubjectDiscussion getDiscussion() {
-        return discussion;
+    public Channel getChannel() {
+        return channel;
     }
 }

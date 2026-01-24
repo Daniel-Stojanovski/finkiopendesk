@@ -29,8 +29,15 @@ public class Subject {
     @JsonProperty("description")
     private String description;
 
+    @OneToOne(mappedBy = "subject")
+    private SubjectDiscussion discussion;
+
     @OneToMany(mappedBy = "subject")
     private Set<SubjectTag> subjectTags = new HashSet<>();
+
+    public SubjectDiscussion getDiscussion() {
+        return discussion;
+    }
 
     public Set<SubjectTag> getSubjectTags() {
         return subjectTags;

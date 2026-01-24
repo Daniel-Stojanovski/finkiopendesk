@@ -26,7 +26,7 @@ public class ProfessionController {
     }
 
     @GetMapping("/pid/{professionId}")
-    public ProfessionDiscussion getDiscussionBySubjectId(@PathVariable String professionId) {
+    public ProfessionDiscussion getDiscussionByProfessionId(@PathVariable String professionId) {
         return professionService.findDiscussionByProfessionId(professionId);
     }
 

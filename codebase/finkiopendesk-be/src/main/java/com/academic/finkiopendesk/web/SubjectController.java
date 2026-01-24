@@ -1,5 +1,6 @@
 package com.academic.finkiopendesk.web;
 
+import com.academic.finkiopendesk.model.Channel;
 import com.academic.finkiopendesk.model.Subject;
 import com.academic.finkiopendesk.model.SubjectDiscussion;
 import com.academic.finkiopendesk.service.SubjectService;
@@ -30,7 +31,12 @@ public class SubjectController {
     }
 
     @GetMapping("/sid/{subjectId}")
-    public List<SubjectDiscussion> getDiscussionsBySubjectId(@PathVariable String subjectId) {
-        return subjectService.findDiscussionsBySubjectId(subjectId);
+    public SubjectDiscussion getDiscussionBySubjectId(@PathVariable String subjectId) {
+        return subjectService.findDiscussionBySubjectId(subjectId);
+    }
+
+    @GetMapping("channels/sid/{subjectId}")
+    public List<Channel> getChannelsBySubjectId(@PathVariable String subjectId) {
+        return subjectService.findChannelsBySubjectId(subjectId);
     }
 }
