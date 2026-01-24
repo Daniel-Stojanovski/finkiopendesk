@@ -1,9 +1,10 @@
 package com.academic.finkiopendesk.service.impl;
 
-import com.academic.finkiopendesk.model.Profession;
+import com.academic.finkiopendesk.model.*;
 import com.academic.finkiopendesk.repository.ProfessionRepository;
 import com.academic.finkiopendesk.service.ProfessionService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,5 +26,21 @@ public class ProfessionServiceImpl implements ProfessionService {
     public Profession findById(String id) {
         return professionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Profession not found"));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ProfessionDiscussion findDiscussionByProfessionId(String professionId) {
+
+        Profession profession = professionRepository.findById(professionId)
+                .orElseThrow(() -> new RuntimeException("Profession not found"));
+
+        ProfessionDiscussion discussion = profession.getDiscussion();
+
+        if (discussion == null) {
+            throw new RuntimeException("Discussion not found for profession");
+        }
+
+        return discussion;
     }
 }

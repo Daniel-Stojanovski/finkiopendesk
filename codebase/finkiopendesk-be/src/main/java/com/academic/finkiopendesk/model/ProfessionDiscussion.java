@@ -1,6 +1,5 @@
 package com.academic.finkiopendesk.model;
 
-import com.academic.finkiopendesk.model.enums.DiscussionType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;

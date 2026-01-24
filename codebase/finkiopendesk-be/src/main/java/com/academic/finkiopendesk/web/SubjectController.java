@@ -1,7 +1,7 @@
 package com.academic.finkiopendesk.web;
 
-
 import com.academic.finkiopendesk.model.Subject;
+import com.academic.finkiopendesk.model.SubjectDiscussion;
 import com.academic.finkiopendesk.service.SubjectService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,5 +27,10 @@ public class SubjectController {
     @GetMapping("/pid/{professionId}")
     public List<Subject> getSubjectsByProfession(@PathVariable String professionId) {
         return subjectService.findSubjectsByProfessionId(professionId);
+    }
+
+    @GetMapping("/sid/{subjectId}")
+    public List<SubjectDiscussion> getDiscussionsBySubjectId(@PathVariable String subjectId) {
+        return subjectService.findDiscussionsBySubjectId(subjectId);
     }
 }

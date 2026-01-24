@@ -31,4 +31,8 @@ public class Subject {
 
     @OneToMany(mappedBy = "subject")
     private Set<SubjectTag> subjectTags = new HashSet<>();
+
+    public Set<SubjectTag> getSubjectTags() {
+        return subjectTags;
+    }
 }

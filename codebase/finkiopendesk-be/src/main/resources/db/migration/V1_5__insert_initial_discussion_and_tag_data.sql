@@ -185,6 +185,13 @@ SELECT
 FROM profession;
 
 
+INSERT INTO subject_tag (subject_subject_id, tag_tag_id)
+SELECT s.subject_id, t.tag_id
+FROM subject s
+         CROSS JOIN tag t
+    ON CONFLICT DO NOTHING;
+
+
 INSERT INTO subject_discussion (subject_discussion_id, name, description, subject_tag_id)
 SELECT
     gen_random_uuid()::text,
@@ -194,10 +201,3 @@ SELECT
 FROM subject_tag st
      JOIN subject s ON s.subject_id = st.subject_subject_id
          JOIN tag t ON t.tag_id = st.tag_tag_id;
-
-
-INSERT INTO subject_tag (subject_subject_id, tag_tag_id)
-SELECT s.subject_id, t.tag_id
-FROM subject s
-         CROSS JOIN tag t
-    ON CONFLICT DO NOTHING;

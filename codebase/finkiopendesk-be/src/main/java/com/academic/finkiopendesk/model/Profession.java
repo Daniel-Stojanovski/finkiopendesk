@@ -39,11 +39,14 @@ public class Profession {
     )
     private List<Subject> recommendedSubjects = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "discussion_id")
+    @OneToOne(mappedBy = "profession")
     private ProfessionDiscussion discussion;
 
     public List<Subject> getRecommendedSubjects() {
         return recommendedSubjects;
+    }
+
+    public ProfessionDiscussion getDiscussion() {
+        return discussion;
     }
 }

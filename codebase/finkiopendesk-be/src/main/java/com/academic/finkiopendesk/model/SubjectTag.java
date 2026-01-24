@@ -31,4 +31,8 @@ public class SubjectTag {
 
     @OneToOne(mappedBy = "subjectTag", cascade = CascadeType.ALL, optional = false)
     private SubjectDiscussion discussion;
+
+    public SubjectDiscussion getDiscussion() {
+        return discussion;
+    }
 }
