@@ -3,6 +3,7 @@ import Layout from "../../pages/base/Layout";
 import GuideProfessionCards from "../../pages/views/guide/GuideProfessionCards";
 import ForumSubjectCards from "../../pages/views/forum/ForumSubjectCards";
 import GuideProfessionSubjectCards from "../../pages/views/guide/GuideProfessionSubjectCards";
+import ForumDiscussionCards from "../../pages/views/forum/ForumDiscussionCards";
 
 export const routesConfig: RouteDetails[] = [
     {
@@ -26,6 +27,14 @@ export const routesConfig: RouteDetails[] = [
         element: (
             <Layout>
                 <ForumSubjectCards/>
+            </Layout>
+        )
+    },
+    {
+        path: "/discussions",
+        element: (
+            <Layout>
+                <ForumDiscussionCards/>
             </Layout>
         )
     },

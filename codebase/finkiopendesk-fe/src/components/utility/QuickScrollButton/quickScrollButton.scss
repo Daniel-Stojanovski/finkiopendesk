@@ -1,0 +1,9 @@
+#utility-button {
+  position: fixed;
+  top: calc(1.5 * var(--size-6));
+  right: var(--size-5);
+  z-index: 1000;
+  background-color: var(--color-base-0);
+  padding: var(--size-2) var(--size-3);
+  border: 1px solid black;
+}
