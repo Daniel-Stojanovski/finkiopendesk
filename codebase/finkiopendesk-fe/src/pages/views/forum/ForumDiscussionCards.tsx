@@ -25,11 +25,12 @@ const ForumDiscussionCards = () => {
                     <h2> Professions </h2>
                     <div className="discussions-sub-grid">
                         {professionDiscussions
-                            .filter(p => p.discussion)
-                            .map(discussion => (
+                            .map(profession => (
                                 <DiscussionCard
-                                    key={discussion.discussionId}
-                                    discussion={discussion}
+                                    key={profession.discussion.professionDiscussionId}
+                                    type={"profession"}
+                                    discussion={profession.discussion}
+                                    object={profession}
                                 />
                             ))}
                     </div>
@@ -41,11 +42,12 @@ const ForumDiscussionCards = () => {
                     <h2> Subjects </h2>
                     <div className="discussions-sub-grid">
                         {subjectDiscussions
-                            .filter(s => s.discussion)
-                            .map(discussion => (
+                            .map(subject => (
                                 <DiscussionCard
-                                    key={discussion.discussionId}
-                                    discussion={discussion}
+                                    key={subject.discussion.subjectDiscussionId}
+                                    type={"subject"}
+                                    discussion={subject.discussion}
+                                    object={subject}
                                 />
                             ))}
                     </div>

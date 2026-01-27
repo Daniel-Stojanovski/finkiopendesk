@@ -4,6 +4,8 @@ import GuideProfessionCards from "../../pages/views/guide/GuideProfessionCards";
 import ForumSubjectCards from "../../pages/views/forum/ForumSubjectCards";
 import GuideProfessionSubjectCards from "../../pages/views/guide/GuideProfessionSubjectCards";
 import ForumDiscussionCards from "../../pages/views/forum/ForumDiscussionCards";
+import ProfessionDiscussion from "../../pages/views/discussion/ProfessionDiscussion";
+import SubjectDiscussion from "../../pages/views/discussion/SubjectDiscussion";
 
 export const routesConfig: RouteDetails[] = [
     {
@@ -46,4 +48,21 @@ export const routesConfig: RouteDetails[] = [
             </Layout>
         )
     },
+    {
+        path: "/discussion/pid/:id",
+        element: (
+            <Layout>
+                <ProfessionDiscussion />
+            </Layout>
+        )
+    },
+    {
+        path: "/discussion/sid/:id",
+        element: (
+            <Layout>
+                <SubjectDiscussion />
+            </Layout>
+        )
+    },
+
 ];
