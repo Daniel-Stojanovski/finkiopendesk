@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import api from "../../../shared/axios";
 import '../views.scss';
 import {useParams} from "react-router-dom";
-import ChannelSidebar from "../../../components/blocks/ChannelSidebar/ChannelSidebar";
+import ChannelSideBar from "../../../components/blocks/ChannelSidebar/ChannelSideBar";
 
 const SubjectDiscussion = () => {
     const { id } = useParams();
     const [discussion, setDiscussion] = useState(null);
     const [channels, setChannels] = useState([]);
+
+    const [isTabletOpen, setIsTabletOpen] = useState(false);
+    const openTabletChannelSidebar = () => setIsTabletOpen(true);
+    const closeTabletChannelSidebar = () => setIsTabletOpen(false);
 
     useEffect(() => {
         if (!id) return;
@@ -27,7 +31,11 @@ const SubjectDiscussion = () => {
                 )}
             </div>
 
-            <ChannelSidebar channels={channels}/>
+            <ChannelSideBar
+                channels={channels}
+                isTabletOpen={isTabletOpen}
+                onOpenChannelSidebar={openTabletChannelSidebar}
+                onCloseTablet={closeTabletChannelSidebar}/>
         </div>
     );
 }

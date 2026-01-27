@@ -1,10 +1,10 @@
 import './channelSidebar.scss';
 
-const ChannelSidebar = ({ channels }) => {
+const ChannelSidebarDesktop = ({ channels }) => {
     return (
         <div id="channel-sidebar">
             <div className="csb-desktop">
-                <div class="title-header-icon">
+                <div className="title-header-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          className="bi bi-diagram-3" viewBox="0 0 16 16" style={{ transform: 'rotate(-90deg)' }}>
                       <path fill-rule="evenodd"
@@ -12,21 +12,13 @@ const ChannelSidebar = ({ channels }) => {
                     </svg>
                     <h3>Channels</h3>
                 </div>
-                <ul>
-                    {channels ? (
-                        channels.map(channel => (
-                            <li key={channel.channelId}>
-                                {channel.name}
-                            </li>
-                        ))
-                    ) : (
-                        <li>None</li>
-                    )}
-                </ul>
+
+                {channels}
+
             </div>
         </div>
     );
 
 }
 
-export default ChannelSidebar;
+export default ChannelSidebarDesktop;
