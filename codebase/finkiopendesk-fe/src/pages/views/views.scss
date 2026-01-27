@@ -37,3 +37,13 @@
   .discussions-sub-grid {
   }
 }
+
+#subject-discussion {
+  display: inline-flex;
+  width: 100%;
+  overflow-y: hidden;
+
+  .discussion-view {
+    width: 100%;
+  }
+}
