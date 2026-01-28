@@ -1,3 +1,5 @@
+@use "sass:map";
+
 //scss colors
 $color-base-0: #faf9f6;
 $color-base-1: #e1e6e7;
@@ -80,7 +82,7 @@ $breakpoints: (
 );
 
 @mixin media($breakpoint) {
-  $size: map-get($breakpoints, $breakpoint);
+  $size: map.get($breakpoints, $breakpoint);
 
   @if $size {
     @media (max-width: $size) {

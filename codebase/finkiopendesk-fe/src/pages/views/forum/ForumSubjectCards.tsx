@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import api from "../../../shared/axios";
 import '../views.scss'
 import SubjectCard from "../../../components/blocks/SubjectCard/SubjectCard";
+import type {SubjectDto} from "../../../shared/dto/SubjectDto";
 
 const ForumSubjectCards = () => {
-    const [subjects, setSubjects] = useState([]);
+    const [subjects, setSubjects] = useState<SubjectDto[]>([]);
 
     useEffect(() => {
-        api.get("/subjects")
+        api.get<SubjectDto[]>("/subjects")
             .then(response => {
                 setSubjects(response.data);
             })

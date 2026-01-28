@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import {Breakpoint} from "./enums/BreakpointEnum";
+// import {Breakpoint} from "./enums/BreakpointEnum";
+import {Breakpoint} from "./const/BreakpointConst";
 
 export type BreakpointSize = keyof typeof Breakpoint;
 
@@ -25,7 +26,7 @@ export const useBreakpoint = (): BreakpointSize => {
     return current;
 };
 
-export const useSectionScroll = (sectionIds) => {
+export const useSectionScroll = (sectionIds: string[]) => {
     const [activeSection, setActiveSection] = useState(sectionIds[0]);
 
     useEffect(() => {

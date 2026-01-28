@@ -1,6 +1,10 @@
 import "./quickScrollButton.scss"
 
-const QuickScrollButton = ({ targetSection }) => {
+interface QuickScrollButtonProps{
+    targetSection: string | undefined;
+}
+
+const QuickScrollButton: React.FC<QuickScrollButtonProps> = ({ targetSection }) => {
     return (
         <div id="utility-button">
             <a href={`#${targetSection}`}>

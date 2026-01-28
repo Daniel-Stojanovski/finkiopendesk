@@ -3,11 +3,13 @@ import api from "../../../shared/axios";
 import '../views.scss';
 import {useParams} from "react-router-dom";
 import ChannelSideBar from "../../../components/blocks/ChannelSidebar/ChannelSideBar";
+import type {ChannelDto} from "../../../shared/dto/ChannelDto";
+import type {SubjectDiscussionDto} from "../../../shared/dto/SubjectDiscussionDto";
 
 const SubjectDiscussion = () => {
     const { id } = useParams();
-    const [discussion, setDiscussion] = useState(null);
-    const [channels, setChannels] = useState([]);
+    const [discussion, setDiscussion] = useState<SubjectDiscussionDto | null>(null);
+    const [channels, setChannels] = useState<ChannelDto[]>([]);
 
     const [isTabletOpen, setIsTabletOpen] = useState(false);
     const openTabletChannelSidebar = () => setIsTabletOpen(true);
@@ -15,11 +17,11 @@ const SubjectDiscussion = () => {
 
     useEffect(() => {
         if (!id) return;
-        api.get(`/subjects/sid/${id}`).then(response => setDiscussion(response.data));
+        api.get<SubjectDiscussionDto>(`/subjects/sid/${id}`).then(response => setDiscussion(response.data));
     }, [id]);
 
     useEffect(() => {
-        api.get(`/subjects/channels/sid/${id}/active`).then(response => setChannels(response.data));
+        api.get<ChannelDto[]>(`/subjects/channels/sid/${id}/active`).then(response => setChannels(response.data));
     }, []);
 
     return (

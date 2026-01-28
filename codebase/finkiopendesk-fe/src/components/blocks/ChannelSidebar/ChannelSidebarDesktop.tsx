@@ -1,6 +1,11 @@
+import React from "react";
 import './channelSidebar.scss';
 
-const ChannelSidebarDesktop = ({ channels }) => {
+interface ChannelSidebarDesktopProps {
+    channels: React.ReactNode;
+}
+
+const ChannelSidebarDesktop: React.FC<ChannelSidebarDesktopProps> = ({ channels }) => {
     return (
         <div id="channel-sidebar">
             <div className="csb-desktop">

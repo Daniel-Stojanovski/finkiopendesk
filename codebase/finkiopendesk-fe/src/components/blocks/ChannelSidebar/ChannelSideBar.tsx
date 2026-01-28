@@ -2,16 +2,16 @@ import React from 'react';
 import {useBreakpoint} from "../../../shared/hooks";
 import ChannelSidebarTablet from "./ChannelSidebarTablet";
 import ChannelSidebarDesktop from "./ChannelSidebarDesktop";
+import type {ChannelDto} from "../../../shared/dto/ChannelDto";
 
 interface ChannelSidebarProps {
-    channels: React.ReactNode;
+    channels: ChannelDto[];
     isTabletOpen: boolean;
     onOpenChannelSidebar: () => void;
     onCloseTablet: () => void;
-
 }
 
-function loadChannels(channels: []) {
+function loadChannels(channels: ChannelDto[]) {
     return (
         <ul>
             {

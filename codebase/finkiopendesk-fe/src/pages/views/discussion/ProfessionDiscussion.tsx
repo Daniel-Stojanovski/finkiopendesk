@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import api from "../../../shared/axios";
 import '../views.scss';
 import {useParams} from "react-router-dom";
+import type {ProfessionDiscussionDto} from "../../../shared/dto/ProfessionDiscussionDto";
 
 const ProfessionDiscussion = () => {
     const { id } = useParams();
-    const [discussion, setDiscussion] = useState(null);
+    const [discussion, setDiscussion] = useState<ProfessionDiscussionDto | null>(null);
 
     useEffect(() => {
         if (!id) return;
-        api.get(`/professions/pid/${id}`).then(response => setDiscussion(response.data));
+        api.get<ProfessionDiscussionDto>(`/professions/pid/${id}`).then(response => setDiscussion(response.data));
     }, [id]);
 
     return (

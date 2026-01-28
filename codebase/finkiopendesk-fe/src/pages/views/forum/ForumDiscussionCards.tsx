@@ -4,14 +4,16 @@ import '../views.scss';
 import DiscussionCard from "../../../components/blocks/DiscussionCard/DiscussionCard";
 import QuickScrollButton from "../../../components/utility/QuickScrollButton/QuickScrollButton";
 import {useSectionScroll} from "../../../shared/hooks";
+import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
+import type {SubjectDto} from "../../../shared/dto/SubjectDto";
 
 const ForumDiscussionCards = () => {
-    const [subjectDiscussions, setSubjectDiscussions] = useState([]);
-    const [professionDiscussions, setProfessionDiscussions] = useState([]);
+    const [subjectDiscussions, setSubjectDiscussions] = useState<SubjectDto[]>([]);
+    const [professionDiscussions, setProfessionDiscussions] = useState<ProfessionDto[]>([]);
 
     useEffect(() => {
-        api.get("/professions").then(response => setProfessionDiscussions(response.data));
-        api.get("/subjects").then(response => setSubjectDiscussions(response.data));
+        api.get<ProfessionDto[]>("/professions").then(response => setProfessionDiscussions(response.data));
+        api.get<SubjectDto[]>("/subjects").then(response => setSubjectDiscussions(response.data));
     }, []);
 
     const activeSection = useSectionScroll(["Professions", "Subjects"]);
