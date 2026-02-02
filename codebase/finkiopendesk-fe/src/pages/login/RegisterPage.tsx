@@ -37,7 +37,7 @@ const RegisterPage = () => {
         try {
             const res = await auth.post('students/create', null, {
                 params: {
-                    email: userForm.email
+                    email: studentForm.email
                 }
             })
             const token = res.data;
@@ -55,13 +55,15 @@ const RegisterPage = () => {
         e.preventDefault();
         setError(null);
 
+        if (userForm.password !== userForm.confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+
         try {
-            await auth.post('users/create', null, {
-                params: {
-                    email: studentForm.email,
-                    password: userForm.password,
-                    confirmPassword: userForm.confirmPassword
-                }
+            await auth.post('users/create', {
+                email: userForm.email,
+                password: userForm.password
             })
 
             navigate('/');
@@ -77,7 +79,7 @@ const RegisterPage = () => {
         <div className="register-container">
             <h2>Create account</h2>
 
-            <form onSubmit={handleRegisterStudent}>
+            <form onSubmit={handleRegisterUser}>
                 <input
                     name="email"
                     type="email"
@@ -116,7 +118,7 @@ const RegisterPage = () => {
             <p>or</p>
             <hr/>
 
-            <form onSubmit={handleRegisterUser}>
+            <form onSubmit={handleRegisterStudent}>
                 <input
                     name="email"
                     type="email"
