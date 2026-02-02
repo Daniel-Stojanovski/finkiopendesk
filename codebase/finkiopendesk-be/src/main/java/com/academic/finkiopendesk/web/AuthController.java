@@ -4,6 +4,7 @@ import com.academic.finkiopendesk.model.User;
 import com.academic.finkiopendesk.service.ActivationTokenService;
 import com.academic.finkiopendesk.service.UserService;
 import com.academic.finkiopendesk.web.dto.ActivationRequest;
+import com.academic.finkiopendesk.web.dto.CreationRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,5 +42,13 @@ public class AuthController {
         userService.activateUser(user, request.password());
 
         return ResponseEntity.ok("Account activated");
+    }
+
+    @PostMapping("/users/create")
+    public ResponseEntity<?> createUser(@RequestBody CreationRequest request) {
+
+        userService.createUser(request.email(), request.password());
+
+        return ResponseEntity.ok("Account created");
     }
 }

@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createStudent(String email) {
-        validateStudentEmail(email);
+        validateStudent(email);
         User user = new User();
         user.setEmail(email);
         user.setStudent(true);
@@ -45,17 +45,43 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    private void validateStudentEmail(String email) {
-        if(email == null || email.isBlank()) {
-            throw new IllegalArgumentException("Email cannot be empty");
-        }
+    @Override
+    public void createUser(String email, String rawPassword) {
+        validateUser(email);
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(encoder.encode(rawPassword));
+        user.setStudent(false);
+        user.setEnabled(true);
+        userRepository.save(user);
+    }
 
-        if(!email.toLowerCase().endsWith("@student.finki.ukim.mk")) {
-            throw new IllegalArgumentException("Email must be a valid student email (@student.finki.ukim.mk)");
+    private void validateEmail(String email) {
+        if(email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Provided e-mail cannot be empty");
         }
 
         if(userRepository.findByEmail(email).isPresent()) {
-            throw new IllegalArgumentException("User with this email already exists");
+            throw new IllegalArgumentException("User with the provided e-mail address already exists");
         }
+    }
+
+    private void validateStudentEmail(String email, Boolean evaluateAs) {
+        if(evaluateAs && !email.toLowerCase().endsWith("@student.finki.ukim.mk")) {
+            throw new IllegalArgumentException("Provided e-mail must be a valid student e-mail address (@student.finki.ukim.mk)");
+        }
+        if(!evaluateAs && email.toLowerCase().endsWith("@student.finki.ukim.mk")) {
+            throw new IllegalArgumentException("Provided e-mail should not be a student e-mail address (@student.finki.ukim.mk)");
+        }
+    }
+
+    private void validateStudent(String email) {
+        validateEmail(email);
+        validateStudentEmail(email, true);
+    }
+
+    private void validateUser(String email) {
+        validateEmail(email);
+        validateStudentEmail(email, false);
     }
 }
