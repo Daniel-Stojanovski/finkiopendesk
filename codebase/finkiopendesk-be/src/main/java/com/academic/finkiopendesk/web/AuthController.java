@@ -4,13 +4,12 @@ import com.academic.finkiopendesk.model.User;
 import com.academic.finkiopendesk.service.ActivationTokenService;
 import com.academic.finkiopendesk.service.UserService;
 import com.academic.finkiopendesk.web.dto.ActivationRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -24,18 +23,12 @@ public class AuthController {
     }
 
     @PostMapping("/students/create")
-    public ResponseEntity<Void> createStudent(@RequestParam String email) {
+    public ResponseEntity<?> createStudent(@RequestParam String email) {
 
         User user = userService.createStudent(email);
         String token = tokenService.generateToken(user.getUserId());
 
-        URI redirect = URI.create(
-                "http://localhost:8080/auth/students/activate?token=" + token
-        );
-
-        return ResponseEntity.status(HttpStatus.FOUND)
-                .location(redirect)
-                .build();
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping("/students/activate")
