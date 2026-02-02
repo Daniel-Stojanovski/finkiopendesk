@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../../../shared/axios";
+import {api} from "../../../shared/axios";
 import '../views.scss';
 import {useParams} from "react-router-dom";
 import ChannelSideBar from "../../../components/blocks/ChannelSidebar/ChannelSideBar";

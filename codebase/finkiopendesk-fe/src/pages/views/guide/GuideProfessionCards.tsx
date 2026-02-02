@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import api from "../../../shared/axios";
+import {api} from "../../../shared/axios";
 import '../views.scss'
 import ProfessionCard from "../../../components/blocks/ProfessionCard/ProfessionCard";
 import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";

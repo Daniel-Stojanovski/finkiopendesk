@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../../../shared/axios";
+import {api} from "../../../shared/axios";
 import '../views.scss'
 import SubjectCard from "../../../components/blocks/SubjectCard/SubjectCard";
 import type {SubjectDto} from "../../../shared/dto/SubjectDto";

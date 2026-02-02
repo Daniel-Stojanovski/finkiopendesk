@@ -6,6 +6,8 @@ import GuideProfessionSubjectCards from "../../pages/views/guide/GuideProfession
 import ForumDiscussionCards from "../../pages/views/forum/ForumDiscussionCards";
 import ProfessionDiscussion from "../../pages/views/discussion/ProfessionDiscussion";
 import SubjectDiscussion from "../../pages/views/discussion/SubjectDiscussion";
+import RegisterPage from "../../pages/login/RegisterPage";
+import RegisterStudentPage from "../../pages/login/RegisterStudentPage";
 
 export const routesConfig: RouteDetails[] = [
     {
@@ -15,6 +17,14 @@ export const routesConfig: RouteDetails[] = [
                 <GuideProfessionCards/>
             </Layout>
         )
+    },
+    {
+        path: "/register",
+        element: <RegisterPage/>
+    },
+    {
+        path: "/register/activate",
+        element: <RegisterStudentPage />
     },
     {
         path: "/professions",

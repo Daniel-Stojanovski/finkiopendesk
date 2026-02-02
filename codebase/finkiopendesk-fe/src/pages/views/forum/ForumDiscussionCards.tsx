@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../../../shared/axios";
+import {api} from "../../../shared/axios";
 import '../views.scss';
 import DiscussionCard from "../../../components/blocks/DiscussionCard/DiscussionCard";
 import QuickScrollButton from "../../../components/utility/QuickScrollButton/QuickScrollButton";
