@@ -26,6 +26,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found!"));
+    }
+
+    @Override
     public User createStudent(String email) {
         validateStudent(email);
         User user = new User();
@@ -56,6 +62,15 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public User authenticateUser(String email, String rawPassword) {
+        User user = findByEmail(email);
+        validatePassword(rawPassword, user);
+        validateUserData(user);
+        return user;
+    }
+
+
     private void validateEmail(String email) {
         if(email == null || email.isBlank()) {
             throw new IllegalArgumentException("Provided e-mail cannot be empty");
@@ -83,5 +98,17 @@ public class UserServiceImpl implements UserService {
     private void validateUser(String email) {
         validateEmail(email);
         validateStudentEmail(email, false);
+    }
+
+    private void validatePassword(String rawPassword, User user) {
+        if (!encoder.matches(rawPassword, user.getPassword())) {
+            throw new RuntimeException("Invalid credentials");
+        }
+    }
+
+    private void validateUserData(User user) {
+        if (!user.isEnabled()) {
+            throw new RuntimeException("User not activated");
+        }
     }
 }
