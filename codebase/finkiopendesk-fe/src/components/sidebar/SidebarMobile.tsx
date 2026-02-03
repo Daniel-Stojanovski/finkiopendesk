@@ -1,4 +1,5 @@
 import './sidebar.scss';
+import UserInfo from "../blocks/elements/UserInfo/UserInfo";
 
 interface SidebarMobileProps {
     isOpen: boolean;
@@ -26,6 +27,8 @@ const SidebarMobile: React.FC<SidebarMobileProps> = ({ isOpen, onClose }) => {
                     <li>2</li>
                     <li>3</li>
                 </ul>
+
+                <UserInfo/>
             </div>
         </div>
     );

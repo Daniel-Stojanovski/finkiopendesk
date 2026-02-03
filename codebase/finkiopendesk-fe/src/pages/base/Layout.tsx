@@ -3,31 +3,28 @@ import './layout.scss';
 import {useState} from "react";
 import SideBar from "../../components/sidebar/SideBar";
 import NavBar from "../../components/navbar/NavBar";
+import {Outlet} from "react-router-dom";
 
-interface LayoutProps {
-    children: React.ReactNode;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
-
+const Layout: React.FC = () => {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-    const openMobileSidebar = () => setIsMobileOpen(true);
-    const closeMobileSidebar = () => setIsMobileOpen(false);
-
     return (
-        <>
-            <div id="layout-page">
-                <SideBar
-                    isMobileOpen={isMobileOpen}
-                    onCloseMobile={closeMobileSidebar}
+        <div id="layout-page">
+            <SideBar
+                isMobileOpen={isMobileOpen}
+                onCloseMobile={() => setIsMobileOpen(false)}
+            />
+
+            <div className="main">
+                <NavBar
+                    onOpenMobileSidebar={() => setIsMobileOpen(true)}
                 />
-                <div className="main">
-                    <NavBar onOpenMobileSidebar={openMobileSidebar} />
-                    <div id="content">{children}</div>
+
+                <div id="content">
+                    <Outlet />
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

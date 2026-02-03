@@ -1,6 +1,7 @@
 import './sidebar.scss'
+import UserInfo from "../blocks/elements/UserInfo/UserInfo";
 
-const SidebarDesktopCollapsed = () => {
+const SidebarDesktopCollapsed: React.FC = () => {
     return (
         <div id="sidebar">
             <div className="sb-desktop-collapsed">
@@ -12,6 +13,8 @@ const SidebarDesktopCollapsed = () => {
                     <li>3</li>
                 </ul>
             </div>
+
+            <UserInfo/>
         </div>
     );
 }

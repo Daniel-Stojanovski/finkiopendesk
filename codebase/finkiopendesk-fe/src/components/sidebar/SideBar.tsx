@@ -1,5 +1,3 @@
-import React from 'react';
-// import {useIsMobile} from "../../shared/hooks";
 import {useBreakpoint} from "../../shared/hooks";
 import SidebarDesktopOpen from './SidebarDesktopOpen';
 import SidebarDesktopCollapsed from './SidebarDesktopCollapsed';

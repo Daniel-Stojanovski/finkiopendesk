@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom';
-
+import App from './App.tsx'
+import {AuthProvider} from "./shared/AuthContext";
 import './shared/global.scss'
 
 // dark theme toggle
@@ -11,7 +11,9 @@ import './shared/global.scss'
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <BrowserRouter>
-            <App />
+            <AuthProvider>
+                <App />
+            </AuthProvider>
         </BrowserRouter>
     </React.StrictMode>,
 )

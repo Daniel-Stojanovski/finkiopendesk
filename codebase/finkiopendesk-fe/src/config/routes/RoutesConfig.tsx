@@ -8,15 +8,21 @@ import ProfessionDiscussion from "../../pages/views/discussion/ProfessionDiscuss
 import SubjectDiscussion from "../../pages/views/discussion/SubjectDiscussion";
 import RegisterPage from "../../pages/login/RegisterPage";
 import RegisterStudentPage from "../../pages/login/RegisterStudentPage";
+import LoginPage from "../../pages/login/LoginPage";
 
 export const routesConfig: RouteDetails[] = [
     {
         path: "/",
-        element: (
-            <Layout>
-                <GuideProfessionCards/>
-            </Layout>
-        )
+        element: <Layout />,
+        children: [
+            { path: "", element: <GuideProfessionCards /> },
+            { path: "professions", element: <GuideProfessionCards /> },
+            { path: "subjects", element: <ForumSubjectCards /> },
+            { path: "discussions", element: <ForumDiscussionCards /> },
+            { path: "subjects/pid/:pid", element: <GuideProfessionSubjectCards /> },
+            { path: "discussion/pid/:id", element: <ProfessionDiscussion /> },
+            { path: "discussion/sid/:id", element: <SubjectDiscussion /> },
+        ]
     },
     {
         path: "/register",
@@ -27,52 +33,7 @@ export const routesConfig: RouteDetails[] = [
         element: <RegisterStudentPage />
     },
     {
-        path: "/professions",
-        element: (
-            <Layout>
-                <GuideProfessionCards/>
-            </Layout>
-        )
-    },
-    {
-        path: "/subjects",
-        element: (
-            <Layout>
-                <ForumSubjectCards/>
-            </Layout>
-        )
-    },
-    {
-        path: "/discussions",
-        element: (
-            <Layout>
-                <ForumDiscussionCards/>
-            </Layout>
-        )
-    },
-    {
-        path: "/subjects/pid/:pid",
-        element: (
-            <Layout>
-                <GuideProfessionSubjectCards />
-            </Layout>
-        )
-    },
-    {
-        path: "/discussion/pid/:id",
-        element: (
-            <Layout>
-                <ProfessionDiscussion />
-            </Layout>
-        )
-    },
-    {
-        path: "/discussion/sid/:id",
-        element: (
-            <Layout>
-                <SubjectDiscussion />
-            </Layout>
-        )
-    },
-
+        path: "/login",
+        element: <LoginPage/>
+    }
 ];

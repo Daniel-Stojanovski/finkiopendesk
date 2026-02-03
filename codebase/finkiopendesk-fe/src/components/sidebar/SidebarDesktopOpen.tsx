@@ -1,6 +1,7 @@
 import './sidebar.scss'
+import UserInfo from "../blocks/elements/UserInfo/UserInfo";
 
-const SidebarDesktopOpen = () => {
+const SidebarDesktopOpen: React.FC = () => {
     return (
         <div id="sidebar">
             <div className="sb-desktop">
@@ -12,6 +13,8 @@ const SidebarDesktopOpen = () => {
                     <li>3</li>
                 </ul>
             </div>
+
+            <UserInfo/>
         </div>
     );
 }
