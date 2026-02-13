@@ -1,12 +1,16 @@
 package com.academic.finkiopendesk.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 import java.util.ArrayList;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "professionId"
+)
 @Entity
 @Table(name = "profession")
 @Data
@@ -41,12 +45,4 @@ public class Profession {
 
     @OneToOne(mappedBy = "profession")
     private ProfessionDiscussion discussion;
-
-    public List<Subject> getRecommendedSubjects() {
-        return recommendedSubjects;
-    }
-
-    public ProfessionDiscussion getDiscussion() {
-        return discussion;
-    }
 }

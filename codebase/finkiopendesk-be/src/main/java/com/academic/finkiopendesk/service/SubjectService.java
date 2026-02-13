@@ -20,4 +20,6 @@ public interface SubjectService {
     List<Channel> findInactiveChannelsBySubjectId(String subjectId);
 
     SubjectDiscussion findDiscussionBySubjectId(String subjectId);
+
+    SubjectDiscussion findDiscussionById(String subjectDiscussionId);
 }

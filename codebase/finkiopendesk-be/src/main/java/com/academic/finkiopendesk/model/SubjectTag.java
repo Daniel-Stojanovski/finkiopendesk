@@ -1,11 +1,15 @@
 package com.academic.finkiopendesk.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "subjectTagId"
+)
 @Entity
 @Table(
         name = "subject_tag",
@@ -35,10 +39,6 @@ public class SubjectTag {
     @Column(name = "status_active", nullable = false)
     @JsonProperty("status")
     private Boolean status;
-
-    public Channel getChannel() {
-        return channel;
-    }
 
     public Boolean isActive() { return status; }
 }

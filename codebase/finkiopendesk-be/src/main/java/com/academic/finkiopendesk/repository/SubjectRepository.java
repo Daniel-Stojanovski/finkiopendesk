@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SubjectRepository extends JpaSpecificationRepository<Subject, String>{
@@ -19,5 +20,13 @@ public interface SubjectRepository extends JpaSpecificationRepository<Subject, S
         )
     """)
     List<Subject> findAllNotRecommendedForProfession(String professionId);
+
+    @Query("""
+        SELECT s
+        FROM Subject s
+        JOIN s.discussion d
+        WHERE d.subjectDiscussionId = :discussionId
+    """)
+    Optional<Subject> findByDiscussionId(String discussionId);
 }
 

@@ -1,12 +1,16 @@
 package com.academic.finkiopendesk.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 import java.util.ArrayList;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "professionDiscussionId"
+)
 @Entity
 @Table(
         name = "profession_discussion",

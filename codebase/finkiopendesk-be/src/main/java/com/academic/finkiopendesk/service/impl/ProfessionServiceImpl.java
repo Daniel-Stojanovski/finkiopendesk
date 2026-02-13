@@ -31,9 +31,22 @@ public class ProfessionServiceImpl implements ProfessionService {
     @Override
     @Transactional(readOnly = true)
     public ProfessionDiscussion findDiscussionByProfessionId(String professionId) {
-
         Profession profession = professionRepository.findById(professionId)
                 .orElseThrow(() -> new RuntimeException("Profession not found"));
+
+        ProfessionDiscussion discussion = profession.getDiscussion();
+
+        if (discussion == null) {
+            throw new RuntimeException("Discussion not found for profession");
+        }
+
+        return discussion;
+    }
+
+    @Override
+    public ProfessionDiscussion findDiscussionById(String professionDiscussionId) {
+        Profession profession = professionRepository.findByDiscussionId(professionDiscussionId)
+                .orElseThrow(() -> new RuntimeException("Profession not found by discussion ID"));
 
         ProfessionDiscussion discussion = profession.getDiscussion();
 

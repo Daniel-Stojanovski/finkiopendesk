@@ -11,4 +11,7 @@ public interface ProfessionService {
     Profession findById(String id);
 
     ProfessionDiscussion findDiscussionByProfessionId(String professionId);
+
+    ProfessionDiscussion findDiscussionById(String professionDiscussionId);
+
 }

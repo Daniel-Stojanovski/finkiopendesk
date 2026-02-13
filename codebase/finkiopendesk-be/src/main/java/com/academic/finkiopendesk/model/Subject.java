@@ -1,6 +1,6 @@
 package com.academic.finkiopendesk.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 import java.util.HashSet;
 import java.util.Set;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "subjectId"
+)
 @Entity
 @Table(name = "subject")
 @Data
@@ -34,12 +38,4 @@ public class Subject {
 
     @OneToMany(mappedBy = "subject")
     private Set<SubjectTag> subjectTags = new HashSet<>();
-
-    public SubjectDiscussion getDiscussion() {
-        return discussion;
-    }
-
-    public Set<SubjectTag> getSubjectTags() {
-        return subjectTags;
-    }
 }

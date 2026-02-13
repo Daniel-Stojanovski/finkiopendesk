@@ -105,4 +105,20 @@ public class SubjectServiceImpl implements SubjectService {
 
         return discussion;
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SubjectDiscussion findDiscussionById(String discussionId) {
+
+        Subject subject = subjectRepository.findByDiscussionId(discussionId)
+                .orElseThrow(() -> new RuntimeException("Subject not found by discussion ID"));
+
+        SubjectDiscussion discussion = subject.getDiscussion();
+
+        if (discussion == null) {
+            throw new RuntimeException("Discussion not found for subject");
+        }
+
+        return discussion;
+    }
 }

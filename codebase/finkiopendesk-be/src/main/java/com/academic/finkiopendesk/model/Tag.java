@@ -1,9 +1,13 @@
 package com.academic.finkiopendesk.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "tagId"
+)
 @Entity
 @Table(name = "tag", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @Data
