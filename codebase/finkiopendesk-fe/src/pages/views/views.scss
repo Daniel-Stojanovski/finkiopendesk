@@ -38,12 +38,33 @@
   }
 }
 
-#subject-discussion {
+#subject-discussion,
+#profession-discussion {
   display: inline-flex;
   width: 100%;
+  height: 100%;
   overflow-y: hidden;
 
   .discussion-view {
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    height: 100%;
+    flex: 1;
+    position: relative;
+
+    h3 {
+      margin: var(--size-1) 0;
+    }
+    p {
+      margin:0 0 var(--size-1) 0;
+    }
+
+    .discussion-comments-view {
+      border: 1px solid violet;
+      display: block;
+      flex-grow: 1;
+      overflow-y: auto;
+    }
   }
 }

@@ -5,6 +5,7 @@ import {useParams} from "react-router-dom";
 import ChannelSideBar from "../../../components/blocks/ChannelSidebar/ChannelSideBar";
 import type {ChannelDto} from "../../../shared/dto/ChannelDto";
 import type {SubjectDiscussionDto} from "../../../shared/dto/SubjectDiscussionDto";
+import CommentInput from "../../../components/blocks/CommentInput/CommentInput";
 
 const SubjectDiscussion = () => {
     const { id } = useParams();
@@ -27,10 +28,16 @@ const SubjectDiscussion = () => {
     return (
         <div id="subject-discussion">
             <div className="discussion-view">
-                <h3>{discussion?.name}</h3>
-                {discussion?.description && (
-                    <p>{discussion.description}</p>
-                )}
+                <>
+                    <h3>{discussion?.name}</h3>
+                    {discussion?.description && (
+                        <p>{discussion.description}</p>
+                    )}
+                </>
+                <div className="discussion-comments-view">
+                    test
+                </div>
+                <CommentInput/>
             </div>
 
             <ChannelSideBar

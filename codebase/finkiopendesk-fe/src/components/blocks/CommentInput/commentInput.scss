@@ -1,0 +1,24 @@
+@use '../../../shared/global' as *;
+
+#comment-input-bar {
+  display: inline-flex;
+  width: 100%;
+  height: var(--size-4);
+  padding-bottom: var(--size-2);
+
+  .cib-variants{
+    * {
+      width: var(--size-4);
+      height: var(--size-4);
+      margin-right: var(--size-1);
+    }
+  }
+
+  .cib-input {
+    flex-grow: 1;
+    margin-right: var(--size-1);
+  }
+
+  .cib-submit {
+  }
+}
