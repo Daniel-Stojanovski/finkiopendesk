@@ -1,7 +1,7 @@
 package com.academic.finkiopendesk.web;
 
-import com.academic.finkiopendesk.model.Profession;
 import com.academic.finkiopendesk.model.ProfessionDiscussion;
+import com.academic.finkiopendesk.model.dto.ProfessionDto;
 import com.academic.finkiopendesk.service.ProfessionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +21,10 @@ public class ProfessionController {
     }
 
     @GetMapping
-    public List<Profession> getProfessions() {
-        return professionService.findAll();
+    public List<ProfessionDto> getProfessions() {
+        return professionService.findAll().stream()
+                .map(ProfessionDto::fromEntity)
+                .toList();
     }
 
     @GetMapping("/pid/{professionId}")

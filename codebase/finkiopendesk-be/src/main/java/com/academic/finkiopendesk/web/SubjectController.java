@@ -1,8 +1,9 @@
 package com.academic.finkiopendesk.web;
 
-import com.academic.finkiopendesk.model.Channel;
-import com.academic.finkiopendesk.model.Subject;
 import com.academic.finkiopendesk.model.SubjectDiscussion;
+import com.academic.finkiopendesk.model.dto.ChannelDto;
+import com.academic.finkiopendesk.model.dto.SubjectDiscussionDto;
+import com.academic.finkiopendesk.model.dto.SubjectDto;
 import com.academic.finkiopendesk.service.SubjectService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,32 +22,43 @@ public class SubjectController {
     }
 
     @GetMapping
-    public List<Subject> getSubjects() {
-        return subjectService.findAll();
+    public List<SubjectDto> getSubjects() {
+        return subjectService.findAll().stream()
+                .map(SubjectDto::fromEntity)
+                .toList();
     }
 
     @GetMapping("/pid/{professionId}")
-    public List<Subject> getSubjectsByProfession(@PathVariable String professionId) {
-        return subjectService.findSubjectsByProfessionId(professionId);
+    public List<SubjectDto> getSubjectsByProfession(@PathVariable String professionId) {
+        return subjectService.findSubjectsByProfessionId(professionId).stream()
+                .map(SubjectDto::fromEntity)
+                .toList();
     }
 
     @GetMapping("/sid/{subjectId}")
-    public SubjectDiscussion getDiscussionBySubjectId(@PathVariable String subjectId) {
-        return subjectService.findDiscussionBySubjectId(subjectId);
+    public SubjectDiscussionDto getDiscussionBySubjectId(@PathVariable String subjectId) {
+        SubjectDiscussion discussion = subjectService.findDiscussionBySubjectId(subjectId);
+        return SubjectDiscussionDto.fromEntity(discussion);
     }
 
     @GetMapping("channels/sid/{subjectId}")
-    public List<Channel> getChannelsBySubjectId(@PathVariable String subjectId) {
-        return subjectService.findChannelsBySubjectId(subjectId);
+    public List<ChannelDto> getChannelsBySubjectId(@PathVariable String subjectId) {
+        return subjectService.findChannelsBySubjectId(subjectId).stream()
+                .map(ChannelDto::fromEntity)
+                .toList();
     }
 
     @GetMapping("channels/sid/{subjectId}/active")
-    public List<Channel> getActiveChannelsBySubjectId(@PathVariable String subjectId) {
-        return subjectService.findActiveChannelsBySubjectId(subjectId);
+    public List<ChannelDto> getActiveChannelsBySubjectId(@PathVariable String subjectId) {
+        return subjectService.findActiveChannelsBySubjectId(subjectId).stream()
+                .map(ChannelDto::fromEntity)
+                .toList();
     }
 
     @GetMapping("channels/sid/{subjectId}/inactive")
-    public List<Channel> getInactiveChannelsBySubjectId(@PathVariable String subjectId) {
-        return subjectService.findInactiveChannelsBySubjectId(subjectId);
+    public List<ChannelDto> getInactiveChannelsBySubjectId(@PathVariable String subjectId) {
+        return subjectService.findInactiveChannelsBySubjectId(subjectId).stream()
+                .map(ChannelDto::fromEntity)
+                .toList();
     }
 }

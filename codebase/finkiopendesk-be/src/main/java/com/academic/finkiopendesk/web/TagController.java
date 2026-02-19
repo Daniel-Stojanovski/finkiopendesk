@@ -1,6 +1,6 @@
 package com.academic.finkiopendesk.web;
 
-import com.academic.finkiopendesk.model.Tag;
+import com.academic.finkiopendesk.model.dto.TagDto;
 import com.academic.finkiopendesk.service.TagService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,9 @@ public class TagController {
     }
 
     @GetMapping
-    public List<Tag> getTags() {
-        return tagService.findAll();
+    public List<TagDto> getTags() {
+        return tagService.findAll().stream()
+                .map(TagDto::fromEntity)
+                .toList();
     }
 }

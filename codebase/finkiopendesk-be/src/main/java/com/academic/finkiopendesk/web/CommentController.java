@@ -1,6 +1,7 @@
 package com.academic.finkiopendesk.web;
 
 import com.academic.finkiopendesk.model.Comment;
+import com.academic.finkiopendesk.model.dto.CommentDto;
 import com.academic.finkiopendesk.service.CommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,9 @@ public class CommentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
+    public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto commentDto) {
+        Comment comment = CommentDto.toEntity(commentDto);
         Comment saved = commentService.createComment(comment);
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok(CommentDto.fromEntity(saved));
     }
 }
