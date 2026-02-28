@@ -1,9 +1,7 @@
 package com.academic.finkiopendesk.service.impl;
 
-import com.academic.finkiopendesk.model.Channel;
-import com.academic.finkiopendesk.model.Comment;
-import com.academic.finkiopendesk.model.ProfessionDiscussion;
-import com.academic.finkiopendesk.model.SubjectDiscussion;
+import com.academic.finkiopendesk.model.*;
+import com.academic.finkiopendesk.model.dto.CommentDto;
 import com.academic.finkiopendesk.repository.CommentRepository;
 import com.academic.finkiopendesk.service.ChannelService;
 import com.academic.finkiopendesk.service.CommentService;
@@ -28,25 +26,33 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment createComment(Comment comment) {
-        comment.setType(comment.getType());
-        comment.setContent(comment.getContent());
+    public Comment createComment(CommentDto dto) {
 
-        if (comment.getSubjectDiscussion() != null) {
-            SubjectDiscussion sd = subjectService
-                    .findDiscussionById(comment.getSubjectDiscussion().getSubjectDiscussionId());
-            comment.setSubjectDiscussion(sd);
+        if (dto.getSubjectId() == null && dto.getProfessionId() == null) {
+            throw new RuntimeException("Must provide subjectId or professionId");
         }
 
-        if (comment.getProfessionDiscussion() != null) {
-            ProfessionDiscussion pd = professionService
-                    .findDiscussionById(comment.getProfessionDiscussion().getProfessionDiscussionId());
-            comment.setProfessionDiscussion(pd);
+        Comment comment = new Comment();
+        comment.setContent(dto.getContent());
+        comment.setType(dto.getType());
+
+        if (dto.getSubjectId() != null) {
+            Subject subject =
+                    subjectService.findById(dto.getSubjectId());
+            SubjectDiscussion discussion = subject.getDiscussion();
+            comment.setSubjectDiscussion(discussion);
         }
 
-        if (comment.getChannel() != null) {
-            Channel channel = channelService
-                    .findById(comment.getChannel().getChannelId());
+        if (dto.getProfessionId() != null) {
+            Profession profession =
+                    professionService.findById(dto.getProfessionId());
+            ProfessionDiscussion discussion = profession.getDiscussion();
+            comment.setProfessionDiscussion(discussion);
+        }
+
+        if (dto.getChannelId() != null) {
+            Channel channel =
+                    channelService.findById(dto.getChannelId());
             comment.setChannel(channel);
         }
 

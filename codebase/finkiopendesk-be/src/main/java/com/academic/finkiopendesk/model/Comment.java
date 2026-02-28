@@ -18,6 +18,7 @@ import lombok.*;
 public class Comment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "comment_id")
     @JsonProperty("commentId")
     private String commentId;
