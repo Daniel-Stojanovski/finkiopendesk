@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import {Breakpoint} from "./enums/BreakpointEnum";
 import {Breakpoint} from "./const/BreakpointConst";
 
 export type BreakpointSize = keyof typeof Breakpoint;
@@ -57,3 +56,15 @@ export const useSectionScroll = (sectionIds: string[]) => {
 
     return sectionIds.find(id => id !== activeSection);
 };
+
+export function useKeyBind(
+    key: string,
+    callback: () => void
+) {
+    return (event: React.KeyboardEvent) => {
+        if (event.key === key) {
+            event.preventDefault();
+            callback();
+        }
+    };
+}

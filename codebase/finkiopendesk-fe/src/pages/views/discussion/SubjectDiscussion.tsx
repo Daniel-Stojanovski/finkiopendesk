@@ -37,7 +37,9 @@ const SubjectDiscussion = () => {
                 <div className="discussion-comments-view">
                     test
                 </div>
-                <CommentInput/>
+                <CommentInput
+                    subjectId={id ?? undefined}
+                />
             </div>
 
             <ChannelSideBar
