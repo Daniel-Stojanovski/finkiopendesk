@@ -8,7 +8,7 @@ type CommentLoaderProps = {
 
 function loadComments(comments: CommentDto[]) {
     return (
-        comments
+        comments && comments.length > 0
             ? (comments.map(comment => <CommentItem type={comment.type} content={comment.content}/>))
             : (<p>- Discussion is empty -</p>)
     );
