@@ -9,5 +9,5 @@ public interface CommentService {
     List<Comment> findAll();
     List<CommentDto> findSubjectDiscussionComments(String subjectDiscussionId);
     List<CommentDto> findProfessionDiscussionComments(String professionDiscussionId);
-    Comment createComment(Comment comment);
+    Comment createComment(CommentDto comment);
 }
