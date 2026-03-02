@@ -4,6 +4,7 @@ import com.academic.finkiopendesk.model.Channel;
 import com.academic.finkiopendesk.model.Comment;
 import com.academic.finkiopendesk.model.ProfessionDiscussion;
 import com.academic.finkiopendesk.model.SubjectDiscussion;
+import com.academic.finkiopendesk.model.dto.CommentDto;
 import com.academic.finkiopendesk.repository.CommentRepository;
 import com.academic.finkiopendesk.service.ChannelService;
 import com.academic.finkiopendesk.service.CommentService;
@@ -33,15 +34,15 @@ public class CommentServiceImpl implements CommentService {
     public List<Comment> findAll() { return commentRepository.findAll(); }
 
     @Override
-    public List<Comment> findSubjectDiscussionComments(String subjectDiscussionId) {
+    public List<CommentDto> findSubjectDiscussionComments(String subjectDiscussionId) {
         SubjectDiscussion subjectDiscussion = subjectService.findDiscussionById(subjectDiscussionId);
-        return subjectDiscussion.getComments();
+        return subjectDiscussion.getComments().stream().map(CommentDto::fromEntity).toList();
     }
 
     @Override
-    public List<Comment> findProfessionDiscussionComments(String professionDiscussionId) {
+    public List<CommentDto> findProfessionDiscussionComments(String professionDiscussionId) {
         ProfessionDiscussion professionDiscussion = professionService.findDiscussionById(professionDiscussionId);
-        return professionDiscussion.getComments();
+        return professionDiscussion.getComments().stream().map(CommentDto::fromEntity).toList();
     }
 
     @Override
