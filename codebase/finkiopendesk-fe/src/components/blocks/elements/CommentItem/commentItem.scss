@@ -1,0 +1,7 @@
+@use '../../../../shared/global' as *;
+
+.comment-item{
+  margin: var(--size-1) 0;
+  padding: var(--size-1) 0;
+  border:1px solid #2a93d1;
+}
