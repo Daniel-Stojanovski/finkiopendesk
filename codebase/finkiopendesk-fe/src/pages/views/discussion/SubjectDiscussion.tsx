@@ -13,12 +13,7 @@ const SubjectDiscussion = () => {
     const { id } = useParams();
     const [discussion, setDiscussion] = useState<SubjectDiscussionDto | null>(null);
     const [channels, setChannels] = useState<ChannelDto[]>([]);
-    const [comments, setComments] = useState<CommentDto[]>([
-        { type: "comment", content: "This is mock comment." },
-        { type: "reply", content: "This is mock reply comment." },
-        { type: "important", content: "This is mock important comment." },
-        { type: "question", content: "This is mock question comment." },
-    ]);
+    const [comments, setComments] = useState<CommentDto[]>([]);
 
     const [isTabletOpen, setIsTabletOpen] = useState(false);
     const openTabletChannelSidebar = () => setIsTabletOpen(true);
@@ -47,7 +42,6 @@ const SubjectDiscussion = () => {
                     )}
                 </>
                 <div className="discussion-comments-view">
-                    test
                     <CommentLoader comments={comments}/>
                 </div>
                 <CommentInput
