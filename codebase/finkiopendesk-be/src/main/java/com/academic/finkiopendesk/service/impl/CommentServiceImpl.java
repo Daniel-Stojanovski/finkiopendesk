@@ -11,6 +11,8 @@ import com.academic.finkiopendesk.service.ProfessionService;
 import com.academic.finkiopendesk.service.SubjectService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -25,6 +27,21 @@ public class CommentServiceImpl implements CommentService {
         this.subjectService = subjectService;
         this.professionService = professionService;
         this.channelService = channelService;
+    }
+
+    @Override
+    public List<Comment> findAll() { return commentRepository.findAll(); }
+
+    @Override
+    public List<Comment> findSubjectDiscussionComments(String subjectDiscussionId) {
+        SubjectDiscussion subjectDiscussion = subjectService.findDiscussionById(subjectDiscussionId);
+        return subjectDiscussion.getComments();
+    }
+
+    @Override
+    public List<Comment> findProfessionDiscussionComments(String professionDiscussionId) {
+        ProfessionDiscussion professionDiscussion = professionService.findDiscussionById(professionDiscussionId);
+        return professionDiscussion.getComments();
     }
 
     @Override
