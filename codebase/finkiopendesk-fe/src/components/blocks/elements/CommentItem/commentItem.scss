@@ -4,4 +4,13 @@
   margin: var(--size-1) 0;
   padding: var(--size-1) 0;
   border:1px solid #2a93d1;
+
+  .ci-user{
+    font-style: italic;
+    font-size: 0.8em;
+
+    span {
+      opacity: 0.6;
+    }
+  }
 }

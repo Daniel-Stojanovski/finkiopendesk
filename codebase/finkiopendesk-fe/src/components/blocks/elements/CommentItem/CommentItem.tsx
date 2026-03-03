@@ -5,7 +5,8 @@ import type {CommentDto} from "../../../../shared/dto/CommentDto";
 const CommentItem: React.FC<CommentDto> = (props) => {
     return (
         <div className="comment-item">
-            {props.content && <p>{props.type}: {props.content}</p>}
+            <p className="ci-user">{props.user.email} <span>• {props.type.toLowerCase()}</span></p>
+            <p>{props.content}</p>
         </div>
     );
 }
