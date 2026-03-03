@@ -8,6 +8,7 @@ import com.academic.finkiopendesk.model.enums.CommentType;
 public class CommentDto {
     private String commentId;
     private CommentType type;
+    private UserDto user;
     private String content;
     private String subjectId;
     private String professionId;
@@ -16,6 +17,7 @@ public class CommentDto {
     public static CommentDto fromEntity(Comment comment) {
         CommentDto dto = new CommentDto();
         dto.setType(comment.getType());
+        dto.setUser(UserDto.fromEntity(comment.getUser()));
         dto.setContent(comment.getContent());
         dto.setChannelId(comment.getChannel() != null ? comment.getChannel().getChannelId() : null);
         dto.setSubjectId(comment.getSubjectDiscussion() != null ? comment.getSubjectDiscussion().getSubject().getSubjectId() : null);

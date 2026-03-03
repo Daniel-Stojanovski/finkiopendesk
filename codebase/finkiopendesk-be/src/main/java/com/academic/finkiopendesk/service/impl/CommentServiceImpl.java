@@ -1,30 +1,27 @@
 package com.academic.finkiopendesk.service.impl;
 
-import com.academic.finkiopendesk.model.Channel;
-import com.academic.finkiopendesk.model.Comment;
-import com.academic.finkiopendesk.model.ProfessionDiscussion;
-import com.academic.finkiopendesk.model.SubjectDiscussion;
+import com.academic.finkiopendesk.model.*;
 import com.academic.finkiopendesk.model.dto.CommentDto;
 import com.academic.finkiopendesk.repository.CommentRepository;
-import com.academic.finkiopendesk.service.ChannelService;
-import com.academic.finkiopendesk.service.CommentService;
-import com.academic.finkiopendesk.service.ProfessionService;
-import com.academic.finkiopendesk.service.SubjectService;
+import com.academic.finkiopendesk.service.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
 
+    private final UserService userService;
     private final SubjectService subjectService;
     private final ProfessionService professionService;
     private final ChannelService channelService;
 
-    public CommentServiceImpl(CommentRepository commentRepository, SubjectService subjectService, ProfessionService professionService, ChannelService channelService) {
+    public CommentServiceImpl(CommentRepository commentRepository, UserService userService, SubjectService subjectService, ProfessionService professionService, ChannelService channelService) {
         this.commentRepository = commentRepository;
+        this.userService = userService;
         this.subjectService = subjectService;
         this.professionService = professionService;
         this.channelService = channelService;
@@ -46,15 +43,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment createComment(CommentDto dto) {
+    public Comment createComment(CommentDto dto, String userId) {
 
         if (dto.getSubjectId() == null && dto.getProfessionId() == null) {
             throw new RuntimeException("Must provide subjectId or professionId");
         }
 
+        User user = userService.findById(UUID.fromString(userId));
+
         Comment comment = new Comment();
         comment.setContent(dto.getContent());
         comment.setType(dto.getType());
+        comment.setUser(user);
 
         if (dto.getSubjectId() != null) {
             Subject subject =

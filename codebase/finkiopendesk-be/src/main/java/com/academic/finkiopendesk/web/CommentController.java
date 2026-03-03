@@ -8,6 +8,8 @@ import com.academic.finkiopendesk.service.CommentService;
 import com.academic.finkiopendesk.service.ProfessionService;
 import com.academic.finkiopendesk.service.SubjectService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,8 +49,11 @@ public class CommentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto commentDto) {
-        Comment saved = commentService.createComment(commentDto);
+    public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto commentDto, Authentication authentication) {
+        JwtAuthenticationToken token = (JwtAuthenticationToken) authentication;
+        String userId = token.getToken().getSubject();
+
+        Comment saved = commentService.createComment(commentDto, userId);
         return ResponseEntity.ok(CommentDto.fromEntity(saved));
     }
 }

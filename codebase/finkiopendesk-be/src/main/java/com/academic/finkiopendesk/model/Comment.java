@@ -26,6 +26,10 @@ public class Comment {
     @Enumerated(EnumType.STRING)
     private CommentType type;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "comment_user_id", nullable = false)
+    private User user;
+
     @ManyToOne
     @JoinColumn(name = "subject_discussion_id")
     private SubjectDiscussion subjectDiscussion;
