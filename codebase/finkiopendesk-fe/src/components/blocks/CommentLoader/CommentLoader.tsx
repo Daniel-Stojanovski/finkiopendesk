@@ -4,11 +4,11 @@ import CommentItem from "../elements/CommentItem/CommentItem";
 
 type CommentLoaderProps = {
     comments: CommentDto[];
+    replyingTo: string | null;
     setParentCommentId: (id: string) => void;
 };
 
-const CommentLoader: React.FC<CommentLoaderProps> = ({ comments, setParentCommentId }) => {
-
+const CommentLoader: React.FC<CommentLoaderProps> = ({ comments, replyingTo, setParentCommentId }) => {
     return (
         <>
             {comments && comments.length > 0 ? (
@@ -16,6 +16,7 @@ const CommentLoader: React.FC<CommentLoaderProps> = ({ comments, setParentCommen
                     <CommentItem
                         key={comment.commentId}
                         comment={comment}
+                        replyingTo={replyingTo}
                         setReply={setParentCommentId}
                     />
                 ))

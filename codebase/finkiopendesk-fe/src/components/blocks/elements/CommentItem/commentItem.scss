@@ -5,12 +5,16 @@
   flex-direction: column;
   margin: var(--size-1) 0;
   padding: var(--size-1);
-
-  //debug style
-  //border:1px solid blue;
+  border: 1px solid var(--color-base-3);
 
   &:hover .ci-header > .ci-reply-btn {
     display: inline-block;
+  }
+
+  &.active{
+    //border: 2px solid var(--color-main-1);
+    border: 1px solid var(--color-main-1);
+    border-right: 4px solid var(--color-main-1);
   }
 
   .ci-header{
@@ -40,7 +44,14 @@
       cursor: pointer;
 
       &:hover {
-        border:1px solid var(--color-main-1);
+        border: 1px solid var(--color-main-1);
+        color: var(--color-main-1);
+      }
+
+      &.active {
+        display: inline-block;
+        border: 1px solid var(--color-main-1);
+        color: var(--color-main-1);
       }
     }
   }

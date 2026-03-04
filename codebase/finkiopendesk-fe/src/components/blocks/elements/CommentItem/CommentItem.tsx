@@ -4,12 +4,20 @@ import type {CommentDto} from "../../../../shared/dto/CommentDto";
 
 type CommentItemProps = {
     comment: CommentDto;
-    setReply: (commentId: string) => void;
+    replyingTo: string | null;
+    setReply: (commentId: string | null) => void;
 };
 
-const CommentItem: React.FC<CommentItemProps> = ({ comment, setReply }) => {
+const CommentItem: React.FC<CommentItemProps> = ({ comment, replyingTo, setReply }) => {
+    const isReplying = (replyingTo === comment.commentId);
+
+    const handleReplyClick = () => {
+        if (isReplying) setReply(null);
+        else setReply(comment.commentId);
+    };
+
     return (
-        <div className="comment-item">
+        <div className={`comment-item ${isReplying ? "active" : ""}`}>
             <div className="ci-header">
                 <p className="ci-user">
                     {comment.user.email}
@@ -17,8 +25,11 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, setReply }) => {
                     {comment.parentId && <span>| {comment.parentId}</span>}
                 </p>
 
-                <span className="ci-reply-btn" onClick={() => setReply(comment.commentId)}>
-                    Reply
+                <span
+                    className={`ci-reply-btn ${isReplying ? "active" : ""}`}
+                    onClick={handleReplyClick}
+                >
+                    {isReplying ? "Replying [x]" : "Reply"}
                 </span>
             </div>
 

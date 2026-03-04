@@ -34,6 +34,7 @@ const ProfessionDiscussion = () => {
                 </>
                 <div className="discussion-comments-view">
                     <CommentLoader comments={comments}
+                                   replyingTo={selectedCommentId}
                                    setParentCommentId={setSelectedCommentId}
                     />
                 </div>
@@ -41,6 +42,8 @@ const ProfessionDiscussion = () => {
                     professionId={id ?? undefined}
                     parentCommentId={selectedCommentId}
                     clearParent={() => setSelectedCommentId(null)}
+                    // parentCommentId={replyingTo}
+                    // clearParent={() => setReplyingTo(null)}
                 />
             </div>
         </div>

@@ -66,9 +66,6 @@ const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, ch
                    onChange={(e) => setMessage(e.target.value)}
                    onKeyDown={enterHandler}
             />
-            {parentCommentId && (
-                <button onClick={clearParent}>x</button>
-            )}
 
             <button className="cib-submit" onClick={handleSubmit}>
                 Send
