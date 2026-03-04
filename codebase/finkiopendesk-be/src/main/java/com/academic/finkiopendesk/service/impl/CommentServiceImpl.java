@@ -31,6 +31,12 @@ public class CommentServiceImpl implements CommentService {
     public List<Comment> findAll() { return commentRepository.findAll(); }
 
     @Override
+    public Comment findById(String id) {
+        return commentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Comment not found"));
+    }
+
+    @Override
     public List<CommentDto> findSubjectDiscussionComments(String subjectDiscussionId) {
         SubjectDiscussion subjectDiscussion = subjectService.findDiscussionById(subjectDiscussionId);
         return subjectDiscussion.getComments().stream().map(CommentDto::fromEntity).toList();
@@ -74,6 +80,11 @@ public class CommentServiceImpl implements CommentService {
             Channel channel =
                     channelService.findById(dto.getChannelId());
             comment.setChannel(channel);
+        }
+
+        if (dto.getParentId() != null) {
+            Comment parentComment = findById(dto.getParentId());
+            comment.setParentComment(parentComment);
         }
 
         return commentRepository.save(comment);
