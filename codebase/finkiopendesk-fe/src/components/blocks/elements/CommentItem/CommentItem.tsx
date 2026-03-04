@@ -2,13 +2,29 @@ import React from "react";
 import './commentItem.scss';
 import type {CommentDto} from "../../../../shared/dto/CommentDto";
 
-const CommentItem: React.FC<CommentDto> = (props) => {
+type CommentItemProps = {
+    comment: CommentDto;
+    setReply: (commentId: string) => void;
+};
+
+const CommentItem: React.FC<CommentItemProps> = ({ comment, setReply }) => {
     return (
         <div className="comment-item">
-            <p className="ci-user">{props.user.email} <span>• {props.type.toLowerCase()}</span></p>
-            <p>{props.content}</p>
+            <div>
+                <p className="ci-user">
+                    {comment.user.email}
+                    <span> • {comment.type.toLowerCase()}</span>
+                    {comment.parentId && <span>| {comment.parentId}</span>}
+                </p>
+
+                <button onClick={() => {setReply(comment.commentId); console.log("Reply clicked:", comment.commentId);}}>
+                    Reply
+                </button>
+            </div>
+
+            <p>{comment.content}</p>
         </div>
     );
-}
+};
 
 export default CommentItem;

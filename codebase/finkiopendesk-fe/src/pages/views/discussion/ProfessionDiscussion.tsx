@@ -3,14 +3,16 @@ import {api} from "../../../shared/axios";
 import '../views.scss';
 import {useParams} from "react-router-dom";
 import type {ProfessionDiscussionDto} from "../../../shared/dto/ProfessionDiscussionDto";
+import type {CommentDto} from "../../../shared/dto/CommentDto";
 import CommentInput from "../../../components/blocks/CommentInput/CommentInput";
 import CommentLoader from "../../../components/blocks/CommentLoader/CommentLoader";
-import type {CommentDto} from "../../../shared/dto/CommentDto";
 
 const ProfessionDiscussion = () => {
     const { id } = useParams();
     const [discussion, setDiscussion] = useState<ProfessionDiscussionDto | null>(null);
     const [comments, setComments] = useState<CommentDto[]>([]);
+
+    const [selectedCommentId, setSelectedCommentId] = useState<string | null>(null);
 
     useEffect(() => {
         if (!id) return;
@@ -31,10 +33,14 @@ const ProfessionDiscussion = () => {
                     )}
                 </>
                 <div className="discussion-comments-view">
-                    <CommentLoader comments={comments}/>
+                    <CommentLoader comments={comments}
+                                   setParentCommentId={setSelectedCommentId}
+                    />
                 </div>
                 <CommentInput
                     professionId={id ?? undefined}
+                    parentCommentId={selectedCommentId}
+                    clearParent={() => setSelectedCommentId(null)}
                 />
             </div>
         </div>

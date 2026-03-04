@@ -4,22 +4,25 @@ import CommentItem from "../elements/CommentItem/CommentItem";
 
 type CommentLoaderProps = {
     comments: CommentDto[];
+    setParentCommentId: (id: string) => void;
 };
 
-function loadComments(comments: CommentDto[]) {
-    return (
-        comments && comments.length > 0
-            ? (comments.map(comment => <CommentItem user={comment.user} type={comment.type} content={comment.content}/>))
-            : (<p>- Discussion is empty -</p>)
-    );
-}
-
-const CommentLoader: React.FC<CommentLoaderProps> = ({ comments }) => {
+const CommentLoader: React.FC<CommentLoaderProps> = ({ comments, setParentCommentId }) => {
     return (
         <>
-            {loadComments(comments)}
+            {comments && comments.length > 0 ? (
+                comments.map(comment => (
+                    <CommentItem
+                        key={comment.commentId}
+                        comment={comment}
+                        setReply={setParentCommentId}
+                    />
+                ))
+            ) : (
+                <p>- Discussion is empty -</p>
+            )}
         </>
-    )
+    );
 };
 
 export default CommentLoader;

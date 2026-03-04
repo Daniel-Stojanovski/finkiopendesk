@@ -10,9 +10,12 @@ interface CommentInputProps {
     professionId?: string;
     channelId?: string;
     onCommentCreated?: (comment: any) => void;
+
+    parentCommentId?: string | null;
+    clearParent?: () => void;
 }
 
-const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, channelId }) => {
+const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, channelId, parentCommentId, clearParent}) => {
     const variants = Object.keys(CommentType) as CommentTypeKey[];
 
     const [selectedType, setSelectedType] = useState<CommentTypeKey>(CommentType.comment.value);
@@ -28,13 +31,19 @@ const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, ch
                 subjectId: subjectId ?? null,
                 professionId: professionId ?? null,
                 channelId: channelId ?? null,
+                parentId: parentCommentId ?? null
             });
 
             setMessage("");
+            if (clearParent) {
+                clearParent();
+            }
         } catch (error) {
             console.error("Failed to create comment:", error);
         }
     };
+
+    const enterHandler = useKeyBind("Enter", handleSubmit);
 
     return (
         <div id="comment-input-bar">
@@ -49,12 +58,17 @@ const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, ch
                     </button>
                 ))}
             </div>
-
+            {parentCommentId && (
+                <div className="reply-indicator">
+                    Replying...
+                    <button onClick={clearParent}>x</button>
+                </div>
+            )}
             <input className="cib-input"
-                placeholder={CommentType[selectedType].message}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyDown={useKeyBind("Enter", handleSubmit)}
+                   placeholder={CommentType[selectedType].message}
+                   value={message}
+                   onChange={(e) => setMessage(e.target.value)}
+                   onKeyDown={enterHandler}
             />
 
             <button className="cib-submit" onClick={handleSubmit}>
