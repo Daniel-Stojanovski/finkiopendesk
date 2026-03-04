@@ -10,16 +10,16 @@ type CommentItemProps = {
 const CommentItem: React.FC<CommentItemProps> = ({ comment, setReply }) => {
     return (
         <div className="comment-item">
-            <div>
+            <div className="ci-header">
                 <p className="ci-user">
                     {comment.user.email}
                     <span> • {comment.type.toLowerCase()}</span>
                     {comment.parentId && <span>| {comment.parentId}</span>}
                 </p>
 
-                <button onClick={() => {setReply(comment.commentId); console.log("Reply clicked:", comment.commentId);}}>
+                <span className="ci-reply-btn" onClick={() => setReply(comment.commentId)}>
                     Reply
-                </button>
+                </span>
             </div>
 
             <p>{comment.content}</p>

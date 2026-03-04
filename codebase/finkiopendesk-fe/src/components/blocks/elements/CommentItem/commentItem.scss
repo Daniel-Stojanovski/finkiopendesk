@@ -1,16 +1,47 @@
 @use '../../../../shared/global' as *;
 
 .comment-item{
+  display: flex;
+  flex-direction: column;
   margin: var(--size-1) 0;
-  padding: var(--size-1) 0;
-  border:1px solid #2a93d1;
+  padding: var(--size-1);
 
-  .ci-user{
-    font-style: italic;
+  //debug style
+  //border:1px solid blue;
+
+  &:hover .ci-header > .ci-reply-btn {
+    display: inline-block;
+  }
+
+  .ci-header{
+    display: inline-flex;
+    justify-content: space-between;
+    height: var(--size-4);
+    flex-grow: 1;
     font-size: 0.8em;
 
-    span {
-      opacity: 0.6;
+    //debug style
+    //border: 1px darkorange dashed;
+
+    .ci-user {
+      display: inline-flex;
+      margin: auto;
+      align-items: center;
+      font-style: italic;
+
+      span {
+        opacity: 0.6;
+      }
+    }
+
+    .ci-reply-btn {
+      padding: var(--size-1) var(--size-2);
+      display: none;
+      cursor: pointer;
+
+      &:hover {
+        border:1px solid var(--color-main-1);
+      }
     }
   }
 }

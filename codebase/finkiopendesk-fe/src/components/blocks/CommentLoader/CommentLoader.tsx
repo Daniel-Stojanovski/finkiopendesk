@@ -8,6 +8,7 @@ type CommentLoaderProps = {
 };
 
 const CommentLoader: React.FC<CommentLoaderProps> = ({ comments, setParentCommentId }) => {
+
     return (
         <>
             {comments && comments.length > 0 ? (

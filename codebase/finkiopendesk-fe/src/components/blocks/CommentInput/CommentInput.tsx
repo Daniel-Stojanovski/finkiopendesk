@@ -21,6 +21,8 @@ const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, ch
     const [selectedType, setSelectedType] = useState<CommentTypeKey>(CommentType.comment.value);
     const [message, setMessage] = useState("");
 
+    const inputPlaceholder = parentCommentId ? 'Replying...' : CommentType[selectedType].message;
+
     const handleSubmit = async () => {
         if (!message.trim()) return;
 
@@ -58,18 +60,15 @@ const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, ch
                     </button>
                 ))}
             </div>
-            {parentCommentId && (
-                <div className="reply-indicator">
-                    Replying...
-                    <button onClick={clearParent}>x</button>
-                </div>
-            )}
             <input className="cib-input"
-                   placeholder={CommentType[selectedType].message}
+                   placeholder={inputPlaceholder}
                    value={message}
                    onChange={(e) => setMessage(e.target.value)}
                    onKeyDown={enterHandler}
             />
+            {parentCommentId && (
+                <button onClick={clearParent}>x</button>
+            )}
 
             <button className="cib-submit" onClick={handleSubmit}>
                 Send
