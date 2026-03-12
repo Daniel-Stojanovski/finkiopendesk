@@ -9,9 +9,10 @@ interface SubjectCardProps {
     type?: CardTypeKey;
     subject: SubjectDto;
     professionId?: string;
+    voteCount?: number;
 }
 
-const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId }) => {
+const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, voteCount = 0 }) => {
 
     const handleVote = async (value: number) => {
         try {
@@ -36,7 +37,7 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId }
                 <div className="subject-state">
                     <button onClick={() => handleVote(1)}>^</button>
                     <div className="subject-state-data">
-                        0 {/*{voteCount}*/}
+                        {voteCount}
                     </div>
                     <button onClick={() => handleVote(-1)}>v</button>
                 </div>
