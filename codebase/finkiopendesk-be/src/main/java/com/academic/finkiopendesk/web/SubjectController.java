@@ -1,24 +1,27 @@
 package com.academic.finkiopendesk.web;
 
 import com.academic.finkiopendesk.model.SubjectDiscussion;
-import com.academic.finkiopendesk.model.dto.ChannelDto;
-import com.academic.finkiopendesk.model.dto.SubjectDiscussionDto;
-import com.academic.finkiopendesk.model.dto.SubjectDto;
+import com.academic.finkiopendesk.model.Vote;
+import com.academic.finkiopendesk.model.dto.*;
 import com.academic.finkiopendesk.service.SubjectService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.academic.finkiopendesk.service.VoteService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/subjects")
 public class SubjectController {
     private final SubjectService subjectService;
+    private final VoteService voteService;
 
-    public SubjectController(SubjectService subjectService) {
+    public SubjectController(SubjectService subjectService, VoteService voteService) {
         this.subjectService = subjectService;
+        this.voteService = voteService;
     }
 
     @GetMapping
@@ -60,5 +63,14 @@ public class SubjectController {
         return subjectService.findInactiveChannelsBySubjectId(subjectId).stream()
                 .map(ChannelDto::fromEntity)
                 .toList();
+    }
+
+    @PostMapping("/vote")
+    public ResponseEntity<VoteDto> vote(@RequestBody VoteDto voteDto, Authentication authentication) {
+        JwtAuthenticationToken token = (JwtAuthenticationToken) authentication;
+        String userId = token.getToken().getSubject();
+
+        Vote saved = voteService.vote(voteDto, userId);
+        return ResponseEntity.ok(VoteDto.fromEntity(saved));
     }
 }
