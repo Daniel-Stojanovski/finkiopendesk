@@ -4,8 +4,10 @@ import com.academic.finkiopendesk.model.Vote;
 import com.academic.finkiopendesk.model.dto.VoteDto;
 import com.academic.finkiopendesk.repository.VoteRepository;
 import com.academic.finkiopendesk.service.VoteService;
+import com.academic.finkiopendesk.web.dto.VotesCountProjection;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,5 +39,9 @@ public class VoteServiceImpl implements VoteService {
             voteRepository.save(newVote);
             return newVote;
         }
+    }
+
+    public List<VotesCountProjection> getVotes(String professionId) {
+        return voteRepository.findByProfessionSubject(professionId);
     }
 }

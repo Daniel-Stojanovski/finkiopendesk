@@ -1,6 +1,7 @@
 package com.academic.finkiopendesk.repository;
 
 import com.academic.finkiopendesk.model.Vote;
+import com.academic.finkiopendesk.web.dto.VotesCountProjection;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -25,11 +26,14 @@ public interface VoteRepository extends JpaSpecificationRepository<Vote, String>
     );
 
     @Query("""
-        SELECT v
-        FROM Vote v
-        WHERE v.subjectId = :subjectId
-        AND v.professionId = :professionId
+        SELECT s.subjectId AS subjectId,
+               COALESCE(SUM(v.vote), 0) AS voteCount
+        FROM Subject s
+        LEFT JOIN Vote v
+            ON v.subjectId = s.subjectId
+            AND v.professionId = :professionId
+        GROUP BY s.subjectId
     """)
-    List<Vote> findByProfessionSubject(String professionId, String subjectId);
+    List<VotesCountProjection> findByProfessionSubject(String professionId);
 
 }
