@@ -20,9 +20,9 @@ const ForumDiscussionCards = () => {
 
     return (
         <>
-            <QuickScrollButton targetSection={activeSection} />
-
             <div id="discussions-grid">
+                <QuickScrollButton targetSection={activeSection} />
+
                 <section id="Professions">
                     <h2> Professions </h2>
                     <div className="discussions-sub-grid">

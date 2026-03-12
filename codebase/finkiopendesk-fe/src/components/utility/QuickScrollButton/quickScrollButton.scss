@@ -1,7 +1,11 @@
+@use '../../../shared/global' as *;
+
 #utility-button {
-  position: fixed;
-  top: calc(1.5 * var(--size-6));
-  right: var(--size-5);
+  position: sticky;
+  float: right;
+  width: auto;
+  top: var(--size-2);
+  right: var(--size-2);
   z-index: 1000;
   background-color: var(--color-base-0);
   padding: var(--size-2) var(--size-3);

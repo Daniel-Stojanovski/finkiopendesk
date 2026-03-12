@@ -1,5 +1,6 @@
 import './navbar.scss';
 import SearchBar from "../search/SearchBar";
+import {Link} from "react-router-dom";
 
 interface NavbarMobileProps {
     onOpenSidebar?: () => void;
@@ -16,8 +17,12 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar }) => {
                     <SearchBar/>
                 </div>
                 <div className="nb-mobile-buttons">
-                    <button className="nb-link-button">Forum</button>
-                    <button className="nb-link-button">Guide</button>
+                    <Link to={'/discussions'} className="nb-link">
+                        <button className="nb-link-button">Forum</button>
+                    </Link>
+                    <Link to={'/careers'} className="nb-link">
+                        <button className="nb-link-button">Guide</button>
+                    </Link>
                 </div>
             </div>
         </div>

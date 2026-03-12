@@ -1,5 +1,6 @@
 import './navbar.scss'
 import SearchBar from "../search/SearchBar";
+import {Link} from "react-router-dom";
 
 const NavbarDesktop = () => {
     return (
@@ -8,8 +9,12 @@ const NavbarDesktop = () => {
                 <div className="nb-desktop">
                     <SearchBar/>
                     <div className="nb-desktop-buttons">
-                        <button className="nb-link-button">Forum</button>
-                        <button className="nb-link-button">Guide</button>
+                        <Link to={'/discussions'}>
+                            <button className="nb-link-button">Forum</button>
+                        </Link>
+                        <Link to={'/careers'}>
+                            <button className="nb-link-button">Guide</button>
+                        </Link>
                     </div>
                 </div>
             </div>
