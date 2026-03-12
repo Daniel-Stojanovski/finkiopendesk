@@ -25,8 +25,10 @@ const GuideProfessionSubjectCards = () => {
         <div id="subjects-grid">
             {pidSubjects.map(pidSubject => (
                 <SubjectCard
+                    type='VOTE'
                     key={pidSubject.subjectId}
                     subject={pidSubject}
+                    professionId={pid}
                 />
             ))}
         </div>
