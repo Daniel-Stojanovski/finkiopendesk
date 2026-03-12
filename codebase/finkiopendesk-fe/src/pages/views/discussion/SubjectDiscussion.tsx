@@ -45,6 +45,7 @@ const SubjectDiscussion = () => {
                 </>
                 <div className="discussion-comments-view">
                     <CommentLoader comments={comments}
+                                   replyingTo={selectedCommentId}
                                    setParentCommentId={setSelectedCommentId}
                     />
                 </div>

@@ -5,7 +5,7 @@ import CommentItem from "../elements/CommentItem/CommentItem";
 type CommentLoaderProps = {
     comments: CommentDto[];
     replyingTo: string | null;
-    setParentCommentId: (id: string) => void;
+    setParentCommentId: (id: string | null) => void;
 };
 
 const CommentLoader: React.FC<CommentLoaderProps> = ({ comments, replyingTo, setParentCommentId }) => {
