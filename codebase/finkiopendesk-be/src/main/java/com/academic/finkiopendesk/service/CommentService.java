@@ -11,4 +11,5 @@ public interface CommentService {
     List<CommentDto> findSubjectDiscussionComments(String subjectDiscussionId);
     List<CommentDto> findProfessionDiscussionComments(String professionDiscussionId);
     Comment createComment(CommentDto comment, String userId);
+    List<Comment> findCommentsByDiscussionContext(String channelId, String subjectDiscussionId, String professionDiscussionId);
 }

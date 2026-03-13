@@ -89,4 +89,9 @@ public class CommentServiceImpl implements CommentService {
 
         return commentRepository.save(comment);
     }
+
+    @Override
+    public List<Comment> findCommentsByDiscussionContext(String channelId, String subjectDiscussionId, String professionDiscussionId) {
+        return commentRepository.findCommentsByDiscussionContext(channelId, subjectDiscussionId, professionDiscussionId);
+    }
 }

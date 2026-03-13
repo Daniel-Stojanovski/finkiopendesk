@@ -5,6 +5,7 @@ import com.academic.finkiopendesk.model.Profession;
 import com.academic.finkiopendesk.model.Subject;
 import com.academic.finkiopendesk.model.dto.CommentDto;
 import com.academic.finkiopendesk.service.CommentService;
+import com.academic.finkiopendesk.service.NotificationService;
 import com.academic.finkiopendesk.service.ProfessionService;
 import com.academic.finkiopendesk.service.SubjectService;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +23,13 @@ public class CommentController {
     private final CommentService commentService;
     private final SubjectService subjectService;
     private final ProfessionService professionService;
+    private final NotificationService notificationService;
 
-    public CommentController(CommentService commentService, SubjectService subjectService, ProfessionService professionService) {
+    public CommentController(CommentService commentService, SubjectService subjectService, ProfessionService professionService, NotificationService notificationService) {
         this.commentService = commentService;
         this.subjectService = subjectService;
         this.professionService = professionService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping
@@ -54,6 +57,8 @@ public class CommentController {
         String userId = token.getToken().getSubject();
 
         Comment saved = commentService.createComment(commentDto, userId);
+        notificationService.sendNotification(saved);
+
         return ResponseEntity.ok(CommentDto.fromEntity(saved));
     }
 }
