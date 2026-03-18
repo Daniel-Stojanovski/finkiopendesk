@@ -6,16 +6,17 @@ import NavbarMobile from "./NavbarMobile";
 
 interface NavBarProps {
     onOpenMobileSidebar: () => void;
+    onToggleNotifications: () => void;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ onOpenMobileSidebar }) => {
+const NavBar: React.FC<NavBarProps> = ({ onOpenMobileSidebar, onToggleNotifications }) => {
     const bp = useBreakpoint();
 
     if (bp === "xs") {
-        return <NavbarMobile onOpenSidebar={onOpenMobileSidebar} />;
+        return <NavbarMobile onOpenSidebar={onOpenMobileSidebar} onToggleNotifications={onToggleNotifications}/>;
     }
 
-    return <NavbarDesktop />;
+    return <NavbarDesktop onToggleNotifications={onToggleNotifications}/>;
 };
 
 export default NavBar;
