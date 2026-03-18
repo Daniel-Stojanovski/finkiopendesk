@@ -3,6 +3,7 @@ package com.academic.finkiopendesk.service.impl;
 import com.academic.finkiopendesk.model.Comment;
 import com.academic.finkiopendesk.model.NotificationEvent;
 import com.academic.finkiopendesk.model.NotificationGroup;
+import com.academic.finkiopendesk.model.dto.NotificationGroupDto;
 import com.academic.finkiopendesk.repository.NotificationEventRepository;
 import com.academic.finkiopendesk.repository.NotificationGroupRepository;
 import com.academic.finkiopendesk.service.CommentService;
@@ -24,6 +25,18 @@ public class NotificationServiceImpl implements NotificationService {
         this.groupRepository = groupRepository;
         this.eventRepository = eventRepository;
         this.commentService = commentService;
+    }
+
+    @Override
+    public List<NotificationGroup> findAllNotifications() {
+        return groupRepository.findAll();
+    }
+
+    @Override
+    public List<NotificationGroupDto> findNotificationsByUserId(UUID userId) {
+        return groupRepository.findByUserId(userId).stream()
+                .map(NotificationGroupDto::fromEntity)
+                .toList();
     }
 
     @Override
