@@ -4,9 +4,15 @@ import {useState} from "react";
 import SideBar from "../../components/sidebar/SideBar";
 import NavBar from "../../components/navbar/NavBar";
 import {Outlet} from "react-router-dom";
+import NotificationsBox from "../../components/blocks/elements/NotificationsBox/NotificationsBox";
 
 const Layout: React.FC = () => {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
+    const [showNotifications, setShowNotifications] = useState(false);
+
+    const toggleNotifications = () => {
+        setShowNotifications(prev => !prev);
+    };
 
     return (
         <div id="layout-page">
@@ -18,7 +24,10 @@ const Layout: React.FC = () => {
             <div className="main">
                 <NavBar
                     onOpenMobileSidebar={() => setIsMobileOpen(true)}
+                    onToggleNotifications={toggleNotifications}
                 />
+
+                {showNotifications && <NotificationsBox />}
 
                 <div id="content">
                     <Outlet />
