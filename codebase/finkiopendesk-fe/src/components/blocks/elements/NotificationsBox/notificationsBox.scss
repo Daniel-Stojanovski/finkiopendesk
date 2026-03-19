@@ -1,3 +1,5 @@
+@use '../../../../shared/global' as *;
+
 #notifications-box {
   position: absolute;
   width: max(300px, 30%);
@@ -13,10 +15,27 @@
   width: 100%;
   border: 1px solid purple;
 
-  &-title {
+  &-header {
     display: inline-flex;
     flex-grow: 1;
     border: 1px solid blue;
+
+    .ngh-box {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+
+      .ngh-title {
+        display: inline-flex;
+        flex-grow: 1;
+        margin: var(--size-3) 0 var(--size-1) var(--size-1);
+      }
+
+      .ngh-message {
+        font-size: 14px;
+        margin: var(--size-2) 0 var(--size-2) var(--size-1);
+      }
+    }
 
     button {
       height: var(--size-4);
@@ -33,4 +52,18 @@
 .notification-event {
   margin-left: var(--size-2);
   border: 1px solid yellow;
+
+  &.unread{
+    //debug style
+    background-color: #dae2f6;
+  }
+}
+
+.blue-dot {
+  width: var(--size-2);
+  height: var(--size-2);
+  background-color: var(--color-main-1);
+  border-radius: 50%;
+  display: inline-block;
+  margin:auto var(--size-1);
 }
