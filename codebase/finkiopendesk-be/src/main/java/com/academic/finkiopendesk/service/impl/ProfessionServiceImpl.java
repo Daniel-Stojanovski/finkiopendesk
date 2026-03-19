@@ -2,6 +2,7 @@ package com.academic.finkiopendesk.service.impl;
 
 import com.academic.finkiopendesk.model.*;
 import com.academic.finkiopendesk.repository.ProfessionRepository;
+import com.academic.finkiopendesk.repository.specification.ProfessionSpecification;
 import com.academic.finkiopendesk.service.ProfessionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,11 @@ public class ProfessionServiceImpl implements ProfessionService {
     @Override
     public List<Profession> findAll() {
         return professionRepository.findAll();
+    }
+
+    @Override
+    public List<Profession> findAll(String query) {
+        return professionRepository.findAll(ProfessionSpecification.search(query));
     }
 
     @Override

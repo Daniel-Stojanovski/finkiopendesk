@@ -9,6 +9,8 @@ import java.util.List;
 public interface SubjectService {
     List<Subject> findAll();
 
+    List<Subject> findAll(String query);
+
     Subject findById(String id);
 
     List<Subject> findSubjectsByProfessionId(String professionId);

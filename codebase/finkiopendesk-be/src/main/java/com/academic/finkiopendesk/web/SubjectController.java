@@ -25,8 +25,13 @@ public class SubjectController {
     }
 
     @GetMapping
-    public List<SubjectDto> getSubjects() {
-        return subjectService.findAll().stream()
+    public List<SubjectDto> getSubjects(@RequestParam(required = false) String query) {
+        if (query == null || query.isBlank()) {
+            return subjectService.findAll().stream()
+                    .map(SubjectDto::fromEntity)
+                    .toList();
+        }
+        return subjectService.findAll(query).stream()
                 .map(SubjectDto::fromEntity)
                 .toList();
     }

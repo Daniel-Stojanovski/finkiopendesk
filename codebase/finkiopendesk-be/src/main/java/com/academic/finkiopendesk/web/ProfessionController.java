@@ -4,13 +4,11 @@ import com.academic.finkiopendesk.model.ProfessionDiscussion;
 import com.academic.finkiopendesk.model.dto.ProfessionDiscussionDto;
 import com.academic.finkiopendesk.model.dto.ProfessionDto;
 import com.academic.finkiopendesk.service.ProfessionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/professions")
 public class ProfessionController {
@@ -22,8 +20,13 @@ public class ProfessionController {
     }
 
     @GetMapping
-    public List<ProfessionDto> getProfessions() {
-        return professionService.findAll().stream()
+    public List<ProfessionDto> getProfessions(@RequestParam(required = false) String query) {
+        if (query == null || query.isBlank()) {
+            return professionService.findAll().stream()
+                    .map(ProfessionDto::fromEntity)
+                    .toList();
+        }
+        return professionService.findAll(query).stream()
                 .map(ProfessionDto::fromEntity)
                 .toList();
     }

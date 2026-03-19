@@ -8,6 +8,8 @@ import java.util.List;
 public interface ProfessionService {
     List<Profession> findAll();
 
+    List<Profession> findAll(String query);
+
     Profession findById(String id);
 
     ProfessionDiscussion findDiscussionByProfessionId(String professionId);

@@ -2,6 +2,7 @@ package com.academic.finkiopendesk.service.impl;
 
 import com.academic.finkiopendesk.model.*;
 import com.academic.finkiopendesk.repository.SubjectRepository;
+import com.academic.finkiopendesk.repository.specification.SubjectSpecification;
 import com.academic.finkiopendesk.service.ProfessionService;
 import com.academic.finkiopendesk.service.SubjectService;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,11 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public List<Subject> findAll() {
         return subjectRepository.findAll();
+    }
+
+    @Override
+    public List<Subject> findAll(String query) {
+        return subjectRepository.findAll(SubjectSpecification.search(query));
     }
 
     @Override
