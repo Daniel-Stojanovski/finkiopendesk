@@ -42,9 +42,7 @@ const ProfessionDiscussion = () => {
                     professionId={id ?? undefined}
                     parentCommentId={selectedCommentId}
                     clearParent={() => setSelectedCommentId(null)}
-                    // parentCommentId={replyingTo}
-                    // clearParent={() => setReplyingTo(null)}
-                />
+                    />
             </div>
         </div>
     );

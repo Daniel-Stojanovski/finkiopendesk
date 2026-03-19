@@ -4,14 +4,17 @@ import {Link} from "react-router-dom";
 
 interface NavbarDesktopProps {
     onToggleNotifications: () => void;
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
 }
 
-const NavbarDesktop: React.FC<NavbarDesktopProps> = ({onToggleNotifications}) => {
+const NavbarDesktop: React.FC<NavbarDesktopProps> = ({onToggleNotifications, searchQuery, setSearchQuery}) => {
     return (
         <>
             <div id="navbar">
                 <div className="nb-desktop">
-                    <SearchBar/>
+                    <SearchBar searchQuery={searchQuery}
+                               setSearchQuery={setSearchQuery}/>
 
                     <div className="nb-desktop-buttons">
                         <Link to={'/discussions'}>

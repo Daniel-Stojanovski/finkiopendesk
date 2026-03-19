@@ -1,20 +1,42 @@
 import { useEffect, useState } from "react";
-import {api} from "../../../shared/axios";
+import {api, backapi} from "../../../shared/axios";
 import '../views.scss';
 import DiscussionCard from "../../../components/blocks/DiscussionCard/DiscussionCard";
 import QuickScrollButton from "../../../components/utility/QuickScrollButton/QuickScrollButton";
 import {useSectionScroll} from "../../../shared/hooks";
 import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
 import type {SubjectDto} from "../../../shared/dto/SubjectDto";
+import {useOutletContext} from "react-router-dom";
 
 const ForumDiscussionCards = () => {
     const [subjectDiscussions, setSubjectDiscussions] = useState<SubjectDto[]>([]);
     const [professionDiscussions, setProfessionDiscussions] = useState<ProfessionDto[]>([]);
 
+    const { searchQuery } = useOutletContext<{ searchQuery: string }>();
+
     useEffect(() => {
-        api.get<ProfessionDto[]>("/professions").then(response => setProfessionDiscussions(response.data));
-        api.get<SubjectDto[]>("/subjects").then(response => setSubjectDiscussions(response.data));
-    }, []);
+        if (!searchQuery) {
+            api.get<ProfessionDto[]>("/professions").then(res => setProfessionDiscussions(res.data));
+            api.get<SubjectDto[]>("/subjects").then(res => setSubjectDiscussions(res.data));
+            return;
+        }
+
+        const fetchSearch = async () => {
+            try {
+                await Promise.all([
+                    backapi.get<ProfessionDto[]>('/professions', {params: { query: searchQuery || undefined }})
+                        .then(res => setProfessionDiscussions(res.data)),
+                    backapi.get<SubjectDto[]>('/subjects', {params: { query: searchQuery || undefined }})
+                        .then(res => setSubjectDiscussions(res.data))
+                ]);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchSearch();
+
+    }, [searchQuery]);
 
     const activeSection = useSectionScroll(["Professions", "Subjects"]);
 

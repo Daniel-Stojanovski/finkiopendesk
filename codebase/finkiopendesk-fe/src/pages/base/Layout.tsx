@@ -10,6 +10,8 @@ const Layout: React.FC = () => {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
 
+    const [searchQuery, setSearchQuery] = useState("");
+
     const toggleNotifications = () => {
         setShowNotifications(prev => !prev);
     };
@@ -25,12 +27,14 @@ const Layout: React.FC = () => {
                 <NavBar
                     onOpenMobileSidebar={() => setIsMobileOpen(true)}
                     onToggleNotifications={toggleNotifications}
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
                 />
 
                 {showNotifications && <NotificationsBox />}
 
                 <div id="content">
-                    <Outlet />
+                    <Outlet context={{ searchQuery }} />
                 </div>
             </div>
         </div>

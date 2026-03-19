@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {Breakpoint} from "./const/BreakpointConst";
 
 export type BreakpointSize = keyof typeof Breakpoint;
@@ -68,3 +68,21 @@ export function useKeyBind(
         }
     };
 }
+
+export const useFilterArray = <T>(
+    array: T[],
+    query: string | undefined,
+    getQueryStrings: (item: T) => (string | undefined)[]
+) => {
+    return useMemo(() => {
+        if (!query || !query.trim()) return array;
+
+        const lowerQuery = query.toLowerCase();
+
+        return array.filter(item =>
+            getQueryStrings(item).some(
+                field => field?.toLowerCase().includes(lowerQuery)
+            )
+        );
+    }, [query, array, getQueryStrings]);
+};

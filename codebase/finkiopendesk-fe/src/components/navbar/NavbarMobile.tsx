@@ -5,9 +5,11 @@ import {Link} from "react-router-dom";
 interface NavbarMobileProps {
     onOpenSidebar?: () => void;
     onToggleNotifications: () => void;
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
 }
 
-const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar, onToggleNotifications }) => {
+const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar, onToggleNotifications, searchQuery, setSearchQuery }) => {
     return (
         <div id="navbar">
             <div className="nb-mobile">
@@ -15,7 +17,8 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar, onToggleNoti
                     <button onClick={onOpenSidebar}>
                         <img src="/vite.svg" alt="finkiopendesk_logo" width="36" height="36"/>
                     </button>
-                    <SearchBar/>
+                    <SearchBar searchQuery={searchQuery}
+                               setSearchQuery={setSearchQuery}/>
 
                     <button className="nb-notifications-button" onClick={onToggleNotifications}>🔔</button>
                 </div>

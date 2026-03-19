@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import {api} from "../../../shared/axios";
+import {Link, useOutletContext} from "react-router-dom";
+import {api, backapi} from "../../../shared/axios";
 import '../views.scss'
 import ProfessionCard from "../../../components/blocks/ProfessionCard/ProfessionCard";
 import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
@@ -8,15 +8,28 @@ import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
 const GuideProfessionCards = () => {
     const [professions, setProfessions] = useState<ProfessionDto[]>([]);
 
+    const { searchQuery } = useOutletContext<{ searchQuery: string }>();
+
     useEffect(() => {
-        api.get<ProfessionDto[]>("/professions")
-            .then(response => {
-                setProfessions(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            })
-    }, []);
+        if (!searchQuery) {
+            api.get<ProfessionDto[]>("/professions").then(res => setProfessions(res.data));
+            return;
+        }
+
+        const fetchSearch = async () => {
+            try {
+                await Promise.all([
+                    backapi.get<ProfessionDto[]>('/professions', {params: { query: searchQuery || undefined }})
+                        .then(res => setProfessions(res.data))
+                ]);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchSearch();
+
+    }, [searchQuery]);
 
     return (
         <div id="professions-grid">

@@ -7,16 +7,18 @@ import NavbarMobile from "./NavbarMobile";
 interface NavBarProps {
     onOpenMobileSidebar: () => void;
     onToggleNotifications: () => void;
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ onOpenMobileSidebar, onToggleNotifications }) => {
+const NavBar: React.FC<NavBarProps> = ({ onOpenMobileSidebar, onToggleNotifications, searchQuery, setSearchQuery }) => {
     const bp = useBreakpoint();
 
     if (bp === "xs") {
-        return <NavbarMobile onOpenSidebar={onOpenMobileSidebar} onToggleNotifications={onToggleNotifications}/>;
+        return <NavbarMobile onOpenSidebar={onOpenMobileSidebar} onToggleNotifications={onToggleNotifications} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>;
     }
 
-    return <NavbarDesktop onToggleNotifications={onToggleNotifications}/>;
+    return <NavbarDesktop onToggleNotifications={onToggleNotifications} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>;
 };
 
 export default NavBar;

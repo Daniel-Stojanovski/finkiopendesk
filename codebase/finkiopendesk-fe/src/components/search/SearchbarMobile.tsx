@@ -1,7 +1,13 @@
 import { useState } from "react";
 import './searchbar.scss';
 
-const SearchbarMobile = () => {
+interface SearchBarProps {
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
+}
+
+const SearchbarMobile: React.FC<SearchBarProps> = ({ searchQuery, setSearchQuery }) => {
+
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -18,6 +24,8 @@ const SearchbarMobile = () => {
                     <input
                         className="search-mobile-search-input"
                         placeholder="search"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                         autoFocus
                     />
                     <span

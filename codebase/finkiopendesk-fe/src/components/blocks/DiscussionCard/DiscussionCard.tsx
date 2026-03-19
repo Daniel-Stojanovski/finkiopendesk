@@ -3,18 +3,6 @@ import { useNavigate } from "react-router-dom";
 import type {DiscussionObjectDto} from "../../../shared/dto/DiscussionObjectDto";
 
 const DiscussionCard: React.FC<DiscussionObjectDto> = (props) => {
-    // { object, type, discussion }
-    // if (props.type === "profession") {
-    //     props.object.professionId;
-    //     props.discussion.professionDiscussionId;
-    // }
-    // else if (props.type === "subject") {
-    //     props.object.subjectId;
-    //     props.discussion.subjectDiscussionId;
-    // }
-    // else {
-    //     null;
-    // }
 
     const navigate = useNavigate();
 
