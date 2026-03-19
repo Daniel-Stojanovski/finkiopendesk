@@ -12,6 +12,8 @@ public class NotificationEventDto {
 
     public static NotificationEventDto fromEntity(NotificationEvent event){
         NotificationEventDto dto = new NotificationEventDto();
+
+        dto.setNotificationEventId(event.getNotificationEventId());
         dto.setMessage(event.getMessage());
         dto.setStatusRead(event.isStatusRead());
         dto.setTargetObjectId(event.getTargetObjectId());

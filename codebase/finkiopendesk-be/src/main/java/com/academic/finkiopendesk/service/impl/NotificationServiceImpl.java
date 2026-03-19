@@ -44,6 +44,8 @@ public class NotificationServiceImpl implements NotificationService {
             UUID receiverId,
             UUID initiatorId,
             String discussionId,
+            String title,
+            String type,
             String message,
             String targetObjectId
     ) {
@@ -52,20 +54,18 @@ public class NotificationServiceImpl implements NotificationService {
                 .findByUserIdAndContextIdAndType(receiverId, discussionId, "DISCUSSION")
                 .orElseGet(() -> {
                     NotificationGroup g = new NotificationGroup();
-//                    g.setNotificationGroupId(UUID.randomUUID().toString());
                     g.setUserId(receiverId);
-                    g.setType("DISCUSSION");
+                    g.setType(type);
                     g.setContextId(discussionId);
-                    g.setTitle("Discussion");
+                    g.setTitle(title);
 
                     return groupRepository.save(g);
                 });
 
         NotificationEvent event = new NotificationEvent();
-//        event.setNotificationEventId(UUID.randomUUID().toString());
         event.setGroup(group);
         event.setInitiatorId(initiatorId);
-        event.setType("REPLY");
+        event.setType(type);
         event.setMessage(message);
         event.setTargetObjectId(targetObjectId);
         event.setStatusRead(false);
@@ -99,16 +99,20 @@ public class NotificationServiceImpl implements NotificationService {
 
         String discussionType;
         String discussionId;
+        String title;
 
         if (comment.getChannel() != null) {
             discussionType = "CHANNEL";
             discussionId = comment.getChannel().getChannelId();
+            title = comment.getChannel().getName();
         } else if (comment.getSubjectDiscussion() != null) {
             discussionType = "SUBJECT";
-            discussionId = comment.getSubjectDiscussion().getSubjectDiscussionId();
+            discussionId = comment.getSubjectDiscussion().getSubject().getSubjectId();
+            title = comment.getSubjectDiscussion().getSubject().getName();
         } else if (comment.getProfessionDiscussion() != null) {
             discussionType = "PROFESSION";
-            discussionId = comment.getProfessionDiscussion().getProfessionDiscussionId();
+            discussionId = comment.getProfessionDiscussion().getProfession().getProfessionId();
+            title = comment.getProfessionDiscussion().getProfession().getName();
         } else {
             throw new IllegalStateException("Comment has no discussion context");
         }
@@ -117,20 +121,24 @@ public class NotificationServiceImpl implements NotificationService {
 
         if (comment.getParentComment() != null) {
             UUID receiverId = comment.getParentComment().getUser().getUserId();
+
             if (!receiverId.equals(comment.getUser().getUserId())) {
                 createDiscussionNotification(
                         receiverId,
                         comment.getUser().getUserId(),
                         contextKey,
-                        comment.getUser().getEmail() + " replied to your comment",
+                        title,
+                        "REPLY",
+                        comment.getUser().getEmail() + " replied to your comment!",
                         comment.getCommentId()
                 );
             }
+
         } else {
             List<Comment> previousComments = commentService.findCommentsByDiscussionContext(
-                    comment.getChannel().getChannelId(),
-                    comment.getSubjectDiscussion().getSubjectDiscussionId(),
-                    comment.getProfessionDiscussion().getProfessionDiscussionId()
+                    comment.getChannel() != null ? comment.getChannel().getChannelId() : null,
+                    comment.getSubjectDiscussion() != null ? comment.getSubjectDiscussion().getSubjectDiscussionId() : null,
+                    comment.getProfessionDiscussion() != null ? comment.getProfessionDiscussion().getProfessionDiscussionId() : null
             );
 
             previousComments.stream()
@@ -141,7 +149,9 @@ public class NotificationServiceImpl implements NotificationService {
                             receiverId,
                             comment.getUser().getUserId(),
                             contextKey,
-                            comment.getUser().getEmail() + " commented in a discussion you participated in",
+                            title,
+                            "NEW_MESSAGES",
+                            "There are new messages in the discussion",
                             comment.getCommentId()
                     ));
         }

@@ -16,6 +16,8 @@ public interface NotificationService {
             UUID receiverId,
             UUID initiatorId,
             String discussionId,
+            String title,
+            String type,
             String message,
             String targetObjectId
     );
