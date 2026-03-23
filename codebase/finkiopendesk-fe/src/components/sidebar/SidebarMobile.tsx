@@ -13,15 +13,14 @@ const SidebarMobile: React.FC<SidebarMobileProps> = ({ isOpen, onClose }) => {
         <div id="sidebar">
             <div className="sb-mobile">
                 <div className="sb-mobile-header">
-                    <h1>Logo</h1>
+                    <img src="src/logo/logo-compact-finkiopendesk-500x250.png" width="100" height="50"/>
                     <button className="sb-mobile-close"
                             aria-label="close_sidebar"
                             onClick={onClose}
                     >
-                        x
+                        <i className='bi bi-x'></i>
                     </button>
                 </div>
-                <h3>Mobile</h3>
                 <ul>
                     <li>1</li>
                     <li>2</li>

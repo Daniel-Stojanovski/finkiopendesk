@@ -6,11 +6,9 @@ interface QuickScrollButtonProps{
 
 const QuickScrollButton: React.FC<QuickScrollButtonProps> = ({ targetSection }) => {
     return (
-        <div id="utility-button">
-            <a href={`#${targetSection}`}>
-                Go to {targetSection}
-            </a>
-        </div>
+        <a id="utility-button" href={`#${targetSection}`}>
+            <i className="bi bi-arrows-vertical"></i>Go to {targetSection}
+        </a>
     );
 };
 

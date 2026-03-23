@@ -1,3 +1,4 @@
+import './userInfo.scss';
 import {useAuth} from "../../../../shared/AuthContext";
 import {useNavigate} from "react-router-dom";
 
@@ -15,12 +16,11 @@ const UserInfo = () => {
     };
 
     return (
-        <>
-            <hr/>
+        <div id="userinfo-box">
             {user
-            ? <><p>{user?.email}</p> <button onClick={handleLogout}>Log out</button></>
-            : <><p>Guest</p> <button onClick={handleLogin}>Login</button></>}
-        </>
+                ? <><i className="bi bi-person-fill"></i><p>{user?.email.split("@")[0]}</p> <button onClick={handleLogout}><i className="bi bi-box-arrow-right"></i></button></>
+                : <><i className="bi bi-person-fill-exclamation"></i><p>Guest</p> <button onClick={handleLogin}><i className="bi bi-box-arrow-in-right"></i></button></>}
+        </div>
 
     );
 }

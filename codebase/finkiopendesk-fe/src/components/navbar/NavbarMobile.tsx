@@ -16,8 +16,7 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar, onToggleNoti
             <div className="nb-mobile">
                 <div className="nb-mobile-bar">
                     <button className='nb-sidebar-button' onClick={onOpenSidebar}>
-                        <img src="/vite.svg" alt="finkiopendesk_logo" width="24" height="24"/>
-                        <i className="bi bi-three-dots-vertical"></i>
+                        <i className="bi bi-list"></i>
                     </button>
                     <SearchBar searchQuery={searchQuery}
                                setSearchQuery={setSearchQuery}/>

@@ -5,8 +5,9 @@ const SidebarDesktopOpen: React.FC = () => {
     return (
         <div id="sidebar">
             <div className="sb-desktop">
-                <h1>Logo</h1>
-                <h3>Desktop</h3>
+                <div className="sb-desktop-header">
+                    <img src="src/logo/logo-compact-finkiopendesk-500x500.png" width="100" height="100"/>
+                </div>
                 <ul>
                     <li>1</li>
                     <li>2</li>

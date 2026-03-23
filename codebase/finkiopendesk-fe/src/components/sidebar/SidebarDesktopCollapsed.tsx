@@ -5,8 +5,7 @@ const SidebarDesktopCollapsed: React.FC = () => {
     return (
         <div id="sidebar">
             <div className="sb-desktop-collapsed">
-                <h1>Logo</h1>
-                <hr></hr>
+                <img src="src/logo/logo-compact-finkiopendesk-500x500.png" width="100" height="100"/>
                 <ul>
                     <li>1</li>
                     <li>2</li>
