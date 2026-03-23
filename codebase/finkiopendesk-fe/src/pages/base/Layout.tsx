@@ -27,6 +27,7 @@ const Layout: React.FC = () => {
                 <NavBar
                     onOpenMobileSidebar={() => setIsMobileOpen(true)}
                     onToggleNotifications={toggleNotifications}
+                    isNotificationsOpen={showNotifications}
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
                 />

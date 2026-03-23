@@ -17,7 +17,7 @@ const SearchbarMobile: React.FC<SearchBarProps> = ({ searchQuery, setSearchQuery
                     className="search-mobile-button"
                     onClick={() => setIsOpen(true)}
                 >
-                    Search
+                    <i className="bi bi-search"></i>
                 </button>
             ) : (
                 <div className="search-mobile">
@@ -32,7 +32,7 @@ const SearchbarMobile: React.FC<SearchBarProps> = ({ searchQuery, setSearchQuery
                         className="search-mobile-search-close"
                         onClick={() => setIsOpen(false)}
                     >
-                        x
+                        <i className="bi bi-x"></i>
                     </span>
                 </div>
             )}

@@ -1,35 +1,39 @@
 import './navbar.scss';
 import SearchBar from "../search/SearchBar";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 interface NavbarMobileProps {
     onOpenSidebar?: () => void;
     onToggleNotifications: () => void;
+    isNotificationsOpen: boolean;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
 }
 
-const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar, onToggleNotifications, searchQuery, setSearchQuery }) => {
+const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar, onToggleNotifications, isNotificationsOpen, searchQuery, setSearchQuery }) => {
     return (
         <div id="navbar">
             <div className="nb-mobile">
                 <div className="nb-mobile-bar">
-                    <button onClick={onOpenSidebar}>
-                        <img src="/vite.svg" alt="finkiopendesk_logo" width="36" height="36"/>
+                    <button className='nb-sidebar-button' onClick={onOpenSidebar}>
+                        <img src="/vite.svg" alt="finkiopendesk_logo" width="24" height="24"/>
+                        <i className="bi bi-three-dots-vertical"></i>
                     </button>
                     <SearchBar searchQuery={searchQuery}
                                setSearchQuery={setSearchQuery}/>
 
-                    <button className="nb-notifications-button" onClick={onToggleNotifications}>🔔</button>
+                    <button className={`nb-notifications-button ${isNotificationsOpen ? 'active': ''}`} onClick={onToggleNotifications}>
+                        <i className="bi bi-bell"></i>
+                    </button>
                 </div>
 
                 <div className="nb-mobile-buttons">
-                    <Link to={'/discussions'} className="nb-link">
-                        <button className="nb-link-button">Forum</button>
-                    </Link>
-                    <Link to={'/careers'} className="nb-link">
-                        <button className="nb-link-button">Guide</button>
-                    </Link>
+                    <NavLink to="/discussions" className={({ isActive }) => `nb-link-button ${isActive ? 'active' : ''}`}>
+                        Forum
+                    </NavLink>
+                    <NavLink to="/careers" className={({ isActive }) => `nb-link-button ${isActive ? 'active' : ''}`}>
+                        Guide
+                    </NavLink>
                 </div>
             </div>
         </div>

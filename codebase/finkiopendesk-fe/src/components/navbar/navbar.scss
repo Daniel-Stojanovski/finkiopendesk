@@ -7,7 +7,8 @@
   padding-right: var(--size-3);
 
   @include media(xs) {
-    height: 96px;
+    height: calc(48px + var(--size-5));
+    padding-right: 0;
   }
 
   .nb-desktop {
@@ -33,8 +34,15 @@
       }
 
       .nb-link-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
         height: 100%;
         padding: 0 var(--size-4);
+        //color: var(--color-base-3);
+        text-decoration: none;
+
       }
     }
 
@@ -50,28 +58,96 @@
 
     &-buttons {
       display: flex;
-      height: var(--size-6);
       width: 100%;
-      padding-top: var(--size-1);
 
-      .nb-link {
-        display: flex;
+      .nb-link-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        height: var(--size-6);
         flex-grow: 1;
-
-        &-button {
-          height: 100%;
-          flex-grow: 1;
-        }
+        padding: 0 var(--size-4);
+        //color: var(--color-base-4);
+        text-decoration: none;
       }
     }
   }
 
-  .nb-notifications-button{
-    height: var(--size-6);
+  .nb-sidebar-button {
+    display: inline-flex;
+    width: var(--size-6);
     aspect-ratio: 1;
-    margin: auto;
+    align-items: center;
+    margin-right: var(--size-2);
+    font-size: 12px;
+
+    background: none;
+    border: none;
   }
 
-  //debug style
-  border: 1px solid purple;
+  .nb-notifications-button {
+    height: 100%;
+    aspect-ratio: 1;
+  }
+
+  border: none;
+  border-bottom: var(--color-base-2) 1px solid;
+
+  .nb-link-button {
+    color: var(--color-base-3);
+    border: none;
+    background: none;
+  }
+  .nb-link-button:hover{
+    border-bottom: var(--color-main-1) 1px solid;
+  }
+  .nb-link-button:active {
+    outline: none;
+    border-bottom: var(--color-main-1) 3px solid;
+    height: calc(100% - 2px);
+
+    @include media(xs) {
+      height: 38px;
+    }
+  }
+  .nb-link-button.active {
+    outline: none;
+    border-bottom: var(--color-main-1) 3px solid;
+    color: var(--color-main-1);
+    background: var(--color-main-0);
+    font-weight: bold;
+    height: calc(100% - 2px);
+
+    @include media(xs) {
+      height: 38px;
+    }
+  }
+
+  .nb-notifications-button {
+    border: none;
+    background: none;
+    font-size: 20px;
+    color: var(--color-base-3);
+
+    @include media(xs) {
+      height: var(--size-6);
+      aspect-ratio: 1;
+      margin: auto var(--size-1);
+    }
+  }
+  .nb-notifications-button:hover{
+    border-bottom: var(--color-main-1) 1px solid;
+  }
+  .nb-notifications-button:active {
+    outline: none;
+    border-bottom: var(--color-main-1) 3px solid;
+  }
+  .nb-notifications-button.active {
+    outline: none;
+    border-bottom: var(--color-main-1) 3px solid;
+    font-weight: bold;
+    color: var(--color-main-1);
+    background: var(--color-main-0);
+  }
 }

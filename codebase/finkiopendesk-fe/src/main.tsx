@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx'
 import {AuthProvider} from "./shared/AuthContext";
 import './shared/global.scss'
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 // dark theme toggle
 // document.documentElement.setAttribute("data-theme", "dark");

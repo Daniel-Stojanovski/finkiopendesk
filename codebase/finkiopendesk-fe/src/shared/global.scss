@@ -9,12 +9,12 @@ $color-base-4: #232627;
 $color-main-0: #d8e8f2;
 $color-main-1: #2a93d1;
 //scss gradients
-$gradient-30-70-v: linear-gradient(0deg, rgba($color-main-1, 0.4), var(--color-transparent) 30%);
-$gradient-50-50-v: linear-gradient(0deg, rgba($color-main-1, 0.4), var(--color-transparent) 50%);
-$gradient-70-30-v: linear-gradient(0deg, rgba($color-main-1, 0.4), var(--color-transparent) 70%);
-$gradient-30-70-h: linear-gradient(90deg, rgba($color-main-1, 0.4), var(--color-transparent) 30%);
-$gradient-50-50-h: linear-gradient(90deg, rgba($color-main-1, 0.4), var(--color-transparent) 50%);
-$gradient-70-30-h: linear-gradient(90deg, rgba($color-main-1, 0.4), var(--color-transparent) 70%);
+$gradient-30-70-v: linear-gradient(0deg, $color-main-0, var(--color-transparent) 30%);
+$gradient-50-50-v: linear-gradient(0deg, $color-main-0, var(--color-transparent) 50%);
+$gradient-70-30-v: linear-gradient(0deg, $color-main-0, var(--color-transparent) 70%);
+$gradient-30-70-h: linear-gradient(90deg, $color-main-0, var(--color-transparent) 30%);
+$gradient-50-50-h: linear-gradient(90deg, $color-main-0, var(--color-transparent) 50%);
+$gradient-70-30-h: linear-gradient(90deg, $color-main-0, var(--color-transparent) 70%);
 
 :root {
   //colors
@@ -63,6 +63,7 @@ $gradient-70-30-h: linear-gradient(90deg, rgba($color-main-1, 0.4), var(--color-
 
 html,
 body {
+  font-family: "Roboto Thin", sans-serif;
   background-color: var(--color-base-0);
   color: var(--color-base-4);
   transition:
@@ -70,6 +71,10 @@ body {
           color var(--transition-speed) ease;
   height: 100%;
   margin: 0;
+
+  input{
+    font-family: "Roboto Thin", sans-serif;
+  }
 }
 
 

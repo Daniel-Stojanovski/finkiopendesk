@@ -1,14 +1,15 @@
 import './navbar.scss'
 import SearchBar from "../search/SearchBar";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 interface NavbarDesktopProps {
     onToggleNotifications: () => void;
+    isNotificationsOpen: boolean;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
 }
 
-const NavbarDesktop: React.FC<NavbarDesktopProps> = ({onToggleNotifications, searchQuery, setSearchQuery}) => {
+const NavbarDesktop: React.FC<NavbarDesktopProps> = ({onToggleNotifications, isNotificationsOpen, searchQuery, setSearchQuery}) => {
     return (
         <>
             <div id="navbar">
@@ -17,15 +18,17 @@ const NavbarDesktop: React.FC<NavbarDesktopProps> = ({onToggleNotifications, sea
                                setSearchQuery={setSearchQuery}/>
 
                     <div className="nb-desktop-buttons">
-                        <Link to={'/discussions'}>
-                            <button className="nb-link-button">Forum</button>
-                        </Link>
-                        <Link to={'/careers'}>
-                            <button className="nb-link-button">Guide</button>
-                        </Link>
+                        <NavLink to="/discussions" className={({ isActive }) => `nb-link-button ${isActive ? 'active' : ''}`}>
+                            Forum
+                        </NavLink>
+                        <NavLink to="/careers" className={({ isActive }) => `nb-link-button ${isActive ? 'active' : ''}`}>
+                            Guide
+                        </NavLink>
                     </div>
 
-                    <button className="nb-notifications-button" onClick={onToggleNotifications}>🔔</button>
+                    <button className={`nb-notifications-button ${isNotificationsOpen ? 'active': ''}`} onClick={onToggleNotifications}>
+                        <i className="bi bi-bell"></i>
+                    </button>
                 </div>
             </div>
         </>

@@ -7,6 +7,12 @@
   background-color: var(--color-base-0);
   z-index: 9999;
   border: 1px solid red;
+
+  @include media(xs) {
+    width: 100%;
+    top: var(--size-6);
+    right: 0;
+  }
 }
 
 .notification-group {
