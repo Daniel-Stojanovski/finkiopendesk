@@ -8,9 +8,10 @@ interface NavbarMobileProps {
     isNotificationsOpen: boolean;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
+    unreadNotifications: boolean;
 }
 
-const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar, onToggleNotifications, isNotificationsOpen, searchQuery, setSearchQuery }) => {
+const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar, onToggleNotifications, isNotificationsOpen, searchQuery, setSearchQuery, unreadNotifications }) => {
     return (
         <div id="navbar">
             <div className="nb-mobile">
@@ -21,7 +22,7 @@ const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar, onToggleNoti
                     <SearchBar searchQuery={searchQuery}
                                setSearchQuery={setSearchQuery}/>
 
-                    <button className={`nb-notifications-button ${isNotificationsOpen ? 'active': ''}`} onClick={onToggleNotifications}>
+                    <button className={`nb-notifications-button ${unreadNotifications ? 'notification-identifier' : ''} ${isNotificationsOpen ? 'active': ''}`} onClick={onToggleNotifications}>
                         <i className="bi bi-bell"></i>
                     </button>
                 </div>

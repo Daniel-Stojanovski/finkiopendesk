@@ -20,12 +20,11 @@ const NotificationsGroupItem: React.FC<NotificationsGroupItemProps> = ({ data })
             <div className="notification-group-header">
                 <div className="ngh-box">
                     <p className="ngh-title">{data.title}</p>
-                    {data.unreadCount > 0 &&
-                        <p className="ngh-message">You have <strong>{data.unreadCount}</strong> {data.unreadCount == 1 ? 'notification' : 'notifications'}.</p>
+                    {(!showNotificationEvents && data.unreadCount > 0) &&
+                        <p className="ngh-message">• <strong>{data.unreadCount}</strong> {data.unreadCount == 1 ? 'notification' : 'notifications'}</p>
                     }
                 </div>
-                {data.unreadCount > 0 && <span className="blue-dot"/>}
-                <button onClick={toggleNotificationEvents}>v</button>
+                <i className={`bi bi-eye ${data.unreadCount > 0 ? 'notification-identifier' : ''}`} onClick={toggleNotificationEvents}></i>
             </div>
 
             <div className="notification-group-events">

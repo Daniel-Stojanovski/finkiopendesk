@@ -10,16 +10,17 @@ interface NavBarProps {
     isNotificationsOpen: boolean;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
+    unreadNotifications: boolean;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ onOpenMobileSidebar, onToggleNotifications, isNotificationsOpen, searchQuery, setSearchQuery }) => {
+const NavBar: React.FC<NavBarProps> = ({ onOpenMobileSidebar, onToggleNotifications, isNotificationsOpen, searchQuery, setSearchQuery, unreadNotifications }) => {
     const bp = useBreakpoint();
 
     if (bp === "xs") {
-        return <NavbarMobile onOpenSidebar={onOpenMobileSidebar} onToggleNotifications={onToggleNotifications} isNotificationsOpen={isNotificationsOpen} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>;
+        return <NavbarMobile onOpenSidebar={onOpenMobileSidebar} onToggleNotifications={onToggleNotifications} isNotificationsOpen={isNotificationsOpen} searchQuery={searchQuery} setSearchQuery={setSearchQuery} unreadNotifications={unreadNotifications}/>;
     }
 
-    return <NavbarDesktop onToggleNotifications={onToggleNotifications} isNotificationsOpen={isNotificationsOpen} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>;
+    return <NavbarDesktop onToggleNotifications={onToggleNotifications} isNotificationsOpen={isNotificationsOpen} searchQuery={searchQuery} setSearchQuery={setSearchQuery} unreadNotifications={unreadNotifications}/>;
 };
 
 export default NavBar;

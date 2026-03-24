@@ -5,13 +5,24 @@
   width: max(300px, 30%);
   right: var(--size-3);
   background-color: var(--color-base-0);
-  z-index: 9999;
-  border: 1px solid red;
+  border: 1px solid var(--color-base-3);
+  border-radius: var(--size-2);
+  border-top-right-radius: 0;
+  z-index: 999;
 
   @include media(xs) {
-    width: 100%;
+    width: 90%;
     top: var(--size-6);
-    right: 0;
+    right: var(--size-1);
+  }
+
+  &.visible {
+    display: block;
+  }
+
+
+  &.invisible {
+    display: none;
   }
 }
 
@@ -19,57 +30,71 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: 1px solid purple;
 
   &-header {
     display: inline-flex;
     flex-grow: 1;
-    border: 1px solid blue;
+    border-bottom: var(--color-base-1) 1px solid;
 
     .ngh-box {
       display: flex;
-      flex-direction: column;
+      align-items: center;
       flex-grow: 1;
 
       .ngh-title {
         display: inline-flex;
         flex-grow: 1;
-        margin: var(--size-3) 0 var(--size-1) var(--size-1);
+        margin: var(--size-2) var(--size-1);
       }
 
       .ngh-message {
-        font-size: 14px;
-        margin: var(--size-2) 0 var(--size-2) var(--size-1);
+        font-size: 12px;
+        color: var(--color-base-3);
       }
     }
 
-    button {
-      height: var(--size-4);
-      aspect-ratio: 1;
+    i {
+      padding: 0 var(--size-2);
       margin: auto;
+      position: relative;
+      color: var(--color-base-3);
+
+      &:hover {
+        color: var(--color-main-1);
+      }
+
+      &.notification-identifier::after {
+        content: "●";
+        position: absolute;
+        top: -8px;
+        right: 4px;
+        color: var(--color-main-1);
+      }
     }
   }
 
   &-events {
-    border: 1px solid red;
+    &:last-child{
+      border-bottom: var(--color-base-3) 1px solid;
+    }
   }
 }
 
 .notification-event {
-  margin-left: var(--size-2);
-  border: 1px solid yellow;
+  padding-left: var(--size-2);
+  color: var(--color-base-3);
+
+  p {
+    margin: 0;
+    padding: var(--size-1) 0;
+  }
 
   &.unread{
-    //debug style
-    background-color: #dae2f6;
-  }
-}
+    background: $gradient-70-30-h;
+    color: var(--color-main-1);
 
-.blue-dot {
-  width: var(--size-2);
-  height: var(--size-2);
-  background-color: var(--color-main-1);
-  border-radius: 50%;
-  display: inline-block;
-  margin:auto var(--size-1);
+    &:hover{
+      background: var(--color-main-0);
+    }
+  }
 }

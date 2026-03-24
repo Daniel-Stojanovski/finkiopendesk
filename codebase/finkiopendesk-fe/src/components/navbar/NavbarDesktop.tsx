@@ -7,9 +7,10 @@ interface NavbarDesktopProps {
     isNotificationsOpen: boolean;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
+    unreadNotifications: boolean;
 }
 
-const NavbarDesktop: React.FC<NavbarDesktopProps> = ({onToggleNotifications, isNotificationsOpen, searchQuery, setSearchQuery}) => {
+const NavbarDesktop: React.FC<NavbarDesktopProps> = ({onToggleNotifications, isNotificationsOpen, searchQuery, setSearchQuery, unreadNotifications}) => {
     return (
         <>
             <div id="navbar">
@@ -26,7 +27,7 @@ const NavbarDesktop: React.FC<NavbarDesktopProps> = ({onToggleNotifications, isN
                         </NavLink>
                     </div>
 
-                    <button className={`nb-notifications-button ${isNotificationsOpen ? 'active': ''}`} onClick={onToggleNotifications}>
+                    <button className={`nb-notifications-button ${unreadNotifications ? 'notification-identifier' : ''} ${isNotificationsOpen ? 'active': ''}`} onClick={onToggleNotifications}>
                         <i className="bi bi-bell"></i>
                     </button>
                 </div>
