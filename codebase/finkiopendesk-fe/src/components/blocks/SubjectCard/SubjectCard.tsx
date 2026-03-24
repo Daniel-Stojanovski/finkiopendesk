@@ -10,9 +10,10 @@ interface SubjectCardProps {
     subject: SubjectDto;
     professionId?: string;
     voteCount?: number;
+    isRecommended?: boolean;
 }
 
-const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, voteCount = 0 }) => {
+const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, voteCount = 0, isRecommended }) => {
 
     const handleVote = async (value: number) => {
         try {
@@ -29,17 +30,18 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, 
     return (
         <div className="subject">
             <div className="subject-content">
+                {(type == CardType.VOTE && isRecommended) && <i className="bi bi-bookmark-fill recommended"></i>}
                 <h3>{subject.name}</h3>
                 {subject.description && <p>{subject.description}</p>}
             </div>
 
             {type == CardType.VOTE &&
                 <div className="subject-state">
-                    <button onClick={() => handleVote(1)}>^</button>
+                    <i className="bi bi-caret-up" onClick={() => handleVote(1)}></i>
                     <div className="subject-state-data">
                         {voteCount}
                     </div>
-                    <button onClick={() => handleVote(-1)}>v</button>
+                    <i className="bi bi-caret-down" onClick={() => handleVote(-1)}></i>
                 </div>
             }
         </div>

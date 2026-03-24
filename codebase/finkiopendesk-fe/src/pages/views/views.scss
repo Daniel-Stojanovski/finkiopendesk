@@ -2,39 +2,36 @@
 
 #professions-grid {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 0 var(--size-2);
+  align-items: stretch;
 
-  @include media(sm) {
-    grid-template-columns: auto auto;
-  }
-
-  @include media(xs) {
-    grid-template-columns: auto;
+  a {
+    text-decoration: none;
   }
 }
 
 #subjects-grid {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 0 var(--size-2);
-
-  @include media(sm) {
-    grid-template-columns: auto auto;
-  }
-
-  @include media(xs) {
-    grid-template-columns: auto;
-  }
+  align-items: stretch;
 }
 
 #discussions-grid {
 
   section {
     scroll-margin-top: var(--size-4);
+    padding-bottom: var(--size-2);
+    border-bottom: var(--color-base-2) 1px solid;
   }
 
   .discussions-sub-grid {
+    .empty-message {
+      text-align: center;
+      font-size: 14px;
+      color: var(--color-base-3);
+    }
   }
 }
 

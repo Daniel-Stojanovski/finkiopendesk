@@ -1,7 +1,21 @@
 @use '../../../shared/global' as *;
 
 .profession-card {
-  border: 1px solid black;
+  height: 80%;
+
+  border: 1px solid var(--color-base-1);
+  border-radius: var(--size-2);
   margin-top: var(--size-2);
   padding: var(--size-2);
+
+  text-decoration: none;
+  color: var(--color-base-4);
+
+  &:hover{
+    background: $gradient-70-30-v;
+
+    h3 {
+      color: var(--color-main-1);
+    }
+  }
 }

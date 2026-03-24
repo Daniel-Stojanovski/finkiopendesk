@@ -24,7 +24,7 @@ const DiscussionCard: React.FC<DiscussionObjectDto> = (props) => {
             <h3>{props.discussion.name}</h3>
             {props.discussion.description && <p>{props.discussion.description}</p>}
 
-            <button onClick={goToDiscussion}>Enter Discussion</button>
+            <button onClick={goToDiscussion}>Enter Discussion <i className="bi bi-arrow-right"></i></button>
         </div>
     );
 };

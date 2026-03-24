@@ -1,7 +1,41 @@
 @use '../../../shared/global' as *;
 
 .discussion-card {
-  border: 1px solid black;
+  height: 80%;
+
+  border: 1px solid var(--color-base-1);
+  border-radius: var(--size-2);
   margin-top: var(--size-2);
   padding: var(--size-2);
+
+  text-decoration: none;
+  color: var(--color-base-4);
+
+  p {
+    color: var(--color-base-3);
+  }
+
+  button {
+    color: var(--color-base-3);
+    padding: var(--size-2);
+    border: var(--color-base-1) 1px solid;
+    border-radius: var(--size-3);
+    text-decoration: none;
+  }
+
+  &:hover{
+    h3 {
+      color: var(--color-main-1);
+    }
+
+    button {
+      background: var(--color-base-1);
+
+      &:hover {
+        background: var(--color-main-0);
+        border: var(--color-main-1) 1px solid;
+        color: var(--color-main-1);
+      }
+    }
+  }
 }

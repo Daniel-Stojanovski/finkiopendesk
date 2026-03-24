@@ -1,5 +1,6 @@
 package com.academic.finkiopendesk.web;
 
+import com.academic.finkiopendesk.model.Profession;
 import com.academic.finkiopendesk.model.ProfessionDiscussion;
 import com.academic.finkiopendesk.model.dto.ProfessionDiscussionDto;
 import com.academic.finkiopendesk.model.dto.ProfessionDto;
@@ -29,6 +30,12 @@ public class ProfessionController {
         return professionService.findAll(query).stream()
                 .map(ProfessionDto::fromEntity)
                 .toList();
+    }
+
+    @GetMapping("/{professionId}")
+    public ProfessionDto getById(@PathVariable String professionId) {
+        Profession profession = professionService.findById(professionId);
+        return ProfessionDto.fromEntity(profession);
     }
 
     @GetMapping("/pid/{professionId}")

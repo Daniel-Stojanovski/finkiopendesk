@@ -1,4 +1,4 @@
-import { useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import { useParams } from "react-router-dom";
 import { api, backapi } from "../../../shared/axios";
 import '../views.scss';
@@ -7,10 +7,12 @@ import type { SubjectDto } from "../../../shared/dto/SubjectDto";
 import type { VotesDataDto } from "../../../shared/dto/VoteDataDto";
 import { useOutletContext } from "react-router-dom";
 import {useFilterArray} from "../../../shared/hooks";
+import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
 
 const GuideProfessionSubjectCards = () => {
     const { pid } = useParams();
     const [pidSubjects, setPidSubjects] = useState<SubjectDto[]>([]);
+    const [profession, setProfession] = useState<ProfessionDto>(null);
     const [votes, setVotes] = useState<Map<string, number>>(new Map());
 
     const { searchQuery } = useOutletContext<{ searchQuery: string }>();
@@ -31,22 +33,40 @@ const GuideProfessionSubjectCards = () => {
             })
             .catch(console.error);
 
+        api.get<ProfessionDto>(`/professions/${pid}`)
+            .then(res => setProfession(res.data))
+            .catch(console.error);
+
     }, [pid]);
+
+    const recommendedIds = useMemo(() => {
+        return new Set(
+            profession?.recommendedSubjects?.map(s => s.subjectId) ?? []
+        );
+    }, [profession]);
 
     const array = useFilterArray<SubjectDto>(pidSubjects, searchQuery, subject => [subject.name, subject.discussion?.name]);
 
     return (
-        <div id="subjects-grid">
-            {array.map(subject => (
-                <SubjectCard
-                    type='VOTE'
-                    key={subject.subjectId}
-                    subject={subject}
-                    professionId={pid}
-                    voteCount={votes.get(subject.subjectId) ?? 0}
-                />
-            ))}
-        </div>
+        <>
+            <h3>{profession?.name}</h3>
+            <div id="subjects-grid">
+                {array.map(subject => {
+                    const isRecommended = recommendedIds.has(subject.subjectId);
+
+                    return (
+                        <SubjectCard
+                            type='VOTE'
+                            key={subject.subjectId}
+                            subject={subject}
+                            professionId={pid}
+                            voteCount={votes.get(subject.subjectId) ?? 0}
+                            isRecommended={isRecommended}
+                        />
+                    );
+                })}
+            </div>
+        </>
     );
 };
 

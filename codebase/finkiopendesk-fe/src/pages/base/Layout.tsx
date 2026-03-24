@@ -36,6 +36,7 @@ const Layout: React.FC = () => {
 
                 <div id="content">
                     <Outlet context={{ searchQuery }} />
+                    <br/>
                 </div>
             </div>
         </div>

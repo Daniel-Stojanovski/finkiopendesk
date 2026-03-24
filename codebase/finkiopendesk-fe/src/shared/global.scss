@@ -71,6 +71,7 @@ body {
           color var(--transition-speed) ease;
   height: 100%;
   margin: 0;
+  user-select: none;
 
   input{
     font-family: "Roboto Thin", sans-serif;

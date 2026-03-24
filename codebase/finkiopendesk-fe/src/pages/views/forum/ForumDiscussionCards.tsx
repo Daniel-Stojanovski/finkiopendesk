@@ -15,7 +15,7 @@ const ForumDiscussionCards = () => {
     const { searchQuery } = useOutletContext<{ searchQuery: string }>();
 
     useEffect(() => {
-        if (!searchQuery) {
+        if (!searchQuery?.trim()) {
             api.get<ProfessionDto[]>("/professions").then(res => setProfessionDiscussions(res.data));
             api.get<SubjectDto[]>("/subjects").then(res => setSubjectDiscussions(res.data));
             return;
@@ -48,32 +48,44 @@ const ForumDiscussionCards = () => {
                 <section id="Professions">
                     <h2> Professions </h2>
                     <div className="discussions-sub-grid">
-                        {professionDiscussions
-                            .map(profession => (
+                        {professionDiscussions.length === 0 ? (
+                            <p className="empty-message">
+                                {searchQuery
+                                    ? "No discussions found for your search."
+                                    : "No discussions available."}
+                            </p>
+                        ) : (
+                            professionDiscussions.map(profession => (
                                 <DiscussionCard
                                     key={profession.discussion.professionDiscussionId}
                                     type={"profession"}
                                     discussion={profession.discussion}
                                     object={profession}
                                 />
-                            ))}
+                            ))
+                        )}
                     </div>
                 </section>
-
-                <hr />
 
                 <section id="Subjects">
                     <h2> Subjects </h2>
                     <div className="discussions-sub-grid">
-                        {subjectDiscussions
-                            .map(subject => (
+                        {subjectDiscussions.length === 0 ? (
+                            <p className="empty-message">
+                                {searchQuery
+                                    ? "No discussions found for your search."
+                                    : "No discussions available."}
+                            </p>
+                        ) : (
+                            subjectDiscussions.map(subject => (
                                 <DiscussionCard
                                     key={subject.discussion.subjectDiscussionId}
                                     type={"subject"}
                                     discussion={subject.discussion}
                                     object={subject}
                                 />
-                            ))}
+                            ))
+                        )}
                     </div>
                 </section>
             </div>
