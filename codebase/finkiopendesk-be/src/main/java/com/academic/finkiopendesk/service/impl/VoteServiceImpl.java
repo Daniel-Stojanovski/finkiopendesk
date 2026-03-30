@@ -4,6 +4,7 @@ import com.academic.finkiopendesk.model.Vote;
 import com.academic.finkiopendesk.model.dto.VoteDto;
 import com.academic.finkiopendesk.repository.VoteRepository;
 import com.academic.finkiopendesk.service.VoteService;
+import com.academic.finkiopendesk.web.dto.UserVoteProjection;
 import com.academic.finkiopendesk.web.dto.VotesCountProjection;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,12 @@ public class VoteServiceImpl implements VoteService {
 
         Optional<Vote> existing = voteRepository.findExact(userUUID, dto.getSubjectId(), dto.getProfessionId());
 
-        if(existing.isPresent()) {
+        if(dto.getVote() == 0) {
+            existing.ifPresent(voteRepository::delete);
+            return null;
+        }
+
+        if (existing.isPresent()) {
             Vote existingVote = existing.get();
             existingVote.setVote(dto.getVote());
             voteRepository.save(existingVote);
@@ -43,5 +49,15 @@ public class VoteServiceImpl implements VoteService {
 
     public List<VotesCountProjection> getVotes(String professionId) {
         return voteRepository.findByProfessionSubject(professionId);
+    }
+
+    public List<UserVoteProjection> getUserProfessionSubjectVotes(String professionId, String userId) {
+        UUID userUUID = UUID.fromString(userId);
+        return voteRepository.findByProfessionSubjectAndUser(professionId, userUUID);
+    }
+
+    public List<Vote> getUserVotes(String userId) {
+        UUID userUUID = UUID.fromString(userId);
+        return voteRepository.findByUserId(userUUID);
     }
 }

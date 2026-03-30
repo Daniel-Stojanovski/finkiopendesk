@@ -9,6 +9,11 @@
 
   display: flex;
 
+  &.active {
+    border-bottom: 1px solid var(--color-main-1);
+    background: $gradient-30-70-v;
+  }
+
   i.recommended {
     position: absolute;
     top: 0;
@@ -39,6 +44,14 @@
       margin: auto;
       padding: var(--size-2) 0;
       font-size: 20px;
+    }
+
+    .active {
+      color: var(--color-main-1);
+    }
+
+    .bold {
+      font-weight: bold;
     }
   }
 }

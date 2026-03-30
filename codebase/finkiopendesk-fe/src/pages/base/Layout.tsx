@@ -28,7 +28,7 @@ const Layout: React.FC = () => {
         backapi.get<NotificationGroupDto[]>(`/notifications/${user.userId}`)
             .then(res => {
                 const hasUnread = res.data.some(group =>
-                    group.events?.some(e => !e.read)
+                    group.events?.some(e => !e.statusRead)
                 );
                 setHasUnreadNotifications(hasUnread);
             });
