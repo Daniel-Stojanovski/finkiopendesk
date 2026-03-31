@@ -7,12 +7,23 @@ import {useSectionScroll} from "../../../shared/hooks";
 import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
 import type {SubjectDto} from "../../../shared/dto/SubjectDto";
 import {useOutletContext} from "react-router-dom";
+import {useAuth} from "../../../shared/AuthContext";
+import type {UserFavoriteDto} from "../../../shared/dto/UserFavoriteDto";
 
 const ForumDiscussionCards = () => {
+    const { user } = useAuth();
+
     const [subjectDiscussions, setSubjectDiscussions] = useState<SubjectDto[]>([]);
     const [professionDiscussions, setProfessionDiscussions] = useState<ProfessionDto[]>([]);
 
     const { searchQuery } = useOutletContext<{ searchQuery: string }>();
+
+    const [favorites, setFavorites] = useState<UserFavoriteDto[]>([]);
+
+    useEffect(() => {
+        if (!user?.userId) return;
+        backapi.get(`/favorites/${user.userId}`).then(res => setFavorites(res.data));
+    }, [user]);
 
     useEffect(() => {
         if (!searchQuery?.trim()) {
@@ -38,6 +49,18 @@ const ForumDiscussionCards = () => {
 
     }, [searchQuery]);
 
+    const checkTargetFavorite = (targetId: string, targetType: "subject" | "profession"): boolean => {
+        return favorites.some(f => f.targetId === targetId && f.targetType === targetType);
+    };
+
+    const handleToggleFavorite = (targetId: string, targetType: "subject" | "profession") => {
+        setFavorites(prev =>
+            prev.some(f => f.targetId === targetId && f.targetType === targetType)
+                ? prev.filter(f => !(f.targetId === targetId && f.targetType === targetType))
+                : [...prev, { targetId, targetType }]
+        );
+    };
+
     const activeSection = useSectionScroll(["Professions", "Subjects"]);
 
     return (
@@ -51,8 +74,8 @@ const ForumDiscussionCards = () => {
                         {professionDiscussions.length === 0 ? (
                             <p className="empty-message">
                                 {searchQuery
-                                    ? "No discussions found for your search."
-                                    : "No discussions available."}
+                                    ? "No discussions match the search."
+                                    : "No discussions found."}
                             </p>
                         ) : (
                             professionDiscussions.map(profession => (
@@ -61,6 +84,8 @@ const ForumDiscussionCards = () => {
                                     type={"profession"}
                                     discussion={profession.discussion}
                                     object={profession}
+                                    isFavorite={checkTargetFavorite(profession.professionId, "profession")}
+                                    onToggleFavorite={handleToggleFavorite}
                                 />
                             ))
                         )}
@@ -73,8 +98,8 @@ const ForumDiscussionCards = () => {
                         {subjectDiscussions.length === 0 ? (
                             <p className="empty-message">
                                 {searchQuery
-                                    ? "No discussions found for your search."
-                                    : "No discussions available."}
+                                    ? "No discussions match the search."
+                                    : "No discussions found."}
                             </p>
                         ) : (
                             subjectDiscussions.map(subject => (
@@ -83,6 +108,8 @@ const ForumDiscussionCards = () => {
                                     type={"subject"}
                                     discussion={subject.discussion}
                                     object={subject}
+                                    isFavorite={checkTargetFavorite(subject.subjectId, "subject")}
+                                    onToggleFavorite={handleToggleFavorite}
                                 />
                             ))
                         )}

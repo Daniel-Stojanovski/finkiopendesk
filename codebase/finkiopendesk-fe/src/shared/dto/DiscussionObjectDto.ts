@@ -12,3 +12,9 @@ export type DiscussionObjectDto = {
     object: SubjectDto;
     discussion: SubjectDiscussionDto;
     };
+
+export interface DiscussionObjectDto {
+    type: string;
+    object: ProfessionDto | SubjectDto;
+    discussion: ProfessionDiscussionDto | SubjectDiscussionDto;
+}

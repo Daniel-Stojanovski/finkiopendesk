@@ -38,4 +38,23 @@
       }
     }
   }
+  .dc-header {
+    display: inline-flex;
+    align-items: center;
+
+    h3 {
+      padding-left: var(--size-1);
+    }
+
+    .favorite-button {
+      font-size: 24px;
+      padding: 0 var(--size-1);
+
+      &:hover,
+      &.active {
+        color: var(--color-main-1);
+      }
+    }
+  }
+
 }
