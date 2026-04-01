@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import {Breakpoint} from "./const/BreakpointConst";
+import {useNavigate} from "react-router-dom";
 
 export type BreakpointSize = keyof typeof Breakpoint;
 
@@ -86,3 +87,29 @@ export const useFilterArray = <T>(
         );
     }, [query, array, getQueryStrings]);
 };
+
+export const useAcronym = (text: string, splitters: string[] = [" ", "-", "/"]): string => {
+    const regex = new RegExp(`[${splitters.join("")}]`);
+    return text
+        .split(regex)
+        .filter(Boolean)
+        .map(word => word[0])
+        .join("")
+};
+
+export const useListItemNavigate = () => {
+    const navigate = useNavigate();
+
+    return (type: string, id: string) => {
+        if (type === "subject") {
+            navigate(`/discussion/sid/${id}`);
+        }
+        else if (type === "profession"){
+            navigate(`/discussion/pid/${id}`);
+        }
+        else {
+            navigate(`/discussions`);
+        }
+    };
+
+}

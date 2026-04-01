@@ -2,6 +2,7 @@ import {useBreakpoint} from "../../shared/hooks";
 import SidebarDesktopOpen from './SidebarDesktopOpen';
 import SidebarDesktopCollapsed from './SidebarDesktopCollapsed';
 import SidebarMobile from './SidebarMobile';
+import {useUserData} from "../../shared/UserDataContext";
 
 interface SidebarProps {
     isMobileOpen: boolean;
@@ -10,16 +11,17 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile }) => {
     const bp = useBreakpoint();
+    const { favorites } = useUserData();
 
     if (bp === "xs") {
-        return <SidebarMobile isOpen={isMobileOpen} onClose={onCloseMobile} />;
+        return <SidebarMobile userFavorites={favorites} isOpen={isMobileOpen} onClose={onCloseMobile} />;
     }
 
     if (bp === "sm" || bp === "md") {
-        return <SidebarDesktopCollapsed />;
+        return <SidebarDesktopCollapsed userFavorites={favorites} />;
     }
 
-    return <SidebarDesktopOpen />;
+    return <SidebarDesktopOpen userFavorites={favorites}/>;
 };
 
 export default Sidebar;

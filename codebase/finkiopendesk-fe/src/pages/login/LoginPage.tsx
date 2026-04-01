@@ -16,7 +16,7 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (user) {
-            navigate("/", { replace: true });
+            navigate("/careers", { replace: true });
         }
     }, [user, navigate]);
 
@@ -40,7 +40,7 @@ const LoginPage = () => {
 
             localStorage.setItem("token", token);
             await fetchUser();
-            navigate("/");
+            navigate("/careers");
         } catch (err: any) {
             setError(
                 err.response?.data?.message ||

@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "./axios";
 import type {AuthContextDto} from "./dto/AuthContextDto";
 import type {UserDto} from "./dto/UserDto";
+import {UserDataProvider} from "./UserDataContext";
 
 const AuthContext = createContext<AuthContextDto | undefined>(undefined);
 
@@ -27,7 +28,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return (
         <AuthContext.Provider value={{ user, fetchUser, logout }}>
-            {children}
+            <UserDataProvider>
+                {children}
+            </UserDataProvider>
         </AuthContext.Provider>
     );
 };

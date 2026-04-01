@@ -1,60 +1,47 @@
 import './discussionCard.scss';
 import { useNavigate } from "react-router-dom";
 import type {DiscussionObjectDto} from "../../../shared/dto/DiscussionObjectDto";
-import {backapi} from "../../../shared/axios";
+import {useUserData} from "../../../shared/UserDataContext";
+import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
+import type {SubjectDto} from "../../../shared/dto/SubjectDto";
 import {useAuth} from "../../../shared/AuthContext";
 
 interface DiscussionCardProps extends DiscussionObjectDto {
     isFavorite: boolean;
-    onToggleFavorite: (targetId: string, type: string) => void;
 }
 
 const DiscussionCard: React.FC<DiscussionCardProps> = (props) => {
-    const navigate = useNavigate();
     const { user } = useAuth();
+    const navigate = useNavigate();
+    const { toggleFavorite } = useUserData();
+
+    const targetId = (
+        props.type === "profession"
+            ? (props.object as ProfessionDto).professionId
+            : (props.object as SubjectDto).subjectId
+    );
 
     const goToDiscussion = () => {
         switch (props.type) {
             case "profession":
-                navigate(`/discussion/pid/${props.object.professionId}`);
+                navigate(`/discussion/pid/${(props.object as ProfessionDto).professionId}`);
                 break;
             case "subject":
-                navigate(`/discussion/sid/${props.object.subjectId}`);
+                navigate(`/discussion/sid/${(props.object as SubjectDto).subjectId}`);
                 break;
             default:
                 console.warn("Unknown discussion type:", props.type);
         }
     };
 
-    const toggleFavorite = async () => {
-        try {
-            let id = "";
-
-            switch (props.type) {
-                case "profession":
-                    id = props.object.professionId;
-                    break;
-                case "subject":
-                    id = props.object.subjectId;
-                    break;
-            }
-
-            await backapi.post(`/favorites/${user?.userId}/set`, {
-                targetId: id,
-                targetType: props.type
-            });
-
-            props.onToggleFavorite(id, props.type);
-
-        } catch (err) {
-            console.error("Failed to toggle favorite:", err);
-        }
-    };
-
     return (
         <div className="discussion-card">
             <div className="dc-header">
-                <i className={`favorite-button bi ${props.isFavorite ? "bi-star-fill active" : "bi-star"}`} onClick={toggleFavorite}></i>
+                { user &&
+                    <i className={`favorite-button bi ${props.isFavorite ? "bi-star-fill active" : "bi-star"}`}
+                             onClick={() => toggleFavorite(targetId, props.type)}>
+                    </i>
+                }
                 <h3>{props.discussion.name}</h3>
             </div>
             {props.discussion.description && <p>{props.discussion.description}</p>}

@@ -36,4 +36,8 @@ public class UserFavorite {
     @Column(name = "target_type", nullable = false)
     @JsonProperty("targetType")
     private String targetType;
+
+    @Transient
+    @JsonProperty("targetName")
+    private String targetName;
 }

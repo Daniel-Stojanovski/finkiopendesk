@@ -61,19 +61,4 @@
       }
     }
   }
-
-  ul {
-    list-style-type: "★";
-    padding: 0 var(--size-4);
-
-    li {
-      margin-bottom: var(--size-1);
-      padding-left: var(--size-1);
-
-      &:hover {
-        color: var(--color-main-1);
-        margin-left: var(--size-2);
-      }
-    }
-  }
 }

@@ -18,7 +18,7 @@ const RegisterStudentPage = () => {
         }
 
         await auth.post('students/activate', { token, password })
-        navigate("/");
+        navigate("/careers");
     };
 
     if (!token) {

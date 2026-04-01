@@ -1,0 +1,42 @@
+@use '../../../../shared/global' as *;
+
+#user-favorites {
+  margin-left: var(--size-2);
+
+  ul {
+    list-style-type: "★";
+    padding: 0 var(--size-2) 0 var(--size-3);
+
+    li {
+      margin-bottom: var(--size-1);
+      padding-left: var(--size-1);
+
+      display: inline-list-item;
+
+      &:hover {
+        color: var(--color-main-1);
+        margin-left: var(--size-2);
+      }
+
+      .ul-li-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+
+        .type-icon {
+          display: inline-block;
+          text-align: center;
+          width: var(--size-3);
+          aspect-ratio: 1;
+          margin-left: auto;
+          border-radius: var(--size-1);
+          background: var(--color-base-2);
+          color: var(--color-base-0);
+          font-size: 12px;
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+}

@@ -15,7 +15,6 @@ export const routesConfig: RouteDetails[] = [
         path: "/",
         element: <Layout />,
         children: [
-            { path: "", element: <GuideProfessionCards /> },
             { path: "careers", element: <GuideProfessionCards /> },
             { path: "professions", element: <GuideProfessionCards /> },
             { path: "subjects", element: <ForumSubjectCards /> },
