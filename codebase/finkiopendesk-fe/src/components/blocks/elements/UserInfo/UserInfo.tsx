@@ -18,8 +18,17 @@ const UserInfo = () => {
     return (
         <div id="userinfo-box">
             {user
-                ? <><i className="bi bi-person-fill"></i><p>{user?.email.split("@")[0]}</p> <button onClick={handleLogout}><i className="bi bi-box-arrow-right"></i></button></>
-                : <><i className="bi bi-person-fill-exclamation"></i><p>Guest</p> <button onClick={handleLogin}><i className="bi bi-box-arrow-in-right"></i></button></>}
+                ? <>
+                    <i className="bi bi-person-fill"></i>
+                    <p>{user?.email.split("@")[0]}</p>
+                    <i className="bi bi-box-arrow-right" onClick={handleLogout}></i>
+                </>
+                : <>
+                    <i className="bi bi-person-fill-exclamation"></i>
+                    <p>Guest</p>
+                    <i className="bi bi-box-arrow-in-right" onClick={handleLogin}></i>
+                </>
+            }
         </div>
 
     );

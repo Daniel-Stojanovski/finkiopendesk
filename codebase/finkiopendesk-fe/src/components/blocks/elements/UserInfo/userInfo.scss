@@ -3,22 +3,30 @@
 #userinfo-box {
   height: var(--size-6);
   border-top: var(--color-base-2) 1px solid;
-  padding: var(--size-1);
   margin: var(--size-1);
   margin-top: auto;
 
-  button {
-    border: none;
-    background: none;
-  }
-
   display: inline-flex;
 
-  &>*{
+  *{
     margin: auto 0;
 
     &:last-child {
+      display: flex;
       margin-left: auto;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      aspect-ratio: 1;
+
+      &:hover {
+        background: var(--color-main-0);
+        color: var(--color-main-1);
+      }
     }
+  }
+
+  p {
+    margin-left: var(--size-1);
   }
 }

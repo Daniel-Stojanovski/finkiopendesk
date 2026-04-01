@@ -8,6 +8,7 @@
   border: 1px solid var(--color-base-3);
   border-radius: var(--size-2);
   border-top-right-radius: 0;
+  overflow: hidden;
   z-index: 999;
 
   @include media(xs) {
@@ -16,10 +17,16 @@
     right: var(--size-1);
   }
 
+  h3 {
+    margin: var(--size-2);
+    margin-bottom: 0;
+    padding-bottom: var(--size-2);
+    border-bottom: var(--color-base-2) 1px solid;
+  }
+
   &.visible {
     display: block;
   }
-
 
   &.invisible {
     display: none;
@@ -34,7 +41,12 @@
   &-header {
     display: inline-flex;
     flex-grow: 1;
-    border-bottom: var(--color-base-1) 1px solid;
+
+    &:hover {
+      i {
+        color: var(--color-main-1);
+      }
+    }
 
     .ngh-box {
       display: flex;
@@ -48,6 +60,7 @@
       }
 
       .ngh-message {
+        margin: auto;
         font-size: 12px;
         color: var(--color-base-3);
       }
@@ -58,10 +71,6 @@
       margin: auto;
       position: relative;
       color: var(--color-base-3);
-
-      &:hover {
-        color: var(--color-main-1);
-      }
 
       &.notification-identifier::after {
         content: "●";
@@ -74,9 +83,8 @@
   }
 
   &-events {
-    &:last-child{
-      border-bottom: var(--color-base-3) 1px solid;
-    }
+      border-top: var(--color-base-1) 1px solid;
+      border-bottom: var(--color-base-2) 1px solid;
   }
 }
 

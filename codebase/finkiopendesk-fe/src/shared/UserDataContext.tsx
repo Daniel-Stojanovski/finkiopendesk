@@ -15,7 +15,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
         backapi.get(`/favorites/${user.userId}`)
             .then(res => setFavorites(res.data));
-    }, [user]);
+    }, [user, favorites]);
 
     const toggleFavorite = async (targetId: string, targetType: "subject" | "profession") => {
         if (!user?.userId) return;

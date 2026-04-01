@@ -33,6 +33,8 @@ const NotificationsBox:React.FC<NotificationsBoxProps> = ({onStateChange, isVisi
 
     return (
         <div id="notifications-box" className={isVisible ? 'visible' : 'invisible'}>
+            <h3>Notifications</h3>
+
             {userNotifications.length === 0 && (
                 <p>No notifications</p>
             )}

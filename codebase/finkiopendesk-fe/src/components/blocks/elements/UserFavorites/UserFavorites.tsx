@@ -24,9 +24,9 @@ const UserFavorites: React.FC<UserFavoritesProps> = ({ userFavorites, sidebarCol
     return (
         <div id="user-favorites">
             <h3>Favorites</h3>
-            <ul>
-                {userFavorites && userFavorites.length > 0 ? (
-                    userFavorites.map(fav => (
+            {userFavorites && userFavorites.length > 0 ? (
+                <ul>
+                    {userFavorites.map(fav => (
                         <li
                             key={fav.targetId}
                             onClick={() => listItemNavigate(fav.targetType, fav.targetId)}
@@ -38,11 +38,11 @@ const UserFavorites: React.FC<UserFavoritesProps> = ({ userFavorites, sidebarCol
                                 </span>
                             </div>
                         </li>
-                    ))
-                ) : (
-                    <span>Try following discussions</span>
-                )}
-            </ul>
+                    ))}
+                </ul>
+            ) : (
+                <p>Try following discussions</p>
+            )}
         </div>
     );
 };
