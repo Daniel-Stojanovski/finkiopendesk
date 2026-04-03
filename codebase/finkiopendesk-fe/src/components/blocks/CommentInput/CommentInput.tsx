@@ -4,6 +4,7 @@ import {backapi} from '../../../shared/axios'
 import { CommentType, type CommentTypeKey } from "../../../shared/const/CommentTypeConst";
 import type {CommentDto} from "../../../shared/dto/CommentDto";
 import {useKeyBind} from "../../../shared/hooks";
+import {useCommentTypeIcon} from "../../../shared/renderHooks";
 
 interface CommentInputProps {
     subjectId?: string;
@@ -21,7 +22,8 @@ const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, ch
     const [selectedType, setSelectedType] = useState<CommentTypeKey>(CommentType.comment.value);
     const [message, setMessage] = useState("");
 
-    const inputPlaceholder = parentCommentId ? 'Replying...' : CommentType[selectedType].message;
+    const inputPlaceholder = parentCommentId ? (selectedType ? `Replying ${selectedType}...` : 'Replying...') : CommentType[selectedType].message;
+    const buttonPlaceholder = parentCommentId ? 'Reply' : 'Send';
 
     const handleSubmit = async () => {
         if (!message.trim()) return;
@@ -51,13 +53,8 @@ const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, ch
         <div id="comment-input-bar">
             <div className="cib-variants">
                 {variants.map((variant: CommentTypeKey) => (
-                    <button
-                        key={variant}
-                        type="button"
-                        onClick={() => setSelectedType(variant)}
-                    >
-                        {variant[0]}
-                    </button>
+                    <span key={variant} className={selectedType === variant ? "active" : ""}
+                          onClick={() => setSelectedType(variant)}>{useCommentTypeIcon(variant)}</span>
                 ))}
             </div>
             <input className="cib-input"
@@ -66,9 +63,9 @@ const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, ch
                    onChange={(e) => setMessage(e.target.value)}
                    onKeyDown={enterHandler}
             />
-
             <button className="cib-submit" onClick={handleSubmit}>
-                Send
+                {buttonPlaceholder}
+                <i className="bi bi-arrow-right-short"></i>
             </button>
         </div>
     );

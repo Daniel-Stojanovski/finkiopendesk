@@ -10,6 +10,7 @@ import { useOutletContext } from "react-router-dom";
 import {useFilterArray} from "../../../shared/hooks";
 import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
 import {useAuth} from "../../../shared/AuthContext";
+import {useNavigate} from "react-router-dom";
 
 const GuideProfessionSubjectCards = () => {
     const { pid } = useParams();
@@ -20,6 +21,8 @@ const GuideProfessionSubjectCards = () => {
     const [userVotes, setUserVotes] = useState<Map<string, number>>(new Map());
 
     const { searchQuery } = useOutletContext<{ searchQuery: string }>();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!pid) return;
@@ -69,7 +72,10 @@ const GuideProfessionSubjectCards = () => {
 
     return (
         <>
-            <h3>{profession?.name}</h3>
+            <div className="cards-view-header">
+                <i className="bi bi-arrow-left-circle" onClick={() => navigate("/careers")}></i>
+                <h3>{profession?.name}</h3>
+            </div>
             <div id="subjects-grid">
                 {array.map(subject => {
                     const isRecommended = recommendedIds.has(subject.subjectId);

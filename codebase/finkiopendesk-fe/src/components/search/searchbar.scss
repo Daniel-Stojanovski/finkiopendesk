@@ -7,8 +7,10 @@
   .search-desktop {
     height: 100%;
     display: flex;
+    align-items: center;
 
     &-search-input {
+      height: calc(100% - 2px);
       margin-left: var(--size-2);
       flex-grow: 1;
     }
@@ -48,17 +50,16 @@
   .search-desktop-search-input, .search-mobile-search-input {
     background: none;
     border: none;
-  }
 
-  .search-desktop-search-input:hover, .search-mobile-search-input:hover{
-    border-bottom: var(--color-main-1) 1px solid;
-  }
+    &:hover {
+      border-bottom: var(--color-main-1) 1px solid;
+    }
 
-  .search-desktop-search-input:focus-visible, .search-mobile-search-input:focus-visible{
-    outline: none;
-    border-bottom: var(--color-main-1) 3px solid;
-    background: $gradient-70-30-h;
-    color: var(--color-main-1);
+    &:focus-visible {
+      outline: none;
+      border-bottom: var(--color-main-1) 3px solid;
+      background: $gradient-70-30-h;
+      color: var(--color-main-1);
+    }
   }
-
 }

@@ -6,6 +6,7 @@ import type {ProfessionDiscussionDto} from "../../../shared/dto/ProfessionDiscus
 import type {CommentDto} from "../../../shared/dto/CommentDto";
 import CommentInput from "../../../components/blocks/CommentInput/CommentInput";
 import CommentLoader from "../../../components/blocks/CommentLoader/CommentLoader";
+import {useNavigate} from "react-router-dom";
 
 const ProfessionDiscussion = () => {
     const { id } = useParams();
@@ -13,6 +14,8 @@ const ProfessionDiscussion = () => {
     const [comments, setComments] = useState<CommentDto[]>([]);
 
     const [selectedCommentId, setSelectedCommentId] = useState<string | null>(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!id) return;
@@ -26,12 +29,15 @@ const ProfessionDiscussion = () => {
     return (
         <div id="profession-discussion">
             <div className="discussion-view">
-                <>
-                    <h3>{discussion?.name}</h3>
-                    {discussion?.description && (
-                        <p>{discussion.description}</p>
-                    )}
-                </>
+                <div className="discussion-header">
+                    <div className="discussion-header-title">
+                        <h3>{discussion?.name}</h3>
+                        {discussion?.description && (
+                            <p>{discussion.description}</p>
+                        )}
+                    </div>
+                    <i className="bi bi-x-lg" onClick={() => navigate("/discussions")}></i>
+                </div>
                 <div className="discussion-comments-view">
                     <CommentLoader comments={comments}
                                    replyingTo={selectedCommentId}

@@ -1,6 +1,8 @@
 import React from "react";
 import './commentItem.scss';
 import type {CommentDto} from "../../../../shared/dto/CommentDto";
+import type {CommentTypeKey} from "../../../../shared/const/CommentTypeConst";
+import {useCommentTypeIcon} from "../../../../shared/renderHooks";
 
 type CommentItemProps = {
     comment: CommentDto;
@@ -19,20 +21,18 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, replyingTo, setReply
     return (
         <div className={`comment-item ${isReplying ? "active" : ""}`}>
             <div className="ci-header">
-                <p className="ci-user">
-                    {comment.user.email}
-                    <span> • {comment.type.toLowerCase()}</span>
-                    {comment.parentId && <span>| {comment.parentId}</span>}
-                </p>
+                <>
+                    {useCommentTypeIcon(comment.type.toLowerCase() as CommentTypeKey)}
+                    <p className="ci-user">
+                        {comment.user.email.split("@")[0]}
+                        <span>{comment.user.student ? 'student' : 'guest'}</span>
+                    </p>
+                </>
 
-                <span
-                    className={`ci-reply-btn ${isReplying ? "active" : ""}`}
-                    onClick={handleReplyClick}
-                >
-                    {isReplying ? "Replying [x]" : "Reply"}
+                <span className={`ci-reply-btn ${isReplying ? "active" : ""}`} onClick={handleReplyClick}>
+                    {isReplying ? (<>Replying <i className="bi bi-x"></i></>) : 'Reply'}
                 </span>
             </div>
-
             <p>{comment.content}</p>
         </div>
     );

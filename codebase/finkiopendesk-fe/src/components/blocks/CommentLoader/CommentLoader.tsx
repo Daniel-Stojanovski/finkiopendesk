@@ -1,4 +1,3 @@
-import React from "react";
 import type {CommentDto} from "../../../shared/dto/CommentDto";
 import CommentItem from "../elements/CommentItem/CommentItem";
 

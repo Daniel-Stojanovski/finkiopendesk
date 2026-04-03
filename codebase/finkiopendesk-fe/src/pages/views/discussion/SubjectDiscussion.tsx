@@ -8,6 +8,7 @@ import type {ChannelDto} from "../../../shared/dto/ChannelDto";
 import CommentInput from "../../../components/blocks/CommentInput/CommentInput";
 import CommentLoader from "../../../components/blocks/CommentLoader/CommentLoader";
 import ChannelSideBar from "../../../components/blocks/ChannelSidebar/ChannelSideBar";
+import {useNavigate} from "react-router-dom";
 
 const SubjectDiscussion = () => {
     const { id } = useParams();
@@ -16,6 +17,8 @@ const SubjectDiscussion = () => {
     const [channels, setChannels] = useState<ChannelDto[]>([]);
 
     const [selectedCommentId, setSelectedCommentId] = useState<string | null>(null);
+
+    const navigate = useNavigate();
 
     const [isTabletOpen, setIsTabletOpen] = useState(false);
     const openTabletChannelSidebar = () => setIsTabletOpen(true);
@@ -37,12 +40,15 @@ const SubjectDiscussion = () => {
     return (
         <div id="subject-discussion">
             <div className="discussion-view">
-                <>
-                    <h3>{discussion?.name}</h3>
-                    {discussion?.description && (
-                        <p>{discussion.description}</p>
-                    )}
-                </>
+                <div className="discussion-header">
+                    <div className="discussion-header-title">
+                        <h3>{discussion?.name}</h3>
+                        {discussion?.description && (
+                            <p>{discussion.description}</p>
+                        )}
+                    </div>
+                    <i className="bi bi-x-lg" onClick={() => navigate("/discussions")}></i>
+                </div>
                 <div className="discussion-comments-view">
                     <CommentLoader comments={comments}
                                    replyingTo={selectedCommentId}

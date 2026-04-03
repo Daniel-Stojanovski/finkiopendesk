@@ -16,7 +16,7 @@ const UserFavorites: React.FC<UserFavoritesProps> = ({ userFavorites, sidebarCol
         return (
             <div id="user-favorites">
                 <h3>Favorites</h3>
-                <span>Log in to access</span>
+                <p>Log in to access</p>
             </div>
         );
     }

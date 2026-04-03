@@ -24,6 +24,11 @@
     border-bottom: var(--color-base-2) 1px solid;
   }
 
+  p {
+    margin-left: var(--size-2);
+    color: var(--color-base-3);
+  }
+
   &.visible {
     display: block;
   }
