@@ -50,7 +50,7 @@
     flex: 1;
     position: relative;
 
-    @include media(sm) {
+    @include media(xs) {
       height: 90vh;
     }
 
@@ -68,15 +68,22 @@
       }
 
       i {
-        margin-left: auto;
         margin-right: var(--size-4);
-        padding: var(--size-2);
+
+        &:first-of-type {
+          margin-left: auto;
+          padding: var(--size-2);
+        }
+
+        &:last-of-type {
+          padding: var(--size-2);
+        }
 
         &:hover {
           color: var(--color-main-1);
         }
 
-        @include media(sm) {
+        @include media(md) {
           margin-right: 0;
         }
       }
@@ -87,6 +94,7 @@
       margin-right: var(--size-2);
       display: block;
       flex-grow: 1;
+      height: 100vh;
       overflow-y: auto;
 
       @include media(sm) {

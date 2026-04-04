@@ -34,6 +34,7 @@
   }
 
   .sb-mobile {
+    position: absolute;
     display: flex;
     flex-direction: column;
     width: max(300px, 30%);

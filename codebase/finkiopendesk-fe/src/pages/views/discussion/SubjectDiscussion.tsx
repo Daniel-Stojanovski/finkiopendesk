@@ -9,9 +9,14 @@ import CommentInput from "../../../components/blocks/CommentInput/CommentInput";
 import CommentLoader from "../../../components/blocks/CommentLoader/CommentLoader";
 import ChannelSideBar from "../../../components/blocks/ChannelSidebar/ChannelSideBar";
 import {useNavigate} from "react-router-dom";
+import {useBreakpoint} from "../../../shared/hooks";
 
 const SubjectDiscussion = () => {
     const { id } = useParams();
+    const bp = useBreakpoint();
+
+    const isViewSmall = (bp === "xs" || bp === "sm");
+
     const [discussion, setDiscussion] = useState<SubjectDiscussionDto | null>(null);
     const [comments, setComments] = useState<CommentDto[]>([]);
     const [channels, setChannels] = useState<ChannelDto[]>([]);
@@ -48,6 +53,7 @@ const SubjectDiscussion = () => {
                         )}
                     </div>
                     <i className="bi bi-x-lg" onClick={() => navigate("/discussions")}></i>
+                    {isViewSmall && (!isTabletOpen && <i className="bi bi-diagram-3" onClick={openTabletChannelSidebar}></i>)}
                 </div>
                 <div className="discussion-comments-view">
                     <CommentLoader comments={comments}

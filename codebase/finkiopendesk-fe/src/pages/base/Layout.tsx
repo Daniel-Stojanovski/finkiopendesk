@@ -51,7 +51,6 @@ const Layout: React.FC = () => {
                     unreadNotifications={hasUnreadNotifications}
                 />
 
-                {/*{showNotifications && <NotificationsBox />}*/}
                 <NotificationsBox onStateChange={setHasUnreadNotifications} isVisible={showNotifications} />
 
                 <div id="content">
