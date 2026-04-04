@@ -36,5 +36,6 @@ public class Channel {
     private SubjectTag subjectTag;
 
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
+    @OrderBy("createdAt ASC")
     private List<Comment> comments = new ArrayList<>();
 }

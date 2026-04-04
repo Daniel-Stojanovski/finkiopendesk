@@ -40,5 +40,6 @@ public class ProfessionDiscussion {
     private Profession profession;
 
     @OneToMany(mappedBy = "professionDiscussion", cascade = CascadeType.ALL)
+    @OrderBy("createdAt ASC")
     private List<Comment> comments = new ArrayList<>();
 }
