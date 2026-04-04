@@ -15,13 +15,13 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
         backapi.get(`/favorites/${user.userId}`)
             .then(res => setFavorites(res.data));
-    }, [user, favorites]);
+    }, [user?.userId]);
 
     const toggleFavorite = async (targetId: string, targetType: "subject" | "profession") => {
         if (!user?.userId) return;
 
         try {
-            await backapi.post(`/favorites/${user.userId}/set`, {
+            const res = await backapi.post<UserFavoriteDto>(`/favorites/${user.userId}/set`, {
                 targetId,
                 targetType
             });
@@ -29,7 +29,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             await setFavorites(prev =>
                 prev.some(f => f.targetId === targetId && f.targetType === targetType)
                     ? prev.filter(f => !(f.targetId === targetId && f.targetType === targetType))
-                    : [...prev, { targetId, targetType }]
+                    : [...prev, res.data]
             );
 
         } catch (err) {

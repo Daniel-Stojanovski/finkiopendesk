@@ -34,18 +34,18 @@ public class UserFavoriteServiceImpl implements UserFavoriteService {
         List<UserFavorite> userFavorites = userFavoriteRepository.findByUserId(userUUID);
 
         return userFavorites.stream().map(
-            favoriteItem -> {
-                if (DiscussionType.SUBJECT.name().equals(favoriteItem.getTargetType().toUpperCase())) {
-                    Subject subject = subjectService.findById(favoriteItem.getTargetId());
-                    favoriteItem.setTargetName(subject.getName());
-                }
-                if (DiscussionType.PROFESSION.name().equals(favoriteItem.getTargetType().toUpperCase())) {
-                    Profession profession = professionService.findById(favoriteItem.getTargetId());
-                    favoriteItem.setTargetName(profession.getName());
-                }
+                favoriteItem -> {
+                    if (DiscussionType.SUBJECT.name().equals(favoriteItem.getTargetType().toUpperCase())) {
+                        Subject subject = subjectService.findById(favoriteItem.getTargetId());
+                        favoriteItem.setTargetName(subject.getName());
+                    }
+                    if (DiscussionType.PROFESSION.name().equals(favoriteItem.getTargetType().toUpperCase())) {
+                        Profession profession = professionService.findById(favoriteItem.getTargetId());
+                        favoriteItem.setTargetName(profession.getName());
+                    }
 
-                return favoriteItem;
-            }).toList();
+                    return favoriteItem;
+                }).toList();
     }
 
     @Override
@@ -64,6 +64,16 @@ public class UserFavoriteServiceImpl implements UserFavoriteService {
             userFavorite.setTargetId(targetId);
             userFavorite.setTargetType(targetType);
             userFavoriteRepository.save(userFavorite);
+
+            if (DiscussionType.SUBJECT.name().equalsIgnoreCase(targetType)) {
+                Subject subject = subjectService.findById(targetId);
+                userFavorite.setTargetName(subject.getName());
+            }
+            if (DiscussionType.PROFESSION.name().equalsIgnoreCase(targetType)) {
+                Profession profession = professionService.findById(targetId);
+                userFavorite.setTargetName(profession.getName());
+            }
+
             return userFavorite;
         }
     }
