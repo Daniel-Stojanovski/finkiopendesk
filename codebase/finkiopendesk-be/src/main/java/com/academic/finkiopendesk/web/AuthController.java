@@ -1,6 +1,7 @@
 package com.academic.finkiopendesk.web;
 
 import com.academic.finkiopendesk.model.User;
+import com.academic.finkiopendesk.service.EmailService;
 import com.academic.finkiopendesk.service.TokenService;
 import com.academic.finkiopendesk.service.UserService;
 import com.academic.finkiopendesk.web.dto.ActivationRequest;
@@ -19,10 +20,12 @@ public class AuthController {
 
     private final UserService userService;
     private final TokenService tokenService;
+    private final EmailService emailService;
 
-    public AuthController(UserService userService, TokenService tokenService) {
+    public AuthController(UserService userService, TokenService tokenService, EmailService emailService) {
         this.userService = userService;
         this.tokenService = tokenService;
+        this.emailService = emailService;
     }
 
     @PostMapping("/students/create")
@@ -30,6 +33,9 @@ public class AuthController {
 
         User user = userService.createStudent(email);
         String token = tokenService.generateActivationToken(user.getUserId());
+
+//        emailService.sendActivationEmail(user, token);
+        emailService.sendFormalActivationEmail(user, token);
 
         return ResponseEntity.ok(token);
     }

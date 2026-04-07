@@ -30,12 +30,11 @@ const RegisterPage = () => {
         setError(null);
 
         try {
-            const res = await auth.post('students/create', null, {
+            await auth.post('students/create', null, {
                 params: { email: studentForm.email }
             });
-            const token = res.data;
 
-            navigate(`/register/activate?token=${token}`);
+            navigate(`/confirm`);
         } catch (err: any) {
             setError(err.response?.data?.message || "Registration failed.");
         }

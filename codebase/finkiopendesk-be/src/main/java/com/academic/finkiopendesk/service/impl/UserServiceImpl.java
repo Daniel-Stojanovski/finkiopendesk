@@ -82,10 +82,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private void validateStudentEmail(String email, Boolean evaluateAs) {
-        if(evaluateAs && !email.toLowerCase().endsWith("@student.finki.ukim.mk")) {
+        if(evaluateAs && !email.toLowerCase().endsWith("@students.finki.ukim.mk")) {
             throw new IllegalArgumentException("Provided e-mail must be a valid student e-mail address (@student.finki.ukim.mk)");
         }
-        if(!evaluateAs && email.toLowerCase().endsWith("@student.finki.ukim.mk")) {
+        if(!evaluateAs && email.toLowerCase().endsWith("@students.finki.ukim.mk")) {
             throw new IllegalArgumentException("Provided e-mail should not be a student e-mail address (@student.finki.ukim.mk)");
         }
     }

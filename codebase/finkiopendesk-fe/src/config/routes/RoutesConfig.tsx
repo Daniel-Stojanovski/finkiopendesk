@@ -9,6 +9,7 @@ import SubjectDiscussion from "../../pages/views/discussion/SubjectDiscussion";
 import RegisterPage from "../../pages/login/RegisterPage";
 import RegisterStudentPage from "../../pages/login/RegisterStudentPage";
 import LoginPage from "../../pages/login/LoginPage";
+import ConfirmPage from "../../pages/login/ConfirmPage";
 
 export const routesConfig: RouteDetails[] = [
     {
@@ -35,5 +36,9 @@ export const routesConfig: RouteDetails[] = [
     {
         path: "/login",
         element: <LoginPage/>
+    },
+    {
+        path: "/confirm",
+        element: <ConfirmPage/>
     }
 ];
