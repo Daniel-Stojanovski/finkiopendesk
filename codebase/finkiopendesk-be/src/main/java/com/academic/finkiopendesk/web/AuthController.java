@@ -43,7 +43,9 @@ public class AuthController {
 
         userService.activateUser(user, request.password());
 
-        return ResponseEntity.ok("Account activated");
+        String jwt = tokenService.generateLoginToken(user);
+        return ResponseEntity.ok(jwt);
+//        return ResponseEntity.ok("Account activated");
     }
 
     @PostMapping("/users/create")

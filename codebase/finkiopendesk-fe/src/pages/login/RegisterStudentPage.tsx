@@ -21,7 +21,8 @@ const RegisterStudentPage = () => {
         }
 
         try {
-            await auth.post('students/activate', { token, password });
+            const res = await auth.post('students/activate', { token, password });
+            localStorage.setItem("token", res.data);
             navigate("/careers");
         } catch (err: any) {
             setError("Activation failed");
