@@ -139,9 +139,15 @@
     &.notification-identifier::after {
       content: "●";
       position: absolute;
-      top: 2px;
-      right: 10px;
+      line-height: 12px;
+      top: 8px;
+      right: 8px;
       color: var(--color-main-1);
+
+      @include media(xs) {
+        top: 4px;
+        right: 4px;
+      }
     }
   }
   .nb-notifications-button:hover{

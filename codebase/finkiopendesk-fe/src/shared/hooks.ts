@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import {Breakpoint} from "./const/BreakpointConst";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export type BreakpointSize = keyof typeof Breakpoint;
 
@@ -111,4 +111,9 @@ export const useListItemNavigate = () => {
             navigate(`/discussions`);
         }
     };
+}
+
+export const isView = (path: string): boolean => {
+    const location = useLocation();
+    return location.pathname.startsWith(`${path}`);
 }

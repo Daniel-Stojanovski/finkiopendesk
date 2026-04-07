@@ -3,6 +3,7 @@ import SearchBar from "../search/SearchBar";
 import {NavLink} from "react-router-dom";
 
 interface NavbarMobileProps {
+    isVisible: boolean;
     onOpenSidebar?: () => void;
     onToggleNotifications: () => void;
     isNotificationsOpen: boolean;
@@ -11,7 +12,9 @@ interface NavbarMobileProps {
     unreadNotifications: boolean;
 }
 
-const NavbarMobile: React.FC<NavbarMobileProps> = ({ onOpenSidebar, onToggleNotifications, isNotificationsOpen, searchQuery, setSearchQuery, unreadNotifications }) => {
+const NavbarMobile: React.FC<NavbarMobileProps> = ({ isVisible, onOpenSidebar, onToggleNotifications, isNotificationsOpen, searchQuery, setSearchQuery, unreadNotifications }) => {
+    if (!isVisible) return null;
+
     return (
         <div id="navbar">
             <div className="nb-mobile">

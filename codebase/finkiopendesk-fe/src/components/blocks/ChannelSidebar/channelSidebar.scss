@@ -66,7 +66,7 @@
     box-sizing: border-box;
     width: 220px;
     background-color: var(--color-base-0);
-    border-left: red 1px solid;
+    border-left: var(--color-base-3) 1px solid;
     z-index: 1999;
   }
 

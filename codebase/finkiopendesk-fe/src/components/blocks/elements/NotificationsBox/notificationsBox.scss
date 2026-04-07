@@ -3,6 +3,7 @@
 #notifications-box {
   position: absolute;
   width: max(300px, 30%);
+  top: 48px;
   right: var(--size-3);
   background-color: var(--color-base-0);
   border: 1px solid var(--color-base-3);

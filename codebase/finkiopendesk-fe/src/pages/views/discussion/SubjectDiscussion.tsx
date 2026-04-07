@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {api} from "../../../shared/axios";
 import '../views.scss';
-import {useParams} from "react-router-dom";
+import {useOutletContext, useParams} from "react-router-dom";
 import type {SubjectDiscussionDto} from "../../../shared/dto/SubjectDiscussionDto";
 import type {CommentDto} from "../../../shared/dto/CommentDto";
 import type {ChannelDto} from "../../../shared/dto/ChannelDto";
@@ -16,6 +16,7 @@ const SubjectDiscussion = () => {
     const bp = useBreakpoint();
 
     const isViewSmall = (bp === "xs" || bp === "sm");
+    const isViewMobile = (bp === "xs");
 
     const [discussion, setDiscussion] = useState<SubjectDiscussionDto | null>(null);
     const [comments, setComments] = useState<CommentDto[]>([]);
@@ -24,6 +25,7 @@ const SubjectDiscussion = () => {
     const [selectedCommentId, setSelectedCommentId] = useState<string | null>(null);
 
     const navigate = useNavigate();
+    const { openSidebar } = useOutletContext<{ openSidebar: () => void }>();
 
     const [isTabletOpen, setIsTabletOpen] = useState(false);
     const openTabletChannelSidebar = () => setIsTabletOpen(true);
@@ -46,6 +48,11 @@ const SubjectDiscussion = () => {
         <div id="subject-discussion">
             <div className="discussion-view">
                 <div className="discussion-header">
+                    {isViewMobile && (
+                        <button onClick={openSidebar}>
+                            <i className="bi bi-list" ></i>
+                        </button>
+                    )}
                     <div className="discussion-header-title">
                         <h3>{discussion?.name}</h3>
                         {discussion?.description && (

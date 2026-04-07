@@ -8,6 +8,7 @@ import NotificationsBox from "../../components/blocks/elements/NotificationsBox/
 import {useAuth} from "../../shared/AuthContext";
 import {backapi} from "../../shared/axios";
 import type {NotificationGroupDto} from "../../shared/dto/NotificationGroupDto";
+import {isView} from "../../shared/hooks";
 
 const Layout: React.FC = () => {
     const { user } = useAuth();
@@ -17,6 +18,8 @@ const Layout: React.FC = () => {
     const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 
     const [searchQuery, setSearchQuery] = useState("");
+
+    const isDiscussionView = isView('/discussion/');
 
     const toggleNotifications = () => {
         setShowNotifications(prev => !prev);
@@ -44,6 +47,7 @@ const Layout: React.FC = () => {
             <div className="main">
                 <NavBar
                     onOpenMobileSidebar={() => setIsMobileOpen(true)}
+                    isVisible={!isDiscussionView}
                     onToggleNotifications={toggleNotifications}
                     isNotificationsOpen={showNotifications}
                     searchQuery={searchQuery}
@@ -54,7 +58,7 @@ const Layout: React.FC = () => {
                 <NotificationsBox onStateChange={setHasUnreadNotifications} isVisible={showNotifications} />
 
                 <div id="content">
-                    <Outlet context={{ searchQuery }} />
+                    <Outlet context={{ searchQuery, openSidebar: () => setIsMobileOpen(true) }} />
                     <br/>
                 </div>
             </div>

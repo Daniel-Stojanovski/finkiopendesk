@@ -3,6 +3,7 @@ import SearchBar from "../search/SearchBar";
 import {NavLink} from "react-router-dom";
 
 interface NavbarDesktopProps {
+    isVisible: boolean;
     onToggleNotifications: () => void;
     isNotificationsOpen: boolean;
     searchQuery: string;
@@ -10,7 +11,9 @@ interface NavbarDesktopProps {
     unreadNotifications: boolean;
 }
 
-const NavbarDesktop: React.FC<NavbarDesktopProps> = ({onToggleNotifications, isNotificationsOpen, searchQuery, setSearchQuery, unreadNotifications}) => {
+const NavbarDesktop: React.FC<NavbarDesktopProps> = ({ isVisible, onToggleNotifications, isNotificationsOpen, searchQuery, setSearchQuery, unreadNotifications}) => {
+    if (!isVisible) return null;
+
     return (
         <>
             <div id="navbar">
