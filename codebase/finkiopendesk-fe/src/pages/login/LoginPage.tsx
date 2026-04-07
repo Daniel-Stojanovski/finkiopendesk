@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from "react";
+import "./loginFormPages.scss"
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {auth} from "../../shared/axios";
 import {useAuth} from "../../shared/AuthContext";
@@ -44,41 +45,46 @@ const LoginPage = () => {
         } catch (err: any) {
             setError(
                 err.response?.data?.message ||
-                "Registration failed. Please try again."
+                "Login failed. Please try again."
             );
         }
     };
 
     return (
-        <div className="login-container">
-            <h2>Login</h2>
+        <div className="login-page">
+            <div className="card">
+                <img src={"./src/logo/logo-compact-finkiopendesk-500x250.png"} width={250} height={125}/>
+                <h2>Login</h2>
 
-            <form onSubmit={handleLogin}>
-                <input
-                    name="email"
-                    type="email"
-                    placeholder="E-mail"
-                    value={loginForm.email}
-                    onChange={handleChange}
-                    required
-                />
+                <form onSubmit={handleLogin}>
+                    <input
+                        name="email"
+                        type="email"
+                        placeholder="E-mail"
+                        value={loginForm.email}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <input
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    value={loginForm.password}
-                    onChange={handleChange}
-                    required
-                />
+                    <input
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        value={loginForm.password}
+                        onChange={handleChange}
+                        required
+                    />
 
-                {error && <p className="error">{error}</p>}
+                    {error && <p className="error" onClick={() => {setLoginForm({email:"", password:""}); setError("")}}>
+                        {error} <i className="bi bi-arrow-clockwise"></i>
+                    </p>}
+                    <button type="submit">
+                        Login
+                    </button>
 
-                <button type="submit">
-                    Login
-                </button>
-            </form>
-
+                    <span onClick={() => navigate("/register")}>Don't have an account? Register now! <i className="bi bi-arrow-right-short"></i></span>
+                </form>
+            </div>
         </div>
     );
 };

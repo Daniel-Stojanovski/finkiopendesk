@@ -1,3 +1,4 @@
+import "./loginFormPages.scss"
 import React, { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import {auth} from "../../shared/axios";
@@ -17,17 +18,11 @@ const RegisterPage = () => {
     const navigate = useNavigate();
 
     const handleStudentFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setStudentForm({
-            ...studentForm,
-            [e.target.name]: e.target.value
-        });
+        setStudentForm({ ...studentForm, [e.target.name]: e.target.value });
     };
 
     const handleUserFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUserForm({
-            ...userForm,
-            [e.target.name]: e.target.value
-        });
+        setUserForm({ ...userForm, [e.target.name]: e.target.value });
     };
 
     const handleRegisterStudent = async (e: React.FormEvent) => {
@@ -36,18 +31,13 @@ const RegisterPage = () => {
 
         try {
             const res = await auth.post('students/create', null, {
-                params: {
-                    email: studentForm.email
-                }
-            })
+                params: { email: studentForm.email }
+            });
             const token = res.data;
 
             navigate(`/register/activate?token=${token}`);
         } catch (err: any) {
-            setError(
-                err.response?.data?.message ||
-                "Registration failed. Please try again."
-            );
+            setError(err.response?.data?.message || "Registration failed.");
         }
     };
 
@@ -61,79 +51,44 @@ const RegisterPage = () => {
         }
 
         try {
-            await auth.post('users/create', {
-                email: userForm.email,
-                password: userForm.password
-            })
-
-            navigate('/');
+            await auth.post('users/create', userForm);
+            navigate('/careers');
         } catch (err: any) {
-            setError(
-                err.response?.data?.message ||
-                "Registration failed. Please try again."
-            );
+            setError(err.response?.data?.message || "Registration failed.");
         }
     };
 
     return (
-        <div className="register-container">
-            <h2>Create account</h2>
+        <div className="login-page">
+            <div className="card">
+                <img src={"./src/logo/logo-compact-finkiopendesk-500x250.png"} width={250} height={125}/>
+                <h2>Create account</h2>
 
-            <form onSubmit={handleRegisterUser}>
-                <input
-                    name="email"
-                    type="email"
-                    placeholder="E-mail"
-                    value={userForm.email}
-                    onChange={handleUserFormChange}
-                    required
-                />
+                <form onSubmit={handleRegisterStudent}>
+                    <input name="email" type="email" placeholder="Student e-mail" value={studentForm.email} onChange={handleStudentFormChange} required />
 
-                <input
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    value={userForm.password}
-                    onChange={handleUserFormChange}
-                    required
-                />
+                    <button type="submit">
+                        Register as Student
+                    </button>
+                </form>
+                or
+                <form onSubmit={handleRegisterUser}>
+                    <input name="email" type="email" placeholder="E-mail" value={userForm.email} onChange={handleUserFormChange} required />
+                    <input name="password" type="password" placeholder="Password" value={userForm.password} onChange={handleUserFormChange} required />
+                    <input name="confirmPassword" type="password" placeholder="Confirm password" value={userForm.confirmPassword} onChange={handleUserFormChange} required />
 
-                <input
-                    name="confirmPassword"
-                    type="password"
-                    placeholder="Confirm password"
-                    value={userForm.confirmPassword}
-                    onChange={handleUserFormChange}
-                    required
-                />
+                    {error && <p className="error" onClick={() => {
+                        setStudentForm({email:""});
+                        setUserForm({email:"", password: "", confirmPassword: ""});
+                        setError("")}}>
+                        {error} <i className="bi bi-arrow-clockwise"></i>
+                    </p>}
 
-                {error && <p className="error">{error}</p>}
+                    <button type="submit">Register</button>
 
-                <button type="submit">
-                    Register
-                </button>
-            </form>
-
-            <hr/>
-            <p>or</p>
-            <hr/>
-
-            <form onSubmit={handleRegisterStudent}>
-                <input
-                    name="email"
-                    type="email"
-                    placeholder="Student e-mail"
-                    value={studentForm.email}
-                    onChange={handleStudentFormChange}
-                    required
-                />
-
-                {error && <p className="error">{error}</p>}
-
-                <button type="submit">
-                    Register as Student
-                </button>
-            </form>
+                    <span onClick={() => navigate("/login")}>Already registered? Login now! <i className="bi bi-arrow-right-short"></i></span>
+                </form>
+            </div>
         </div>
     );
 };
