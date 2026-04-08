@@ -1,8 +1,10 @@
 package com.academic.finkiopendesk.web;
 
 import com.academic.finkiopendesk.model.Channel;
+import com.academic.finkiopendesk.model.dto.ChannelDto;
 import com.academic.finkiopendesk.service.ChannelService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,5 +33,10 @@ public class ChannelController {
     @GetMapping("inactive")
     public List<Channel> getInactiveChannels() {
         return channelService.findAllInactive();
+    }
+
+    @GetMapping("/cid/{id}")
+    public ChannelDto getDiscussionByChannelId(@PathVariable String id) {
+        return ChannelDto.fromEntity(channelService.findById(id));
     }
 }
