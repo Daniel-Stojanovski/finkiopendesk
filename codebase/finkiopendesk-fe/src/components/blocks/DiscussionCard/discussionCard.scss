@@ -55,6 +55,21 @@
         color: var(--color-main-1);
       }
     }
+
+    .tag-label {
+      font-size: 12px;
+      margin-left: var(--size-2);
+      padding: var(--size-1);
+      background: var(--color-base-1);
+      color: var(--color-base-2);
+      border-radius: var(--size-1);
+
+      &:hover {
+        background: var(--color-main-0);
+        color: var(--color-main-1);
+        padding: var(--size-1) var(--size-2);
+      }
+    }
   }
 
 }

@@ -6,6 +6,9 @@ import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
 import type {SubjectDto} from "../../../shared/dto/SubjectDto";
 import {useAuth} from "../../../shared/AuthContext";
 import {DiscussionType} from "../../../shared/const/DiscussionTypeConst";
+import {useEffect, useState} from "react";
+import type {ChannelDto} from "../../../shared/dto/ChannelDto";
+import {api} from "../../../shared/axios";
 
 interface DiscussionCardProps extends DiscussionObjectDto {
     isFavorite: boolean;
@@ -15,6 +18,13 @@ const DiscussionCard: React.FC<DiscussionCardProps> = (props) => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const { toggleFavorite } = useUserData();
+
+    const [channels, setChannels] = useState<ChannelDto[]>([]);
+
+    useEffect(() => {
+        api.get<ChannelDto[]>(`/subjects/channels/sid/${(props.object as SubjectDto).subjectId}/active`)
+            .then(response => setChannels(response.data));
+    }, []);
 
     const canUserContribute =
         user && (
@@ -49,6 +59,13 @@ const DiscussionCard: React.FC<DiscussionCardProps> = (props) => {
                     </i>
                 }
                 <h3>{props.discussion.name}</h3>
+
+                {props.type == DiscussionType.SUBJECT && (
+                    channels.map(tag => (
+                        <p className="tag-label" onClick={() => navigate(`/discussion/cid/${tag.channelId}`)}><i className="bi bi-tag"></i>{tag.name.split(' | ')[1]}</p>
+                    ))
+                )}
+
             </div>
             {props.discussion.description && <p>{props.discussion.description}</p>}
 
