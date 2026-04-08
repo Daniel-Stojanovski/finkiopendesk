@@ -10,6 +10,9 @@ type CommentLoaderProps = {
 };
 
 const CommentLoader: React.FC<CommentLoaderProps> = ({ comments, replyingTo, setParentCommentId, discussionType }) => {
+    const findParent = (parentId?: string) =>
+        comments.find(c => c.commentId === parentId);
+
     return (
         <>
             {comments && comments.length > 0 ? (
@@ -20,6 +23,7 @@ const CommentLoader: React.FC<CommentLoaderProps> = ({ comments, replyingTo, set
                         replyingTo={replyingTo}
                         setReply={setParentCommentId}
                         discussionType={discussionType}
+                        parentComment={findParent(comment?.parentId?.toString())}
                     />
                 ))
             ) : (

@@ -12,9 +12,10 @@ type CommentItemProps = {
     replyingTo: string | null;
     setReply: (commentId: string | null) => void;
     discussionType: DiscussionTypeKey;
+    parentComment?: CommentDto;
 };
 
-const CommentItem: React.FC<CommentItemProps> = ({ comment, replyingTo, setReply, discussionType }) => {
+const CommentItem: React.FC<CommentItemProps> = ({ comment, replyingTo, setReply, discussionType , parentComment}) => {
     const { user } = useAuth();
 
     const canUserReply =
@@ -37,7 +38,8 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, replyingTo, setReply
                     {useCommentTypeIcon(comment.type.toLowerCase() as CommentTypeKey)}
                     <p className="ci-user">
                         {comment.user.email.split("@")[0]}
-                        <span>{comment.user.student ? 'student' : 'guest'}</span>
+                        {/*<span>{comment.user.student ? 'student' : 'guest'}</span>*/}
+                        {comment.parentId && <sub>Replied to {parentComment?.user?.email.toString().split("@")[0]}'s: {parentComment?.content}</sub>}
                     </p>
                 </>
 
@@ -47,7 +49,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, replyingTo, setReply
                     </span>
                 }
             </div>
-            <p>{comment.content}</p>
+            <p className="ci-content">{comment.content}</p>
         </div>
     );
 };
