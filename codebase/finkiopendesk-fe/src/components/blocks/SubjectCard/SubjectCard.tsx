@@ -4,6 +4,7 @@ import {backapi} from "../../../shared/axios";
 import type {VoteDto} from "../../../shared/dto/VoteDto";
 import type {CardTypeKey} from "../../../shared/const/CardTypeConst";
 import {CardType} from "../../../shared/const/CardTypeConst";
+import {useAuth} from "../../../shared/AuthContext";
 
 interface SubjectCardProps {
     type?: CardTypeKey;
@@ -15,6 +16,10 @@ interface SubjectCardProps {
 }
 
 const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, voteCount = 0, userVote, isRecommended }) => {
+    const { user } = useAuth();
+
+    const canUserVote = user && user.student;
+
     const vote = userVote ?? 0;
 
     const handleVote = async (value: number) => {
@@ -39,11 +44,16 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, 
 
             {type == CardType.VOTE &&
                 <div className="subject-state">
-                    <i className={`bi ${vote === 1 ? "bi-caret-up-fill active" : "bi-caret-up"}`} onClick={() => handleVote(1)}></i>
+                    { canUserVote &&
+                        <i className={`bi ${vote === 1 ? "bi-caret-up-fill active" : "bi-caret-up"}`}
+                            onClick={() => handleVote(1)}></i>}
                     <div className={`subject-state-data ${vote !== 0 ? "active bold" : ""}`}>
                         {voteCount}
                     </div>
-                    <i className={`bi ${vote === -1 ? "bi-caret-down-fill active" : "bi-caret-down"}`} onClick={() => handleVote(-1)}></i>
+                    { !canUserVote && <sub>Votes</sub>}
+                    { canUserVote &&
+                        <i className={`bi ${vote === -1 ? "bi-caret-down-fill active" : "bi-caret-down"}`}
+                            onClick={() => handleVote(-1)}></i>}
                 </div>
             }
         </div>

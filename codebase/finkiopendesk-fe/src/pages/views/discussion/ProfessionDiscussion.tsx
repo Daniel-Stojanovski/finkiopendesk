@@ -8,6 +8,7 @@ import CommentInput from "../../../components/blocks/CommentInput/CommentInput";
 import CommentLoader from "../../../components/blocks/CommentLoader/CommentLoader";
 import {useNavigate} from "react-router-dom";
 import {useBreakpoint} from "../../../shared/hooks";
+import {DiscussionType} from "../../../shared/const/DiscussionTypeConst";
 
 const ProfessionDiscussion = () => {
     const { id } = useParams();
@@ -53,6 +54,7 @@ const ProfessionDiscussion = () => {
                     <CommentLoader comments={comments}
                                    replyingTo={selectedCommentId}
                                    setParentCommentId={setSelectedCommentId}
+                                   discussionType={DiscussionType.PROFESSION}
                     />
                 </div>
                 <CommentInput

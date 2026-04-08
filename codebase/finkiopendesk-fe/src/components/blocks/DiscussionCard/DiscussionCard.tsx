@@ -5,6 +5,7 @@ import {useUserData} from "../../../shared/UserDataContext";
 import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
 import type {SubjectDto} from "../../../shared/dto/SubjectDto";
 import {useAuth} from "../../../shared/AuthContext";
+import {DiscussionType} from "../../../shared/const/DiscussionTypeConst";
 
 interface DiscussionCardProps extends DiscussionObjectDto {
     isFavorite: boolean;
@@ -15,8 +16,13 @@ const DiscussionCard: React.FC<DiscussionCardProps> = (props) => {
     const navigate = useNavigate();
     const { toggleFavorite } = useUserData();
 
+    const canUserContribute =
+        user && (
+            user.student || (!user.student && (props.type == DiscussionType.PROFESSION))
+        );
+
     const targetId = (
-        props.type === "profession"
+        props.type === DiscussionType.PROFESSION
             ? (props.object as ProfessionDto).professionId
             : (props.object as SubjectDto).subjectId
     );
@@ -37,7 +43,7 @@ const DiscussionCard: React.FC<DiscussionCardProps> = (props) => {
     return (
         <div className="discussion-card">
             <div className="dc-header">
-                { user &&
+                { canUserContribute &&
                     <i className={`favorite-button bi ${props.isFavorite ? "bi-star-fill active" : "bi-star"}`}
                              onClick={() => toggleFavorite(targetId, props.type)}>
                     </i>
@@ -46,7 +52,12 @@ const DiscussionCard: React.FC<DiscussionCardProps> = (props) => {
             </div>
             {props.discussion.description && <p>{props.discussion.description}</p>}
 
-            <button onClick={goToDiscussion}>Enter Discussion <i className="bi bi-arrow-right"></i></button>
+            <button onClick={goToDiscussion}>
+                {canUserContribute
+                    ? <>Enter Discussion <i className="bi bi-arrow-right"></i></>
+                    : <>View Discussion <i className="bi bi-eye"></i></>
+                }
+            </button>
         </div>
     );
 };

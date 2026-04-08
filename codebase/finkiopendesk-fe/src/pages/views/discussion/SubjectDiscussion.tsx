@@ -10,6 +10,7 @@ import CommentLoader from "../../../components/blocks/CommentLoader/CommentLoade
 import ChannelSideBar from "../../../components/blocks/ChannelSidebar/ChannelSideBar";
 import {useNavigate} from "react-router-dom";
 import {useBreakpoint} from "../../../shared/hooks";
+import {DiscussionType} from "../../../shared/const/DiscussionTypeConst";
 
 const SubjectDiscussion = () => {
     const { id } = useParams();
@@ -66,6 +67,7 @@ const SubjectDiscussion = () => {
                     <CommentLoader comments={comments}
                                    replyingTo={selectedCommentId}
                                    setParentCommentId={setSelectedCommentId}
+                                   discussionType={DiscussionType.SUBJECT}
                     />
                 </div>
                 <CommentInput

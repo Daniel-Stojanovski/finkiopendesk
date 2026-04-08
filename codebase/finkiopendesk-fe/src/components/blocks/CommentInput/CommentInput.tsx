@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./commentInput.scss";
 import {backapi} from '../../../shared/axios'
 import { CommentType, type CommentTypeKey } from "../../../shared/const/CommentTypeConst";
 import type {CommentDto} from "../../../shared/dto/CommentDto";
 import {useKeyBind} from "../../../shared/hooks";
 import {useCommentTypeIcon} from "../../../shared/renderHooks";
+import {useAuth} from "../../../shared/AuthContext";
 
 interface CommentInputProps {
     subjectId?: string;
@@ -18,6 +19,12 @@ interface CommentInputProps {
 
 const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, channelId, parentCommentId, clearParent}) => {
     const variants = Object.keys(CommentType) as CommentTypeKey[];
+    const {user} = useAuth();
+
+    const canUserComment =
+        user && (
+            user.student || (!user.student && (professionId != undefined))
+        );
 
     const [selectedType, setSelectedType] = useState<CommentTypeKey>(CommentType.comment.value);
     const [message, setMessage] = useState("");
@@ -48,6 +55,12 @@ const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, ch
     };
 
     const enterHandler = useKeyBind("Enter", handleSubmit);
+
+    if(!canUserComment) {
+        return (
+            <p className="cib-limits">Only students can contribute in subject driven discussions!</p>
+        )
+    }
 
     return (
         <div id="comment-input-bar">
