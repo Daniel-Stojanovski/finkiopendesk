@@ -10,6 +10,7 @@ import RegisterPage from "../../pages/login/RegisterPage";
 import RegisterStudentPage from "../../pages/login/RegisterStudentPage";
 import LoginPage from "../../pages/login/LoginPage";
 import ConfirmPage from "../../pages/login/ConfirmPage";
+import ChannelDiscussion from "../../pages/views/discussion/ChannelDiscussion";
 
 export const routesConfig: RouteDetails[] = [
     {
@@ -23,6 +24,7 @@ export const routesConfig: RouteDetails[] = [
             { path: "subjects/pid/:pid", element: <GuideProfessionSubjectCards /> },
             { path: "discussion/pid/:id", element: <ProfessionDiscussion /> },
             { path: "discussion/sid/:id", element: <SubjectDiscussion /> },
+            { path: "discussion/cid/:id", element: <ChannelDiscussion /> },
         ]
     },
     {

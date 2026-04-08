@@ -3,6 +3,7 @@ import {useBreakpoint} from "../../../shared/hooks";
 import ChannelSidebarTablet from "./ChannelSidebarTablet";
 import ChannelSidebarDesktop from "./ChannelSidebarDesktop";
 import type {ChannelDto} from "../../../shared/dto/ChannelDto";
+import {useNavigate} from "react-router-dom";
 
 interface ChannelSidebarProps {
     channels: ChannelDto[];
@@ -12,12 +13,14 @@ interface ChannelSidebarProps {
 }
 
 function loadChannels(channels: ChannelDto[]) {
+    const navigate = useNavigate();
+
     return (
         <ul>
             {
                 channels
-                ? (channels.map(channel => (<li key={channel.channelId}> {channel.name.split(" | ")?.[1]} </li>)))
-                : (<p>- None -</p>)
+                ? (channels.map(channel => (<li key={channel.channelId} onClick={() => navigate(`/discussion/cid/${channel.channelId}`)}> {channel.name.split(" | ")?.[1]} </li>)))
+                : (<p>No channels available</p>)
             }
         </ul>
     );
