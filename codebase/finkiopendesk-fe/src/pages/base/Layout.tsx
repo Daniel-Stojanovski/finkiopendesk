@@ -19,7 +19,16 @@ const Layout: React.FC = () => {
 
     const [searchQuery, setSearchQuery] = useState("");
 
+    const [filters, setFilters] = useState({
+        program: null,
+        format: null,
+        hardness: null,
+        semesterType: null
+    });
+
     const isDiscussionView = isView('/discussion/');
+    const isForumView = isView('/discussions');
+    const isGuideView = isView('/subjects');
 
     const toggleNotifications = () => {
         setShowNotifications(prev => !prev);
@@ -42,6 +51,9 @@ const Layout: React.FC = () => {
             <SideBar
                 isMobileOpen={isMobileOpen}
                 onCloseMobile={() => setIsMobileOpen(false)}
+                isFiltersVisible={isForumView || isGuideView}
+                filters={filters}
+                setFilters={setFilters}
             />
 
             <div className="main">
@@ -58,7 +70,7 @@ const Layout: React.FC = () => {
                 <NotificationsBox onStateChange={setHasUnreadNotifications} isVisible={showNotifications} />
 
                 <div id="content">
-                    <Outlet context={{ searchQuery, openSidebar: () => setIsMobileOpen(true) }} />
+                    <Outlet context={{ searchQuery, filters, setFilters, openSidebar: () => setIsMobileOpen(true) }} />
                     <br/>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {api, backapi} from "../../../shared/axios";
+import {backapi} from "../../../shared/axios";
 import '../views.scss';
 import DiscussionCard from "../../../components/blocks/DiscussionCard/DiscussionCard";
 import QuickScrollButton from "../../../components/utility/QuickScrollButton/QuickScrollButton";
@@ -15,31 +15,47 @@ const ForumDiscussionCards = () => {
     const [subjectDiscussions, setSubjectDiscussions] = useState<SubjectDto[]>([]);
     const [professionDiscussions, setProfessionDiscussions] = useState<ProfessionDto[]>([]);
 
-    const { searchQuery } = useOutletContext<{ searchQuery: string }>();
+    const { searchQuery, filters } = useOutletContext<{ searchQuery: string, filters: any }>();
+
+    const fetchData = async () => {
+        const professionParams: any = { query: searchQuery || undefined };
+        const subjectParams: any = { query: searchQuery || undefined, ...filters };
+
+        Object.entries(filters).forEach(([key, value]) => {
+            if (value) subjectParams[key] = value;
+        });
+
+        try {
+            await Promise.all([
+                backapi.get<ProfessionDto[]>('/professions', { params: professionParams }).then(res => setProfessionDiscussions(res.data)),
+                backapi.get<SubjectDto[]>('/subjects', { params: subjectParams }).then(res => setSubjectDiscussions(res.data))
+            ]);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const filteredSubjects = subjectDiscussions.filter(subject => {
+        const matchesSearch =
+            !searchQuery ||
+            subject.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+        const matchesFilters = Object.entries(filters).every(([key, value]) => {
+            if (!value) return true;
+
+            return subject.tags?.some(st => {
+                if (!st.tag) return false;
+
+                return st.tag[key] === value;
+            });
+        });
+
+        return matchesSearch && matchesFilters;
+    });
 
     useEffect(() => {
-        if (!searchQuery?.trim()) {
-            api.get<ProfessionDto[]>("/professions").then(res => setProfessionDiscussions(res.data));
-            api.get<SubjectDto[]>("/subjects").then(res => setSubjectDiscussions(res.data));
-            return;
-        }
-
-        const fetchSearch = async () => {
-            try {
-                await Promise.all([
-                    backapi.get<ProfessionDto[]>('/professions', {params: { query: searchQuery || undefined }})
-                        .then(res => setProfessionDiscussions(res.data)),
-                    backapi.get<SubjectDto[]>('/subjects', {params: { query: searchQuery || undefined }})
-                        .then(res => setSubjectDiscussions(res.data))
-                ]);
-            } catch (err) {
-                console.error(err);
-            }
-        };
-
-        fetchSearch();
-
-    }, [searchQuery]);
+        fetchData();
+    }, [searchQuery, filters]);
 
     const checkTargetFavorite = (targetId: string, targetType: "subject" | "profession"): boolean => {
         return favorites.some(f => f.targetId === targetId && f.targetType === targetType);
@@ -78,14 +94,14 @@ const ForumDiscussionCards = () => {
                 <section id="Subjects">
                     <h2> Subjects </h2>
                     <div className="discussions-sub-grid">
-                        {subjectDiscussions.length === 0 ? (
+                        {filteredSubjects.length === 0 ? (
                             <p className="empty-message">
                                 {searchQuery
                                     ? "No discussions match the search."
                                     : "No discussions found."}
                             </p>
                         ) : (
-                            subjectDiscussions.map(subject => (
+                            filteredSubjects.map(subject => (
                                 <DiscussionCard
                                     key={subject.discussion.subjectDiscussionId}
                                     type={"subject"}

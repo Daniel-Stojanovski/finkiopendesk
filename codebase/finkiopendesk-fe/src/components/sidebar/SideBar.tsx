@@ -7,21 +7,28 @@ import {useUserData} from "../../shared/UserDataContext";
 interface SidebarProps {
     isMobileOpen: boolean;
     onCloseMobile: () => void;
+    isFiltersVisible: boolean;
+    filters: any;
+    setFilters: (filters: any) => void;
+
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile, isFiltersVisible, filters, setFilters}) => {
     const bp = useBreakpoint();
     const { favorites } = useUserData();
 
     if (bp === "xs") {
-        return <SidebarMobile userFavorites={favorites} isOpen={isMobileOpen} onClose={onCloseMobile} />;
+        return <SidebarMobile userFavorites={favorites} isOpen={isMobileOpen} onClose={onCloseMobile}
+                              isFiltersVisible={isFiltersVisible} filters={filters} setFilters={setFilters}/>;
     }
 
     if (bp === "sm" || bp === "md") {
-        return <SidebarDesktopCollapsed userFavorites={favorites} />;
+        return <SidebarDesktopCollapsed userFavorites={favorites}
+                                        isFiltersVisible={isFiltersVisible} filters={filters} setFilters={setFilters}/>;
     }
 
-    return <SidebarDesktopOpen userFavorites={favorites}/>;
+    return <SidebarDesktopOpen userFavorites={favorites}
+                               isFiltersVisible={isFiltersVisible} filters={filters} setFilters={setFilters}/>;
 };
 
 export default Sidebar;

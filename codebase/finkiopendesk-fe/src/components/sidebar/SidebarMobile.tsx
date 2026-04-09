@@ -2,14 +2,18 @@ import './sidebar.scss';
 import UserInfo from "../blocks/elements/UserInfo/UserInfo";
 import type {UserFavoriteDto} from "../../shared/dto/UserFavoriteDto";
 import UserFavorites from "../blocks/elements/UserFavorites/UserFavorites";
+import FilterBox from "../blocks/elements/FilterBox/FilterBox";
 
 interface SidebarMobileProps {
     userFavorites: UserFavoriteDto[];
     isOpen: boolean;
     onClose: () => void;
+    isFiltersVisible: boolean;
+    filters: any;
+    setFilters: (filters: any) => void;
 }
 
-const SidebarMobile: React.FC<SidebarMobileProps> = ({ userFavorites, isOpen, onClose }) => {
+const SidebarMobile: React.FC<SidebarMobileProps> = ({ userFavorites, isOpen, onClose, isFiltersVisible, filters, setFilters }) => {
     if (!isOpen) return null;
 
     return (
@@ -22,6 +26,11 @@ const SidebarMobile: React.FC<SidebarMobileProps> = ({ userFavorites, isOpen, on
                     </button>
                 </div>
                 <UserFavorites userFavorites={userFavorites} />
+                <FilterBox
+                    isVisible={isFiltersVisible}
+                    filters={filters}
+                    setFilters={setFilters}
+                />
 
                 <UserInfo/>
             </div>

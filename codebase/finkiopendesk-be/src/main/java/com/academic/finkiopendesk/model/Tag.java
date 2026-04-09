@@ -24,4 +24,20 @@ public class Tag {
     @Column(nullable = false)
     @JsonProperty("name")
     private String name;
+
+    @Column(nullable = false)
+    @JsonProperty("program")
+    private String program;
+
+    @Column(nullable = false)
+    @JsonProperty("format")
+    private String format;
+
+    @Column(nullable = false)
+    @JsonProperty("hardness")
+    private String hardness;
+
+    @Column(nullable = false)
+    @JsonProperty("semesterType")
+    private String semesterType;
 }

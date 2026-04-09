@@ -1,0 +1,89 @@
+@use '../../../../shared/global' as *;
+
+#filter {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--size-1);
+
+  .filter-header {
+    display: inline-flex;
+    padding-left: var(--size-2);
+    padding-right: var(--size-2);
+    align-items: center;
+
+    h3 {
+      margin-bottom: var(--size-2);
+    }
+
+    i {
+      margin-left: auto;
+      margin-right: var(--size-2);
+      margin-top: var(--size-2);
+
+      &:hover {
+        color: var(--color-main-1);
+      }
+    }
+  }
+
+  p {
+    margin: 0 auto;
+    padding-bottom: var(--size-2);
+  }
+
+  .filter-preview {
+    display: inline-flex;
+    align-items: center;
+    font-family: monospace;
+    padding: var(--size-1) var(--size-2);
+    padding-right: var(--size-3);
+    border-radius: var(--size-1);
+    font-size: 14px;
+    background: var(--color-base-0);
+    border: 1px solid var(--color-base-1);
+    color: var(--color-base-2);
+    margin-bottom: var(--size-2);
+
+    &.active {
+      background: var(--color-main-0);
+      border: 1px solid var(--color-main-1);
+      color: var(--color-main-1);
+    }
+  }
+
+  .filter-group {
+    display: grid;
+    align-items: center;
+    margin: 0 var(--size-3);
+    padding-bottom: var(--size-1);
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--size-1);
+    border-bottom: 1px solid var(--color-base-1);
+
+    @include media(md) {
+      grid-template-columns: repeat(2, 1fr);
+      margin: 0 var(--size-1);
+    }
+  }
+
+  .pill {
+    font-size: 10px;
+    border: 1px solid var(--color-base-1);
+    border-radius: var(--size-2);
+    padding: var(--size-1);
+    background: var(--color-base-0);
+    cursor: pointer;
+
+    &:hover {
+      background: var(--color-main-0);
+      border-color: var(--color-main-1);
+    }
+
+    &.active {
+      color: var(--color-base-0);
+      background: var(--color-main-1);
+      border-color: var(--color-main-1);
+    }
+  }
+}

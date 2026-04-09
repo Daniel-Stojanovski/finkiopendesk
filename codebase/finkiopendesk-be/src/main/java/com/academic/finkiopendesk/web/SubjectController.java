@@ -25,16 +25,30 @@ public class SubjectController {
     }
 
     @GetMapping
-    public List<SubjectDto> getSubjects(@RequestParam(required = false) String query) {
-        if (query == null || query.isBlank()) {
-            return subjectService.findAll().stream()
-                    .map(SubjectDto::fromEntity)
-                    .toList();
-        }
-        return subjectService.findAll(query).stream()
+    public List<SubjectDto> getSubjects(
+            @RequestParam(required = false) String query,
+            @RequestParam(required = false) String program,
+            @RequestParam(required = false) String format,
+            @RequestParam(required = false) String hardness,
+            @RequestParam(required = false) String semesterType
+    ) {
+        return subjectService.findAllFiltered(query, program, format, hardness, semesterType)
+                .stream()
                 .map(SubjectDto::fromEntity)
                 .toList();
     }
+
+//    @GetMapping
+//    public List<SubjectDto> getSubjects(@RequestParam(required = false) String query) {
+//        if (query == null || query.isBlank()) {
+//            return subjectService.findAll().stream()
+//                    .map(SubjectDto::fromEntity)
+//                    .toList();
+//        }
+//        return subjectService.findAll(query).stream()
+//                .map(SubjectDto::fromEntity)
+//                .toList();
+//    }
 
     @GetMapping("/pid/{professionId}")
     public List<SubjectDto> getSubjectsByProfession(@PathVariable String professionId) {

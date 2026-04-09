@@ -34,6 +34,17 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
+    public List<Subject> findAllFiltered(
+            String query,
+            String program,
+            String format,
+            String hardness,
+            String semesterType
+    ) {
+        return subjectRepository.findAll(SubjectSpecification.searchAndFilter(query, program, format, hardness, semesterType));
+    }
+
+    @Override
     public Subject findById(String id) {
         return subjectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Subject not found"));

@@ -11,6 +11,8 @@ public interface SubjectService {
 
     List<Subject> findAll(String query);
 
+    List<Subject> findAllFiltered(String query, String program, String format, String hardness, String semesterType);
+
     Subject findById(String id);
 
     List<Subject> findSubjectsByProfessionId(String professionId);
