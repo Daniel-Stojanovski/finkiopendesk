@@ -34,7 +34,7 @@ const GuideProfessionCards = () => {
     return (
         <div id="professions-grid">
             {professions.map(profession => (
-                <a href={`/subjects/pid/${profession.professionId}`}>
+                <a key={profession.professionId} href={`/subjects/pid/${profession.professionId}`}>
                     <ProfessionCard
                         key={profession.professionId}
                         profession={profession}

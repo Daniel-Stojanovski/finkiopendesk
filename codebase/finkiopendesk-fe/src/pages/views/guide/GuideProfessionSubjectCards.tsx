@@ -20,12 +20,17 @@ const GuideProfessionSubjectCards = () => {
     const [votes, setVotes] = useState<Map<string, number>>(new Map());
     const [userVotes, setUserVotes] = useState<Map<string, number>>(new Map());
 
-    const { searchQuery } = useOutletContext<{ searchQuery: string }>();
+    const { searchQuery, filters } = useOutletContext<{ searchQuery: string, filters: any }>();
 
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!pid) return;
+
+        const subjectParams: any = { query: searchQuery || undefined, ...filters };
+        Object.entries(filters).forEach(([key, value]) => {
+            if (value) subjectParams[key] = value;
+        });
 
         api.get<SubjectDto[]>(`/subjects/pid/${pid}`)
             .then(res => setPidSubjects(res.data))
@@ -60,7 +65,23 @@ const GuideProfessionSubjectCards = () => {
 
     }, [pid, user]);
 
+    const filteredSubjects = pidSubjects.filter(subject => {
+        const matchesSearch =
+            !searchQuery ||
+            subject.name.toLowerCase().includes(searchQuery.toLowerCase());
 
+        const matchesFilters = Object.entries(filters).every(([key, value]) => {
+            if (!value) return true;
+
+            return subject.tags?.some(st => {
+                if (!st.tag) return false;
+
+                return st.tag[key] === value;
+            });
+        });
+
+        return matchesSearch && matchesFilters;
+    });
 
     const recommendedIds = useMemo(() => {
         return new Set(
@@ -68,7 +89,7 @@ const GuideProfessionSubjectCards = () => {
         );
     }, [profession]);
 
-    const array = useFilterArray<SubjectDto>(pidSubjects, searchQuery, subject => [subject.name, subject.discussion?.name]);
+    const array = useFilterArray<SubjectDto>(filteredSubjects, searchQuery, subject => [subject.name, subject.discussion?.name]);
 
     return (
         <>

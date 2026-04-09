@@ -25,10 +25,17 @@
     }
 
     &-collapsed {
-      width: 100px;
+      width: 120px;
 
-      img {
+      &-header {
+        display: flex;
+        flex-grow: 1;
         border-bottom: var(--color-base-2) 1px solid;
+        margin: 0 var(--size-1);
+
+        img {
+          margin: auto;
+        }
       }
     }
   }

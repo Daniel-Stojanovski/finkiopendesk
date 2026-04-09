@@ -13,7 +13,7 @@
 
 #subjects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, 410px);
   gap: 0 var(--size-2);
   align-items: stretch;
 }

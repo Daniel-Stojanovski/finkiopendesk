@@ -1,13 +1,12 @@
 @use '../../../shared/global' as *;
 
 .subject {
+  display: flex;
   position: relative;
   border: 1px solid var(--color-base-2);
   border-radius: var(--size-2);
   margin-top: var(--size-2);
   padding: var(--size-2);
-
-  display: flex;
 
   &.active {
     border-bottom: 1px solid var(--color-main-1);
@@ -17,6 +16,23 @@
   i.recommended {
     position: absolute;
     top: 0;
+  }
+
+  .tag-label {
+    max-width: 86px;
+    font-size: 12px;
+    text-align: center;
+    margin-left: var(--size-2);
+    padding: var(--size-1);
+    background: var(--color-base-1);
+    color: var(--color-base-2);
+    border-radius: var(--size-1);
+
+    &:hover {
+      background: var(--color-main-0);
+      color: var(--color-main-1);
+      padding: var(--size-1) var(--size-2);
+    }
   }
 
   &:hover{

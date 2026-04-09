@@ -22,8 +22,15 @@ const DiscussionCard: React.FC<DiscussionCardProps> = (props) => {
     const [channels, setChannels] = useState<ChannelDto[]>([]);
 
     useEffect(() => {
-        api.get<ChannelDto[]>(`/subjects/channels/sid/${(props.object as SubjectDto).subjectId}/active`)
-            .then(response => setChannels(response.data));
+        try {
+            if (props.type == DiscussionType.SUBJECT) {
+            api.get<ChannelDto[]>(`/subjects/channels/sid/${(props.object as SubjectDto).subjectId}/active`)
+                .then(response => setChannels(response.data));
+            }
+        }
+        catch (err) {
+            console.error("Discussion Type found: Profession; must be: Subject ", err);
+        }
     }, []);
 
     const canUserContribute =
@@ -62,7 +69,7 @@ const DiscussionCard: React.FC<DiscussionCardProps> = (props) => {
 
                 {props.type == DiscussionType.SUBJECT && (
                     channels.map(tag => (
-                        <p className="tag-label" onClick={() => navigate(`/discussion/cid/${tag.channelId}`)}><i className="bi bi-tag"></i>{tag.name.split(' | ')[1]}</p>
+                        <p key={tag.channelId} className="tag-label" onClick={() => navigate(`/discussion/cid/${tag.channelId}`)}><i className="bi bi-tag"></i>{tag.name.split(' | ')[1]}</p>
                     ))
                 )}
 
