@@ -9,6 +9,8 @@ import {useAuth} from "../../shared/AuthContext";
 import {backapi} from "../../shared/axios";
 import type {NotificationGroupDto} from "../../shared/dto/NotificationGroupDto";
 import {isView} from "../../shared/hooks";
+import FilterBox from "../../components/blocks/elements/Filter/FilterBox";
+import type {FiltersDto} from "../../shared/dto/FiltersDto";
 
 const Layout: React.FC = () => {
     const { user } = useAuth();
@@ -16,10 +18,11 @@ const Layout: React.FC = () => {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
     const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
 
     const [searchQuery, setSearchQuery] = useState("");
 
-    const [filters, setFilters] = useState({
+    const [filters, setFilters] = useState<FiltersDto>({
         program: null,
         format: null,
         hardness: null,
@@ -34,6 +37,10 @@ const Layout: React.FC = () => {
         setShowNotifications(prev => !prev);
     };
 
+    const toggleFilters = () => {
+        setIsFilterOpen(prev => !prev);
+    };
+
     useEffect(() => {
         if (!user?.userId) return;
 
@@ -46,6 +53,21 @@ const Layout: React.FC = () => {
             });
     }, [user]);
 
+    useEffect(() => {
+        setIsFilterOpen(false);
+    }, [isForumView, isGuideView]);
+
+    const generateFilterTag = (f: any) => {
+        const program = f.program ?? "___";
+        const format = f.program ? "F23" : "__";
+        const hardness = f.hardness ?? "__";
+        const semester = f.semesterType ?? "_";
+
+        return `${program}_${format}${hardness}${semester}`;
+    };
+
+    const filterTag = generateFilterTag(filters);
+
     return (
         <div id="layout-page">
             <SideBar
@@ -54,6 +76,9 @@ const Layout: React.FC = () => {
                 isFiltersVisible={isForumView || isGuideView}
                 filters={filters}
                 setFilters={setFilters}
+                toggleFilters={toggleFilters}
+                isFilterOpen={isFilterOpen}
+                filterTag={filterTag}
             />
 
             <div className="main">
@@ -68,6 +93,8 @@ const Layout: React.FC = () => {
                 />
 
                 <NotificationsBox onStateChange={setHasUnreadNotifications} isVisible={showNotifications} />
+
+                <FilterBox isOpen={isFilterOpen} filters={filters} setFilters={setFilters} onClose={() => setIsFilterOpen(false)} filterTag={filterTag}/>
 
                 <div id="content">
                     <Outlet context={{ searchQuery, filters, setFilters, openSidebar: () => setIsMobileOpen(true) }} />

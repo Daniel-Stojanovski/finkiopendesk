@@ -1,15 +1,12 @@
 @use '../../../../shared/global' as *;
 
-#filter {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: var(--size-1);
+#filter-tab {
+  padding-left: var(--size-2);
+  padding-right: var(--size-2);
 
-  .filter-header {
-    display: inline-flex;
-    padding-left: var(--size-2);
-    padding-right: var(--size-2);
+  .filter-header{
+    display: flex;
+    flex-grow: 1;
     align-items: center;
 
     h3 {
@@ -18,7 +15,6 @@
 
     i {
       margin-left: auto;
-      margin-right: var(--size-2);
       margin-top: var(--size-2);
 
       &:hover {
@@ -27,22 +23,65 @@
     }
   }
 
-  p {
-    margin: 0 auto;
-    padding-bottom: var(--size-2);
+  .filter-preview {
+    color: var(--color-main-1);
+    background: var(--color-main-0);
+    padding: var(--size-1);
+    border-radius: var(--size-1);
+    margin: auto;
+    text-align: center;
+  }
+
+}
+
+#filter {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: max(300px, 30%);
+  height: 100%;
+  top: 48px;
+  left: 0;
+  background-color: var(--color-base-0);
+  border-right: 1px solid var(--color-base-2);
+  overflow: hidden;
+  z-index: 19999;
+
+  @include media(xs) {
+    top: 0;
+  }
+
+  .filter-header {
+    color: var(--color-base-3);
+    display: inline-flex;
+    justify-content: space-between;
+    padding-left: var(--size-2);
+    padding-right: var(--size-2);
+    align-items: center;
+
+    &-options {
+      i {
+        margin-left: auto;
+        margin-right: var(--size-2);
+
+        &:hover {
+          color: var(--color-main-1);
+        }
+      }
+    }
   }
 
   .filter-preview {
     display: inline-flex;
     align-items: center;
-    font-family: monospace;
+    font-size: 14px;
     padding: var(--size-1) var(--size-2);
     padding-right: var(--size-3);
     border-radius: var(--size-1);
-    font-size: 14px;
     background: var(--color-base-0);
     border: 1px solid var(--color-base-1);
     color: var(--color-base-2);
+    margin: 0 auto;
     margin-bottom: var(--size-2);
 
     &.active {
@@ -51,20 +90,20 @@
       color: var(--color-main-1);
     }
   }
+  .filter-group-title {
+    font-size: 12px;
+    color: var(--color-base-3);
+    margin: var(--size-1) var(--size-2);
+  }
 
   .filter-group {
     display: grid;
     align-items: center;
     margin: 0 var(--size-3);
-    padding-bottom: var(--size-1);
+    padding-bottom: var(--size-2);
     grid-template-columns: repeat(3, 1fr);
     gap: var(--size-1);
     border-bottom: 1px solid var(--color-base-1);
-
-    @include media(md) {
-      grid-template-columns: repeat(2, 1fr);
-      margin: 0 var(--size-1);
-    }
   }
 
   .pill {

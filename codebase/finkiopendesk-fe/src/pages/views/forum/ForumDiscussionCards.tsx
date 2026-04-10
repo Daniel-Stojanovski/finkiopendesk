@@ -8,6 +8,8 @@ import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
 import type {SubjectDto} from "../../../shared/dto/SubjectDto";
 import {useOutletContext} from "react-router-dom";
 import {useUserData} from "../../../shared/UserDataContext";
+import type {FiltersDto} from "../../../shared/dto/FiltersDto";
+import type {TagDto} from "../../../shared/dto/TagDto";
 
 const ForumDiscussionCards = () => {
     const { favorites } = useUserData();
@@ -15,7 +17,7 @@ const ForumDiscussionCards = () => {
     const [subjectDiscussions, setSubjectDiscussions] = useState<SubjectDto[]>([]);
     const [professionDiscussions, setProfessionDiscussions] = useState<ProfessionDto[]>([]);
 
-    const { searchQuery, filters } = useOutletContext<{ searchQuery: string, filters: any }>();
+    const { searchQuery, filters } = useOutletContext<{ searchQuery: string, filters: FiltersDto }>();
 
     const fetchData = async () => {
         const professionParams: any = { query: searchQuery || undefined };
@@ -46,7 +48,7 @@ const ForumDiscussionCards = () => {
             return subject.tags?.some(st => {
                 if (!st.tag) return false;
 
-                return st.tag[key] === value;
+                return st.tag[key as keyof TagDto] === value;
             });
         });
 

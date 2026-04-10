@@ -1,14 +1,18 @@
-import './filterBox.scss';
+import './filterOptions.scss';
+import type {FiltersDto} from "../../../../shared/dto/FiltersDto";
 
 type FilterBoxProps = {
-    isVisible: boolean;
-    filters: any;
-    setFilters: (filters: any) => void;
+    isOpen: boolean;
+    filters: FiltersDto;
+    setFilters: React.Dispatch<React.SetStateAction<FiltersDto>>;
+    // setFilters: (filters: FiltersDto) => void;
+    onClose: () => void;
+    filterTag: string;
 };
 
-const FilterBox: React.FC<FilterBoxProps> = ({ isVisible, filters, setFilters }) => {
+const FilterBox: React.FC<FilterBoxProps> = ({ isOpen, filters, setFilters, onClose, filterTag }) => {
 
-    const handleChange = (name: string, value: string) => {
+    const handleChange = (name: keyof FiltersDto, value: string) => {
         setFilters(prev => ({
             ...prev,
             [name]: prev[name] === value ? null : value
@@ -24,28 +28,36 @@ const FilterBox: React.FC<FilterBoxProps> = ({ isVisible, filters, setFilters })
         });
     };
 
-    const generateFilterTag = () => {
-        const program = filters.program ?? "___";
-        const format = filters.program ? "F23" : "__";
-        const hardness = filters.hardness ?? "__";
-        const semester = filters.semesterType ?? "_";
-
-        return `${program}_${format}${hardness}${semester}`;
-    };
+    // const generateFilterTag = () => {
+    //     const program = filters.program ?? "___";
+    //     const format = filters.program ? "F23" : "__";
+    //     const hardness = filters.hardness ?? "__";
+    //     const semester = filters.semesterType ?? "_";
+    //
+    //     return `${program}_${format}${hardness}${semester}`;
+    // };
+    //
+    // const filterTag = generateFilterTag();
 
     const activeFilters = Object.values(filters).some(v => v !== null);
 
-    if (!isVisible) return null;
+    if (!isOpen) return null;
 
     return (
         <div id="filter">
             <div className="filter-header">
-                <h3>Filters</h3>
-                <i className="bi bi-arrow-clockwise clear-btn" onClick={clearFilters}></i>
+                <h3>Set filter</h3>
+                <span className="filter-header-options">
+                    <i className="bi bi-arrow-clockwise" onClick={clearFilters}></i>
+                    <i className="bi bi-x-lg" onClick={onClose}></i>
+                </span>
             </div>
+
             <p className={`filter-preview ${activeFilters ? 'active' : ''}`}>
-                <i className="bi bi-tag"></i> {generateFilterTag()}
+                <i className="bi bi-tag"></i> {filterTag}
             </p>
+
+            <p className="filter-group-title">Program:</p>
             <div className="filter-group">
                 {["SIIS", "SEIS", "IMB", "PIT", "IE", "KI", "KN", "SSP"].map(p => (
                     <button
@@ -58,6 +70,7 @@ const FilterBox: React.FC<FilterBoxProps> = ({ isVisible, filters, setFilters })
                 ))}
             </div>
 
+            <p className="filter-group-title">Level:</p>
             <div className="filter-group">
                 {["L1", "L2", "L3"].map(h => (
                     <button
@@ -70,6 +83,7 @@ const FilterBox: React.FC<FilterBoxProps> = ({ isVisible, filters, setFilters })
                 ))}
             </div>
 
+            <p className="filter-group-title">Semester:</p>
             <div className="filter-group">
                 {["W", "S"].map(s => (
                     <button

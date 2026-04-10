@@ -11,6 +11,8 @@ import {useFilterArray} from "../../../shared/hooks";
 import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
 import {useAuth} from "../../../shared/AuthContext";
 import {useNavigate} from "react-router-dom";
+import type {FiltersDto} from "../../../shared/dto/FiltersDto";
+import type {TagDto} from "../../../shared/dto/TagDto";
 
 const GuideProfessionSubjectCards = () => {
     const { pid } = useParams();
@@ -20,7 +22,7 @@ const GuideProfessionSubjectCards = () => {
     const [votes, setVotes] = useState<Map<string, number>>(new Map());
     const [userVotes, setUserVotes] = useState<Map<string, number>>(new Map());
 
-    const { searchQuery, filters } = useOutletContext<{ searchQuery: string, filters: any }>();
+    const { searchQuery, filters } = useOutletContext<{ searchQuery: string, filters: FiltersDto }>();
 
     const navigate = useNavigate();
 
@@ -76,7 +78,7 @@ const GuideProfessionSubjectCards = () => {
             return subject.tags?.some(st => {
                 if (!st.tag) return false;
 
-                return st.tag[key] === value;
+                return st.tag[key as keyof TagDto] === value;
             });
         });
 

@@ -2,36 +2,34 @@ import './sidebar.scss';
 import UserInfo from "../blocks/elements/UserInfo/UserInfo";
 import type {UserFavoriteDto} from "../../shared/dto/UserFavoriteDto";
 import UserFavorites from "../blocks/elements/UserFavorites/UserFavorites";
-import FilterBox from "../blocks/elements/FilterBox/FilterBox";
+import FilterTab from "../blocks/elements/Filter/FilterTab";
 
 interface SidebarMobileProps {
     userFavorites: UserFavoriteDto[];
     isOpen: boolean;
     onClose: () => void;
     isFiltersVisible: boolean;
-    filters: any;
-    setFilters: (filters: any) => void;
+    toggleFilters: () => void;
+    isFilterOpen: boolean;
+    filterTag: string;
 }
 
-const SidebarMobile: React.FC<SidebarMobileProps> = ({ userFavorites, isOpen, onClose, isFiltersVisible, filters, setFilters }) => {
+const SidebarMobile: React.FC<SidebarMobileProps> = ({ userFavorites, isOpen, onClose, isFiltersVisible, toggleFilters, isFilterOpen, filterTag }) => {
     if (!isOpen) return null;
 
     return (
         <div id="sidebar">
             <div className="sb-mobile">
                 <div className="sb-mobile-header">
-                    <img src="src/logo/logo-compact-finkiopendesk-500x250.png" width="100" height="50"/>
+                    <img src="src/logo/logo-compact-finkiopendesk-500x250.png" alt="finkiopendesk_compact_icon_long_side" width={100} height={50}/>
                     <button className="sb-mobile-close" aria-label="close_sidebar" onClick={onClose}>
                         <i className='bi bi-x'></i>
                     </button>
                 </div>
                 <UserFavorites userFavorites={userFavorites} />
-                <FilterBox
-                    isVisible={isFiltersVisible}
-                    filters={filters}
-                    setFilters={setFilters}
-                />
-
+                {isFiltersVisible &&
+                    <FilterTab onToggle={toggleFilters} isOpen={isFilterOpen} filterTag={filterTag}/>
+                }
                 <UserInfo/>
             </div>
         </div>
