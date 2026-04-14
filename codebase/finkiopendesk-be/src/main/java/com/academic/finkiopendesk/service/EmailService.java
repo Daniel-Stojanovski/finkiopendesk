@@ -17,23 +17,6 @@ public class EmailService {
         this.mailSender = mailSender;
     }
 
-// v1
-//    public void sendActivationEmail(User user, String token) {
-//        String activationUrl = "http://localhost:5173/register/activate?token=" + token;
-//
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setTo(user.getEmail());
-//        message.setSubject("Activate your FinkiOpenDesk Student account");
-//        message.setText(
-//                "Hello, " + user.getEmail() +
-//                        "\n\nPlease click the following link to set your password and activate your account:\n" +
-//                        activationUrl + "\n\n" +
-//                        "This link will expire in 30 minutes."
-//        );
-//
-//        mailSender.send(message);
-//    }
-
     public void sendFormalActivationEmail(User user, String token) {
         String activationUrl = "http://localhost:5173/register/activate?token=" + token;
 

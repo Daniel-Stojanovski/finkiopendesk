@@ -14,9 +14,9 @@ const FilterTab: React.FC<FilterTabProps> = ({onToggle, isOpen, filterTag}) => {
                     <h3>Filters</h3>
                     <i className={`bi ${isOpen ? 'bi-arrow-bar-left' : 'bi-arrow-bar-right'}`} onClick={onToggle}></i>
                 </div>
-                <p className="filter-preview">
-                    <i className="bi bi-tag"></i> {filterTag}
-                </p>
+                {
+                    filterTag.toString() === "_________" || <p className="filter-preview"><i className="bi bi-tag"></i> {filterTag}</p>
+                }
             </div>
         </>
     );

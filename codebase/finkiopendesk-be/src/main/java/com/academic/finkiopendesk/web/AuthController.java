@@ -9,6 +9,7 @@ import com.academic.finkiopendesk.web.dto.CreationRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -28,13 +29,13 @@ public class AuthController {
         this.emailService = emailService;
     }
 
+    @Transactional
     @PostMapping("/students/create")
     public ResponseEntity<?> createStudent(@RequestParam String email) {
 
         User user = userService.createStudent(email);
         String token = tokenService.generateActivationToken(user.getUserId());
 
-//        emailService.sendActivationEmail(user, token);
         emailService.sendFormalActivationEmail(user, token);
 
         return ResponseEntity.ok(token);
@@ -51,15 +52,15 @@ public class AuthController {
 
         String jwt = tokenService.generateLoginToken(user);
         return ResponseEntity.ok(jwt);
-//        return ResponseEntity.ok("Account activated");
     }
 
     @PostMapping("/users/create")
     public ResponseEntity<?> createUser(@RequestBody CreationRequest request) {
 
-        userService.createUser(request.email(), request.password());
+        User user = userService.createUser(request.email(), request.password());
+        String jwt = tokenService.generateLoginToken(user);
 
-        return ResponseEntity.ok("Account created");
+        return ResponseEntity.ok(jwt);
     }
 
     @PostMapping("/login")

@@ -44,7 +44,7 @@ export const useSectionScroll = (sectionIds: string[]) => {
 
                 setActiveSection(current);
             },
-            { threshold: Array.from({ length: 101 }, (_, i) => i / 100) }
+            { threshold: 0.03 }
         );
 
         sectionIds.forEach(id => {
@@ -117,3 +117,24 @@ export const isView = (path: string): boolean => {
     const location = useLocation();
     return location.pathname.startsWith(`${path}`);
 }
+
+export const useDebounce = <T>(value: T, delay: number): T => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => clearTimeout(timer);
+    }, [value, delay]);
+
+    return debouncedValue;
+};
+
+export const validatePassword = (password: string): string | null => {
+    if (!password || password.length < 8 || !/[A-Z]/.test(password) || !/[0-9]/.test(password) || !/[!@#$%^&*_+=\-]/.test(password))
+        return "Error! Check required rules and try again.";
+
+    return null;
+};

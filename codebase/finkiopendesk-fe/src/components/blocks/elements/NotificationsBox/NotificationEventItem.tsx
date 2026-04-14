@@ -7,9 +7,10 @@ import {backapi} from "../../../../shared/axios";
 interface NotificationsEventItemProps {
     data: NotificationEventDto;
     contextId: string;
+    onClick: () => void;
 }
 
-const NotificationsEventItem: React.FC<NotificationsEventItemProps> = ({ data, contextId }) => {
+const NotificationsEventItem: React.FC<NotificationsEventItemProps> = ({ data, contextId, onClick }) => {
     const navigate = useNavigate();
 
     const handleClick = async () => {
@@ -19,6 +20,8 @@ const NotificationsEventItem: React.FC<NotificationsEventItemProps> = ({ data, c
         } catch (e) {
             console.error(e);
         }
+
+        onClick();
 
         const getContextPart = (contextId: string, element: number): string => {
             return contextId.split(":")[element];
@@ -38,7 +41,6 @@ const NotificationsEventItem: React.FC<NotificationsEventItemProps> = ({ data, c
         };
 
         navigate(`/discussion/${getGroupTypeAcronym(getContextPart(contextId,1))}/${getContextPart(contextId,2)}`);
-        // navigate(`/discussion/${getGroupTypeAcronym(getContextPart(contextId,1))}/${getContextPart(contextId,2)}?commentId=${data.targetObjectId}`);
     };
 
     return (

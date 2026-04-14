@@ -19,7 +19,7 @@ const UserInfo = () => {
         <div id="userinfo-box">
             {user
                 ? <>
-                    <i className="bi bi-person-fill"></i>
+                    {user?.student ? <i className="bi bi-person-fill-check"></i> : <i className="bi bi-person-fill"></i>}
                     <p>{user?.email.split("@")[0]}</p>
                     <i className="bi bi-box-arrow-right" onClick={handleLogout}></i>
                 </>

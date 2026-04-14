@@ -2,6 +2,7 @@ package com.academic.finkiopendesk.service.impl;
 
 import com.academic.finkiopendesk.model.User;
 import com.academic.finkiopendesk.repository.UserRepository;
+import com.academic.finkiopendesk.service.PasswordService;
 import com.academic.finkiopendesk.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
+    private final PasswordService passwordService;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder encoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder encoder, PasswordService passwordService) {
         this.userRepository = userRepository;
         this.encoder = encoder;
+        this.passwordService = passwordService;
     }
 
     @Override
@@ -46,20 +49,23 @@ public class UserServiceImpl implements UserService {
         if (user.isEnabled() || user.getPassword() != null) {
             throw new IllegalStateException("User already activated");
         }
+        passwordService.validatePassword(rawPassword);
         user.setPassword(encoder.encode(rawPassword));
         user.setEnabled(true);
         userRepository.save(user);
     }
 
     @Override
-    public void createUser(String email, String rawPassword) {
+    public User createUser(String email, String rawPassword) {
         validateUser(email);
+        passwordService.validatePassword(rawPassword);
         User user = new User();
         user.setEmail(email);
         user.setPassword(encoder.encode(rawPassword));
         user.setStudent(false);
         user.setEnabled(true);
         userRepository.save(user);
+        return user;
     }
 
     @Override

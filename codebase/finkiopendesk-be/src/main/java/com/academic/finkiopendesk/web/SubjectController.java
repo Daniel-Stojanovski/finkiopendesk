@@ -90,6 +90,10 @@ public class SubjectController {
         String userId = token.getToken().getSubject();
 
         Vote saved = voteService.vote(voteDto, userId);
+
+        if (saved == null) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(VoteDto.fromEntity(saved));
     }
 }

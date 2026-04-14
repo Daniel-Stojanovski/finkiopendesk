@@ -3,6 +3,7 @@ import UserInfo from "../blocks/elements/UserInfo/UserInfo";
 import type {UserFavoriteDto} from "../../shared/dto/UserFavoriteDto";
 import UserFavorites from "../blocks/elements/UserFavorites/UserFavorites";
 import FilterTab from "../blocks/elements/Filter/FilterTab";
+import LogoImage from "../../logo/logo-compact-finkiopendesk-500x250.png";
 
 interface SidebarMobileProps {
     userFavorites: UserFavoriteDto[];
@@ -21,7 +22,7 @@ const SidebarMobile: React.FC<SidebarMobileProps> = ({ userFavorites, isOpen, on
         <div id="sidebar">
             <div className="sb-mobile">
                 <div className="sb-mobile-header">
-                    <img src="src/logo/logo-compact-finkiopendesk-500x250.png" alt="finkiopendesk_compact_icon_long_side" width={100} height={50}/>
+                    <img src={LogoImage} alt="finkiopendesk_compact_icon_long_side" width={100} height={50}/>
                     <button className="sb-mobile-close" aria-label="close_sidebar" onClick={onClose}>
                         <i className='bi bi-x'></i>
                     </button>

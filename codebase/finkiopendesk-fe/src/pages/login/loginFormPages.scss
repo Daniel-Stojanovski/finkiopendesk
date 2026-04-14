@@ -9,9 +9,23 @@
 
   background: url("./../../logo/IO1920x1080.jpg");
 
+  background-repeat: repeat-x;
+
   background-size: cover;
   background-position: center;
+
   overflow: hidden;
+
+  animation: moveBackground 30s linear infinite;
+
+  @keyframes moveBackground {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: -1920px 0;
+    }
+  }
 }
 
 .card {
@@ -46,23 +60,29 @@
     }
 
     input {
-      color: var(--color-base-4);
+      color: var(--color-main-1);
       padding: var(--size-2) var(--size-3);
       background: none;
       border: none;
-      border-bottom: var(--color-base-0) 1px solid;
+      border-bottom: var(--color-base-3) 1px solid;
       outline: none;
 
       &::placeholder {
-        color: var(--color-base-0);
+        color: var(--color-base-3);
       }
 
       &:hover {
         border-bottom: var(--color-main-1) 1px solid;
+        &::placeholder {
+          color: var(--color-main-1);
+        }
       }
 
       &:focus {
         border-bottom: var(--color-main-1) 2px solid;
+        &::placeholder {
+          color: var(--color-main-1);
+        }
       }
     }
 
@@ -82,6 +102,40 @@
       &:hover {
         color: var(--color-main-1);
       }
+    }
+  }
+
+  .password-rules {
+    list-style: none;
+    padding: 0;
+    margin: auto;
+    margin-top: var(--size-2);
+
+    li {
+      display: flex;
+      align-items: center;
+      color: var(--color-base-3);
+      font-size: 12px;
+      gap: var(--size-1);
+
+      &.valid {
+        color: var(--color-success);
+      }
+    }
+  }
+
+  .password-match {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: var(--size-1);
+
+    &.valid {
+      color: var(--color-success);
+    }
+
+    &.invalid {
+      color: var(--color-error);
     }
   }
 

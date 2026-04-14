@@ -32,16 +32,22 @@ const GuideProfessionCards = () => {
     }, [searchQuery]);
 
     return (
-        <div id="professions-grid">
-            {professions.map(profession => (
-                <a key={profession.professionId} href={`/subjects/pid/${profession.professionId}`}>
-                    <ProfessionCard
-                        key={profession.professionId}
-                        profession={profession}
-                    />
-                </a>
-            ))}
-        </div>
+        <>
+            {professions.length == 0 ? (
+                <p className="empty-message">No subjects found.</p>
+            ) : (
+                <div id="professions-grid">
+                    {professions.map(profession => (
+                        <a key={profession.professionId} href={`/subjects/pid/${profession.professionId}`}>
+                            <ProfessionCard
+                                key={profession.professionId}
+                                profession={profession}
+                            />
+                        </a>
+                    ))}
+                </div>
+            )}
+        </>
     );
 }
 

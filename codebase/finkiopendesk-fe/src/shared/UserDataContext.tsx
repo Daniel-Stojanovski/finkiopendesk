@@ -17,7 +17,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             .then(res => setFavorites(res.data));
     }, [user?.userId]);
 
-    const toggleFavorite = async (targetId: string, targetType: "subject" | "profession") => {
+    const toggleFavorite = async (targetId: string, targetType: "subject" | "profession" | "channel") => {
         if (!user?.userId) return;
 
         try {

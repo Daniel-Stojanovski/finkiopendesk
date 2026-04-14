@@ -28,5 +28,17 @@
 
   p {
     margin-left: var(--size-1);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @include media(md) {
+      max-width: 50px;
+    }
+
+    @include media(xs) {
+      max-width: 230px;
+    }
   }
 }

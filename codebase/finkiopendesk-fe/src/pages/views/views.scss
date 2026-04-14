@@ -11,9 +11,10 @@
   }
 }
 
-#subjects-grid {
+#subjects-grid,
+#professions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 410px);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
   gap: 0 var(--size-2);
   align-items: stretch;
 }
@@ -24,13 +25,19 @@
     scroll-margin-top: var(--size-4);
     padding-bottom: var(--size-2);
     border-bottom: var(--color-base-2) 1px solid;
-  }
 
-  .discussions-sub-grid {
-    .empty-message {
-      text-align: center;
-      font-size: 14px;
-      color: var(--color-base-3);
+    .section-header {
+      display: flex;
+      align-items: center;
+
+      i {
+        font-size: 16px;
+        margin-left: var(--size-2);
+      }
+
+      &:hover {
+        color: var(--color-main-1);
+      }
     }
   }
 }
@@ -124,4 +131,10 @@
       color: var(--color-main-1);
     }
   }
+}
+
+.empty-message {
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-base-3);
 }

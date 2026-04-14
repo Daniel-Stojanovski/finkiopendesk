@@ -1,6 +1,10 @@
+import './commentLoader.scss'
+
 import type {CommentDto} from "../../../shared/dto/CommentDto";
 import CommentItem from "../elements/CommentItem/CommentItem";
 import type {DiscussionTypeKey} from "../../../shared/const/DiscussionTypeConst";
+import {useEffect, useRef} from "react";
+import {useAuth} from "../../../shared/AuthContext";
 
 type CommentLoaderProps = {
     comments: CommentDto[];
@@ -10,8 +14,23 @@ type CommentLoaderProps = {
 };
 
 const CommentLoader: React.FC<CommentLoaderProps> = ({ comments, replyingTo, setParentCommentId, discussionType }) => {
+    const {user} = useAuth();
+
     const findParent = (parentId?: string) =>
         comments.find(c => c.commentId === parentId);
+
+    const discussionEndRef = useRef<HTMLDivElement | null>(null);
+
+    const scrollToBottom = () => {
+        const el = discussionEndRef.current;
+        if (!el) return;
+
+        el.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [comments]);
 
     return (
         <>
@@ -27,8 +46,12 @@ const CommentLoader: React.FC<CommentLoaderProps> = ({ comments, replyingTo, set
                     />
                 ))
             ) : (
-                <p>- Discussion is empty -</p>
+                user
+                    ? <p className="cl-message">Be the one to encourage the discussion</p>
+                    : <p className="cl-message">The discussion is empty</p>
             )}
+
+            <span ref={discussionEndRef}></span>
         </>
     );
 };

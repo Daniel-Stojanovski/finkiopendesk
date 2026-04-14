@@ -5,9 +5,10 @@ import NotificationEventItem from "./NotificationEventItem";
 
 interface NotificationsGroupItemProps {
     data: NotificationGroupDto;
+    onItemClick: () => void;
 }
 
-const NotificationsGroupItem: React.FC<NotificationsGroupItemProps> = ({ data }) => {
+const NotificationsGroupItem: React.FC<NotificationsGroupItemProps> = ({ data, onItemClick }) => {
     const [showNotificationEvents, setShowNotificationEvents] = useState(false);
 
     const toggleNotificationEvents = () => {
@@ -33,6 +34,7 @@ const NotificationsGroupItem: React.FC<NotificationsGroupItemProps> = ({ data })
                         key={eventData.notificationEventId}
                         data={eventData}
                         contextId={data.contextId}
+                        onClick={onItemClick}
                     />
                 ))}
             </div>

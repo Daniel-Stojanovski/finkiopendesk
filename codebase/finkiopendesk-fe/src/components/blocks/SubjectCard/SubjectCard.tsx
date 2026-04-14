@@ -16,9 +16,10 @@ interface SubjectCardProps {
     voteCount?: number;
     userVote?: number;
     isRecommended?: boolean;
+    refreshVotes?: () => Promise<void>;
 }
 
-const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, voteCount = 0, userVote, isRecommended }) => {
+const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, voteCount = 0, userVote, isRecommended, refreshVotes }) => {
     const { user } = useAuth();
     const navigate = useNavigate();
 
@@ -45,6 +46,8 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, 
                 professionId: professionId,
                 vote: value != vote ? value : 0
             });
+
+            {refreshVotes && await refreshVotes()}
         } catch (error) {
             console.error("Failed to vote ("+ value +"):", error);
         }
@@ -53,7 +56,7 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, 
     return (
         <div className={`subject ${vote ? "active"  : ""}`}>
             <div className="subject-content">
-                {(type == CardType.VOTE && isRecommended) && <i className="bi bi-bookmark-fill recommended"></i>}
+                {(type == CardType.VOTE && isRecommended) && <i className="bi bi-bookmark-check-fill recommended"></i>}
                 <h3>{subject.name}</h3>
                 {channels.map(tag => (
                     <p key={tag.channelId} className="tag-label" onClick={() => navigate(`/discussion/cid/${tag.channelId}`)}><i className="bi bi-tag"></i>{tag.name.split(' | ')[1]}</p>

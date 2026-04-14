@@ -1,26 +1,24 @@
 @use '../../../shared/global' as *;
 
 #channel-sidebar {
-
-  &:hover {
-    background: $gradient-30-70-h;
-
-    .csb-header-title {
-      color: var(--color-main-1);
-    }
-  }
+  padding: var(--size-1);
 
   ul {
-    list-style: circle outside;
-    padding-left: var(--size-5);
-    color: var(--color-base-3);
+    list-style: none;
+    padding-left: var(--size-2);
+    color: var(--color-base-2);
 
     li {
-      padding-bottom: var(--size-1);
+      display: inline-block;
+      background: var(--color-base-1);
+      border-radius: var(--size-1);
+      margin-bottom: var(--size-1);
+      padding: var(--size-1) var(--size-2);
 
       &:hover {
+        background: var(--color-main-0);
         color: var(--color-main-1);
-        margin-left: var(--size-2);
+        padding: var(--size-1) var(--size-3);
       }
     }
   }
@@ -29,6 +27,7 @@
     display: inline-flex;
     align-items: center;
     width: 220px;
+    border-bottom: var(--color-base-2) 1px solid;
 
     &-icon {
       margin-left: auto;
@@ -62,12 +61,13 @@
     position: absolute;
     display: block;
     height: 100%;
+    top: 0;
     right: 0;
     box-sizing: border-box;
     width: 220px;
     background-color: var(--color-base-0);
     border-left: var(--color-base-3) 1px solid;
-    z-index: 1999;
+    z-index: 200;
   }
 
   border-left: var(--color-base-2) 1px solid;

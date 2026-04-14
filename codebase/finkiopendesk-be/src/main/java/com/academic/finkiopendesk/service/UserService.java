@@ -14,7 +14,7 @@ public interface UserService {
 
     void activateUser(User user, String rawPassword);
 
-    void createUser(String email, String rawPassword);
+    User createUser(String email, String rawPassword);
 
     User authenticateUser(String email, String rawPassword);
 

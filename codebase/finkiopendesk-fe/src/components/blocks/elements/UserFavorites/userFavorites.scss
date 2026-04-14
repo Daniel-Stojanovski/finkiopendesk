@@ -1,53 +1,56 @@
 @use '../../../../shared/global' as *;
 
 #user-favorites {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
   padding-left: var(--size-2);
+  margin: 0;
 
-  &:hover {
-    background: $gradient-30-70-h;
+  #uf-list-container {
+    flex: 1;
+    min-height: 0;
+    overflow-y: scroll;
 
-    h3{
-      color: var(--color-main-1);
-    }
-  }
+    ul {
+      list-style-type: "★";
+      margin: 0;
+      padding: 0 var(--size-2) 0 var(--size-3);
 
-  ul {
-    list-style-type: "★";
-    padding: 0 var(--size-2) 0 var(--size-3);
+      li {
+        display: inline-list-item;
+        margin-bottom: var(--size-1);
+        padding-left: var(--size-1);
 
-    li {
-      display: inline-list-item;
-      margin-bottom: var(--size-1);
-      padding-left: var(--size-1);
-
-      &:hover {
-        color: var(--color-main-1);
-        margin-left: var(--size-2);
-      }
-
-      @include media(md) {
         &:hover {
           color: var(--color-main-1);
-          margin-left: var(--size-1);
+          margin-left: var(--size-2);
         }
-      }
 
-      .ul-li-content {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        @include media(md) {
+          &:hover {
+            margin-left: var(--size-1);
+          }
+        }
 
-        .type-icon {
-          display: inline-block;
-          text-align: center;
-          width: var(--size-3);
-          aspect-ratio: 1;
-          margin-left: auto;
-          border-radius: var(--size-1);
-          background: var(--color-base-2);
-          color: var(--color-base-0);
-          font-size: 12px;
-          flex-shrink: 0;
+        .ul-li-content {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .type-icon {
+            display: inline-block;
+            text-align: center;
+            width: var(--size-3);
+            aspect-ratio: 1;
+            margin-left: auto;
+            border-radius: var(--size-1);
+            background: var(--color-base-2);
+            color: var(--color-base-0);
+            font-size: 12px;
+            flex-shrink: 0;
+          }
         }
       }
     }

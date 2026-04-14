@@ -15,14 +15,14 @@
 
   i.recommended {
     position: absolute;
-    top: 0;
   }
 
   .tag-label {
     max-width: 86px;
     font-size: 12px;
     text-align: center;
-    margin-left: var(--size-2);
+    margin: 0;
+    margin-bottom: var(--size-3);
     padding: var(--size-1);
     background: var(--color-base-1);
     color: var(--color-base-2);

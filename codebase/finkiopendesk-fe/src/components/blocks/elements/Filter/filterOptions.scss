@@ -1,17 +1,15 @@
 @use '../../../../shared/global' as *;
 
 #filter-tab {
-  padding-left: var(--size-2);
-  padding-right: var(--size-2);
+  border-top: var(--color-base-2) 1px solid;
+  margin-left: var(--size-2);
+  margin-right: var(--size-2);
+  margin-bottom: var(--size-3);
 
   .filter-header{
     display: flex;
     flex-grow: 1;
     align-items: center;
-
-    h3 {
-      margin-bottom: var(--size-2);
-    }
 
     i {
       margin-left: auto;
@@ -45,10 +43,12 @@
   background-color: var(--color-base-0);
   border-right: 1px solid var(--color-base-2);
   overflow: hidden;
-  z-index: 19999;
+  z-index: 1200;
 
   @include media(xs) {
-    top: 0;
+    left: -1px;
+    top: 60px;
+    border-top: var(--color-base-2) 1px solid;
   }
 
   .filter-header {
@@ -117,6 +117,7 @@
     &:hover {
       background: var(--color-main-0);
       border-color: var(--color-main-1);
+      color: var(--color-main-1);
     }
 
     &.active {

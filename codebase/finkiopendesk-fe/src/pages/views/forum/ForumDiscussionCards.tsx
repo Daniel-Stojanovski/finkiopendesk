@@ -3,13 +3,14 @@ import {backapi} from "../../../shared/axios";
 import '../views.scss';
 import DiscussionCard from "../../../components/blocks/DiscussionCard/DiscussionCard";
 import QuickScrollButton from "../../../components/utility/QuickScrollButton/QuickScrollButton";
-import {useSectionScroll} from "../../../shared/hooks";
+import {useDebounce, useSectionScroll} from "../../../shared/hooks";
 import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
 import type {SubjectDto} from "../../../shared/dto/SubjectDto";
 import {useOutletContext} from "react-router-dom";
 import {useUserData} from "../../../shared/UserDataContext";
 import type {FiltersDto} from "../../../shared/dto/FiltersDto";
 import type {TagDto} from "../../../shared/dto/TagDto";
+import Spinner from "../../../components/utility/Spinner/Spinner";
 
 const ForumDiscussionCards = () => {
     const { favorites } = useUserData();
@@ -19,7 +20,30 @@ const ForumDiscussionCards = () => {
 
     const { searchQuery, filters } = useOutletContext<{ searchQuery: string, filters: FiltersDto }>();
 
-    const fetchData = async () => {
+    const [collapsed, setCollapsed] = useState({
+        professions: false,
+        subjects: false
+    });
+
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if(isFilterActive) {
+            setCollapsed(prev => ({
+                ...prev,
+                professions: true
+            }));
+        }
+    }, [filters]);
+
+    const toggleSection = (section: "professions" | "subjects") => {
+        setCollapsed(prev => ({
+            ...prev,
+            [section]: !prev[section]
+        }));
+    };
+
+    const fetchData = async (searchQuery: string) => {
         const professionParams: any = { query: searchQuery || undefined };
         const subjectParams: any = { query: searchQuery || undefined, ...filters };
 
@@ -28,12 +52,16 @@ const ForumDiscussionCards = () => {
         });
 
         try {
+            setLoading(true);
+
             await Promise.all([
                 backapi.get<ProfessionDto[]>('/professions', { params: professionParams }).then(res => setProfessionDiscussions(res.data)),
                 backapi.get<SubjectDto[]>('/subjects', { params: subjectParams }).then(res => setSubjectDiscussions(res.data))
             ]);
         } catch (err) {
             console.error(err);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -55,9 +83,16 @@ const ForumDiscussionCards = () => {
         return matchesSearch && matchesFilters;
     });
 
+    const debouncedQuery = useDebounce(searchQuery, 1000);
+
     useEffect(() => {
-        fetchData();
-    }, [searchQuery, filters]);
+        if (!debouncedQuery && !Object.values(filters).some(v => v)) {
+            fetchData("");
+            return;
+        }
+
+        fetchData(debouncedQuery);
+    }, [debouncedQuery, filters]);
 
     const checkTargetFavorite = (targetId: string, targetType: "subject" | "profession"): boolean => {
         return favorites.some(f => f.targetId === targetId && f.targetType === targetType);
@@ -65,55 +100,75 @@ const ForumDiscussionCards = () => {
 
     const activeSection = useSectionScroll(["Professions", "Subjects"]);
 
+    const isFilterActive = Object.values(filters).some(v => v !== null);
+
     return (
         <>
             <div id="discussions-grid">
                 <QuickScrollButton targetSection={activeSection} />
 
                 <section id="Professions">
-                    <h2> Professions </h2>
-                    <div className="discussions-sub-grid">
-                        {professionDiscussions.length === 0 ? (
-                            <p className="empty-message">
-                                {searchQuery
-                                    ? "No discussions match the search."
-                                    : "No discussions found."}
-                            </p>
-                        ) : (
-                            professionDiscussions.map(profession => (
-                                <DiscussionCard
-                                    key={profession.discussion.professionDiscussionId}
-                                    type={"profession"}
-                                    discussion={profession.discussion}
-                                    object={profession}
-                                    isFavorite={checkTargetFavorite(profession.professionId, "profession")}
-                                />
-                            ))
-                        )}
-                    </div>
+                    <h2 onClick={() => toggleSection("professions")} className="section-header">
+                        Professions
+                        <i className={`bi ${collapsed.professions ? "bi-chevron-down" : "bi-chevron-up"}`}></i>
+                    </h2>
+                    {!collapsed.professions && (
+                        <div>
+                            {loading ? (
+                                <div className="spinner-container">
+                                    <Spinner size={2}/>
+                                </div>
+                            ) : professionDiscussions.length === 0 ? (
+                                <p className="empty-message">
+                                    {searchQuery
+                                        ? "No discussions match the search."
+                                        : "No discussions found."}
+                                </p>
+                            ) : (
+                                professionDiscussions.map(profession => (
+                                    <DiscussionCard
+                                        key={profession.discussion.professionDiscussionId}
+                                        type={"profession"}
+                                        discussion={profession.discussion}
+                                        object={profession}
+                                        isFavorite={checkTargetFavorite(profession.professionId, "profession")}
+                                    />
+                                ))
+                            )}
+                        </div>
+                    )}
                 </section>
 
                 <section id="Subjects">
-                    <h2> Subjects </h2>
-                    <div className="discussions-sub-grid">
-                        {filteredSubjects.length === 0 ? (
-                            <p className="empty-message">
-                                {searchQuery
-                                    ? "No discussions match the search."
-                                    : "No discussions found."}
-                            </p>
-                        ) : (
-                            filteredSubjects.map(subject => (
-                                <DiscussionCard
-                                    key={subject.discussion.subjectDiscussionId}
-                                    type={"subject"}
-                                    discussion={subject.discussion}
-                                    object={subject}
-                                    isFavorite={checkTargetFavorite(subject.subjectId, "subject")}
-                                />
-                            ))
-                        )}
-                    </div>
+                    <h2 onClick={() => toggleSection("subjects")} className="section-header">
+                        Subjects
+                        <i className={`bi ${collapsed.subjects ? "bi-chevron-down" : "bi-chevron-up"}`}></i>
+                    </h2>
+                    {!collapsed.subjects && (
+                        <div>
+                            {loading ? (
+                                <div className="spinner-container">
+                                    <Spinner size={2}/>
+                                </div>
+                            ) : filteredSubjects.length === 0 ? (
+                                <p className="empty-message">
+                                    {searchQuery
+                                        ? "No discussions match the search."
+                                        : "No discussions found."}
+                                </p>
+                            ) : (
+                                filteredSubjects.map(subject => (
+                                    <DiscussionCard
+                                        key={subject.discussion.subjectDiscussionId}
+                                        type={"subject"}
+                                        discussion={subject.discussion}
+                                        object={subject}
+                                        isFavorite={checkTargetFavorite(subject.subjectId, "subject")}
+                                    />
+                                ))
+                            )}
+                        </div>
+                    )}
                 </section>
             </div>
         </>

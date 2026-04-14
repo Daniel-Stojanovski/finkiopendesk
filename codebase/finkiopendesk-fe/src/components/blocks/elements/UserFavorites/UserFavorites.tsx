@@ -16,7 +16,7 @@ const UserFavorites: React.FC<UserFavoritesProps> = ({ userFavorites, sidebarCol
         return (
             <div id="user-favorites">
                 <h3>Favorites</h3>
-                <p>Log in to access</p>
+                <p className="empty-message">Log in to access</p>
             </div>
         );
     }
@@ -24,25 +24,27 @@ const UserFavorites: React.FC<UserFavoritesProps> = ({ userFavorites, sidebarCol
     return (
         <div id="user-favorites">
             <h3>Favorites</h3>
-            {userFavorites && userFavorites.length > 0 ? (
-                <ul>
-                    {userFavorites.map(fav => (
-                        <li
-                            key={fav.targetId}
-                            onClick={() => listItemNavigate(fav.targetType, fav.targetId)}
-                        >
-                            <div className="ul-li-content">
-                                <span>{sidebarCollapsed ? useAcronym(fav.targetName ?? "-") : fav.targetName}</span>
-                                <span className="type-icon">
-                                    {fav.targetType?.[0]}
-                                </span>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>Try following discussions</p>
-            )}
+            <div id="uf-list-container">
+                {userFavorites && userFavorites.length > 0 ? (
+                    <ul>
+                        {userFavorites.map(fav => (
+                            <li
+                                key={fav.targetId}
+                                onClick={() => listItemNavigate(fav.targetType, fav.targetId)}
+                            >
+                                <div className="ul-li-content">
+                                    <span>{sidebarCollapsed ? useAcronym(fav.targetName ?? "-") : fav.targetName}</span>
+                                    <span className="type-icon">
+                                        {fav.targetType?.[0]}
+                                    </span>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p className="empty-message">Follow discussions</p>
+                )}
+            </div>
         </div>
     );
 };

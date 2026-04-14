@@ -3,6 +3,7 @@ import UserInfo from "../blocks/elements/UserInfo/UserInfo";
 import type {UserFavoriteDto} from "../../shared/dto/UserFavoriteDto";
 import UserFavorites from "../blocks/elements/UserFavorites/UserFavorites";
 import FilterTab from "../blocks/elements/Filter/FilterTab";
+import LogoImage from "../../logo/logo-compact-finkiopendesk-500x500.png";
 
 interface SidebarDesktopOpenProps {
     userFavorites: UserFavoriteDto[];
@@ -17,7 +18,7 @@ const SidebarDesktopOpen: React.FC<SidebarDesktopOpenProps> = ({userFavorites, i
         <div id="sidebar">
             <div className="sb-desktop">
                 <div className="sb-desktop-header">
-                    <img src="src/logo/logo-compact-finkiopendesk-500x500.png" alt="finkiopendesk_compact_icon" width={100} height={100}/>
+                    <img src={LogoImage} alt="finkiopendesk_compact_icon" width={100} height={100}/>
                 </div>
                 <UserFavorites userFavorites={userFavorites} />
                 {isFiltersVisible &&
