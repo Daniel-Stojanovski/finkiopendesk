@@ -1,7 +1,7 @@
 import "./loginFormPages.scss"
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
-import {auth} from "../../shared/axios";
+import {authpublic} from "../../shared/axios";
 import {validatePassword} from "../../shared/hooks";
 import LogoImage from "../../logo/logo-compact-finkiopendesk-500x250.png";
 import Spinner from "../../components/utility/Spinner/Spinner";
@@ -39,7 +39,7 @@ const RegisterPage = () => {
         setIsLoading(true);
 
         try {
-            await auth.post('students/create', null, {
+            await authpublic.post('students/create', null, {
                 params: { email: studentForm.email }
             });
 
@@ -66,9 +66,8 @@ const RegisterPage = () => {
         }
 
         try {
-            const res = await auth.post('users/create', userForm);
+            const res = await authpublic.post('users/create', userForm);
             localStorage.setItem("token", res.data);
-
             await fetchUser();
 
             navigate('/careers');

@@ -1,0 +1,81 @@
+@use '../../../shared/global' as *;
+
+#diagram {
+  width: 100%;
+  margin: auto;
+  height: auto;
+  min-width: 0;
+  overflow: hidden;
+
+  @include media(sm) {
+    overflow: auto;
+  }
+
+  .diagram-container {
+    position: relative;
+    transform: scale(0.99);
+    min-width: 100%;
+
+    border: 1px solid var(--color-base-2);
+    border-radius: var(--size-3);
+
+    background-color: #f9fafb;
+    background-image: radial-gradient($color-base-2 1px, transparent 1px);
+    background-size: var(--size-2) var(--size-2);
+
+    .svg-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .column-title {
+      position: absolute;
+      top: var(--size-2);
+
+      text-align: center;
+      font-weight: bold;
+      font-size: 12px;
+      color: var(--color-main-1);
+    }
+
+    .node {
+      position: absolute;
+
+      background: var(--color-base-0);
+      border: 2px solid var(--color-base-2);
+      border-radius: var(--size-2);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 10px;
+      white-space: nowrap;
+
+      z-index: 2;
+    }
+
+    .node-tag {
+      position: absolute;
+      top: calc(var(--size-1) * -1);
+      left: var(--size-1);
+
+      padding: calc(var(--size-1) / 2) var(--size-1);
+      font-size: 9px;
+      border-radius: var(--size-1);
+
+      color: var(--color-base-0);
+      line-height: 1;
+    }
+
+    .mandatory {
+      background: var(--color-main-1);
+    }
+
+    .elective {
+      background: var(--color-base-3);
+    }
+  }
+}

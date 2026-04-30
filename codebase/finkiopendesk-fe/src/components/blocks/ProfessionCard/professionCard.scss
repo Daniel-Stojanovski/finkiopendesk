@@ -1,21 +1,108 @@
 @use '../../../shared/global' as *;
 
 .profession-card {
-  height: 80%;
-
   border: 1px solid var(--color-base-1);
-  border-radius: var(--size-2);
+  border-radius: var(--size-4);
   margin-top: var(--size-2);
-  padding: var(--size-2);
+  padding: var(--size-2) var(--size-3);
 
   text-decoration: none;
   color: var(--color-base-4);
 
-  &:hover{
-    background: $gradient-70-30-v;
+  .pc-header {
+    display: inline-flex;
+    align-items: center;
 
+    @include media(xs) {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+      padding-bottom: var(--size-2);
+    }
+
+    .pc-tags {
+      display: inline-flex;
+
+      span {
+        margin: auto;
+        padding-left: var(--size-2);
+        color: var(--color-base-3);
+        font-size: 12px;
+
+        @include media(xs) {
+          padding: 0;
+        }
+      }
+
+      .tag-label {
+        font-size: 10px;
+        margin: auto;
+        margin-left: var(--size-2);
+        padding: var(--size-1);
+        background: var(--color-base-1);
+        color: var(--color-base-2);
+        border-radius: var(--size-1);
+
+        &.preferred {
+          background: var(--color-main-0);
+          color: var(--color-main-1);
+        }
+
+
+        &:hover {
+          background: var(--color-main-0);
+          border: var(--color-main-1) 1px solid;
+          color: var(--color-main-1);
+        }
+      }
+    }
+  }
+
+  p {
+    margin-top: 0;
+    color: var(--color-base-3);
+  }
+
+  .pc-buttons {
+    padding-bottom: var(--size-2);
+
+    button {
+      color: var(--color-base-3);
+      padding: var(--size-2);
+      margin-right: var(--size-2);
+      border: var(--color-base-1) 1px solid;
+      border-radius: var(--size-3);
+      text-decoration: none;
+
+      .rotate-90-r {
+        display: inline-block;
+        transform: rotate(90deg);
+      }
+
+      .scale-120 {
+        scale: 1.2;
+      }
+    }
+  }
+
+  &:hover{
     h3 {
       color: var(--color-main-1);
+    }
+
+    p {
+      color: var(--color-main-1);
+    }
+
+    button {
+      background: var(--color-base-1);
+
+      &:hover {
+        background: var(--color-main-0);
+        border: var(--color-main-1) 1px solid;
+        color: var(--color-main-1);
+      }
     }
   }
 }

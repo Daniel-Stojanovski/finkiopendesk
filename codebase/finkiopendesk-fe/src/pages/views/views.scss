@@ -1,8 +1,12 @@
 @use '../../shared/global' as *;
 
+* {
+  font-family: "Roboto Thin", sans-serif;
+}
+
 #professions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: 1fr;
   gap: 0 var(--size-2);
   align-items: stretch;
 
@@ -11,8 +15,7 @@
   }
 }
 
-#subjects-grid,
-#professions-grid {
+#subjects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
   gap: 0 var(--size-2);
@@ -69,11 +72,31 @@
       }
 
       &-title {
-        h3 {
-          margin: var(--size-1) 0;
+        display: inline-flex;
+        margin: var(--size-2) 0;
+        align-items: center;
+        width: 100%;
+
+        .type-label {
+          font-size: 14px;
+          margin: auto var(--size-1);
+          background: var(--color-main-0);
+          color: var(--color-main-1);
+          padding: var(--size-1) var(--size-2);
+          border-radius: var(--size-1);
+
+          @include media(xs) {
+            margin: auto;
+            margin-bottom: var(--size-1);
+          }
         }
-        p {
-          margin:0 0 var(--size-1) 0;
+
+        @include media(xs){
+          display: flex;
+          flex-direction: column;
+          text-align: center;
+
+          font-size: 18px;
         }
       }
 
@@ -111,24 +134,18 @@
       height: 100vh;
       overflow-y: auto;
 
+      .discussion-description {
+        margin-top: 0;
+        padding: var(--size-2);
+        border-bottom: 1px solid var(--color-base-2);
+        font-weight: normal;
+        color: var(--color-base-3);
+        text-align: center;
+      }
+
       @include media(sm) {
        margin: 0;
       }
-    }
-  }
-}
-
-.cards-view-header {
-  display: inline-flex;
-  width: 100%;
-  align-items: center;
-
-  i {
-    font-size: 24px;
-    padding: var(--size-2);
-
-    &:hover {
-      color: var(--color-main-1);
     }
   }
 }
@@ -137,4 +154,181 @@
   text-align: center;
   font-size: 14px;
   color: var(--color-base-3);
+}
+
+#guide-profession-view {
+  padding-right: var(--size-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-3);
+
+  .gpv-header {
+    display: inline-flex;
+    width: 100%;
+    padding-top: var(--size-3);
+
+    i {
+      font-size: 34px;
+      padding: var(--size-2);
+
+      &:hover {
+        color: var(--color-main-1);
+      }
+    }
+
+    &-title {
+      display: flex;
+      flex-direction: column;
+
+      h1 {
+        padding: var(--size-2);
+        margin: auto;
+        margin-left: 0;
+      }
+    }
+
+    p {
+      color: var(--color-base-3);
+      padding: var(--size-2);
+      margin: auto;
+      margin-left: 0;
+    }
+  }
+
+  .gpv-tab-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-base-2);
+
+    &-tabs {
+
+      button {
+        font-size: 16px;
+        height: 100%;
+        padding: var(--size-2) var(--size-6);
+        border: none;
+        background: transparent;
+        border-radius: var(--size-2) var(--size-2) 0 0;
+        color: var(--color-base-3);
+
+        &:hover {
+          border-bottom: 1px solid var(--color-main-1);
+        }
+
+        &.active {
+          background: var(--color-main-0);
+          color: var(--color-main-1);
+          border-bottom: 2px solid var(--color-main-1);
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .gpv-program-pills {
+    display: flex;
+    gap: var(--size-2);
+    overflow-x: auto;
+
+    span {
+      margin: auto 0;
+      color: var(--color-base-3);
+
+      &:first-child {
+        padding-left: var(--size-2)
+      }
+    }
+
+    .pill {
+      padding: var(--size-1) var(--size-2);
+      border-radius: var(--size-2);
+      border: 1px solid var(--color-base-2);
+      white-space: nowrap;
+      font-size: 14px;
+      color: var(--color-base-3);
+
+      &:hover {
+        background: var(--color-base-1);
+      }
+
+      &.active {
+        background: var(--color-main-0);
+        color: var(--color-main-1);
+        border-color: var(--color-main-1);
+      }
+    }
+  }
+
+  .gpv-tab-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    min-height: 300px;
+  }
+
+  .gpv-roadmap-content {
+    width: 100%;
+
+    .roadmap-wrapper{
+      margin: auto;
+      width: 100%;
+      display: block;
+      min-width: 0;
+    }
+  }
+}
+
+#guide-profession-cards {
+
+  .gpc-program-pills {
+    position: sticky;
+    top: 0;
+    display: flex;
+    padding: var(--size-2) 0;
+    gap: var(--size-2);
+    overflow-x: auto;
+    background: var(--color-base-0);
+    border-bottom: var(--color-base-2) 1px solid;
+    color: var(--color-base-3);
+    z-index: 300;
+
+    @include media(xs) {
+      top: 2px;
+    }
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      margin: auto 0;
+
+      i {
+        font-size: 12px;
+        padding-right: var(--size-1);
+      }
+
+      &:first-child {
+        padding-left: var(--size-2)
+      }
+    }
+
+    .pill {
+      padding: var(--size-1) var(--size-2);
+      border-radius: var(--size-2);
+      border: 1px solid var(--color-base-2);
+      white-space: nowrap;
+      font-size: 14px;
+      color: var(--color-base-3);
+
+      &:hover {
+        background: var(--color-base-1);
+      }
+
+      &.active {
+        background: var(--color-main-0);
+        color: var(--color-main-1);
+        border-color: var(--color-main-1);
+      }
+    }
+  }
 }

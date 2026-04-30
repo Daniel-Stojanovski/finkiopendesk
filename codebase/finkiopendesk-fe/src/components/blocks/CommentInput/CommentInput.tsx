@@ -30,7 +30,6 @@ const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, ch
     const [message, setMessage] = useState("");
 
     const inputPlaceholder = parentCommentId ? (selectedType ? `Replying ${selectedType}...` : 'Replying...') : CommentType[selectedType].message;
-    const buttonPlaceholder = parentCommentId ? 'Reply' : 'Send';
 
     const handleSubmit = async () => {
         if (!message.trim()) return;
@@ -66,8 +65,8 @@ const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, ch
         <div id="comment-input-bar">
             <div className="cib-variants">
                 {variants.map((variant: CommentTypeKey) => (
-                    <span key={variant} className={selectedType === variant ? "active" : ""}
-                          onClick={() => setSelectedType(variant)}>{useCommentTypeIcon(variant)}</span>
+                    <div key={variant} className={`cib-variant ${selectedType === variant ? "active" : ""}`}
+                          onClick={() => setSelectedType(variant)}>{useCommentTypeIcon(variant)}</div>
                 ))}
             </div>
             <input className="cib-input"
@@ -76,10 +75,10 @@ const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, ch
                    onChange={(e) => setMessage(e.target.value)}
                    onKeyDown={enterHandler}
             />
-            <button className="cib-submit" onClick={handleSubmit}>
-                {buttonPlaceholder}
-                <i className="bi bi-arrow-right-short"></i>
-            </button>
+            {/*<button className="cib-submit" onClick={handleSubmit}>*/}
+            {/*    {buttonPlaceholder}*/}
+            {/*    <i className="bi bi-arrow-right-short"></i>*/}
+            {/*</button>*/}
         </div>
     );
 };

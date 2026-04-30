@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "./axios";
+import { authprivate } from "./axios";
 import type {AuthContextDto} from "./dto/AuthContextDto";
 import type {UserDto} from "./dto/UserDto";
 import {UserDataProvider} from "./UserDataContext";
@@ -11,9 +11,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const fetchUser = async () => {
         const token = localStorage.getItem("token");
-        const res = await auth.get<UserDto>("/user", {
-            headers: { Authorization: `Bearer ${token}` }
-        });
+
+        if (!token) return;
+        const res = await authprivate.get<UserDto>("/user");
         setUser(res.data);
     };
 
@@ -23,7 +23,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     useEffect(() => {
-        fetchUser();
+        const token = localStorage.getItem("token");
+        if (token) fetchUser();
     }, []);
 
     return (

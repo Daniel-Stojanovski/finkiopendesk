@@ -3,15 +3,25 @@
 #comment-input-bar {
   display: inline-flex;
   width: 100%;
-  height: var(--size-4);
-  padding-bottom: var(--size-2);
+  height: calc(var(--size-6) + var(--size-2));
+  border-top: var(--color-base-2) 1px solid;
 
   .cib-variants{
+    display: inline-flex;
+    margin-right: var(--size-1);
     font-size: 20px;
     color: var(--color-base-3);
+    align-items: center;
 
-    span {
-      margin-right: var(--size-1);
+    .cib-variant {
+      display: flex;
+      width: var(--size-5);
+      height: var(--size-5);
+      margin-right: calc(var(--size-1) / 2);
+      background: var(--color-base-1);
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--size-3);
 
       &:hover {
         color: var(--color-main-1);
@@ -19,6 +29,7 @@
 
       &.active {
         color: var(--color-main-1);
+        background: var(--color-main-0);
       }
     }
   }
@@ -26,7 +37,7 @@
   .cib-input {
     display: inline-flex;
     flex-grow: 1;
-    margin-right: var(--size-1);
+    margin-right: var(--size-3);
 
     background: none;
     border: none;

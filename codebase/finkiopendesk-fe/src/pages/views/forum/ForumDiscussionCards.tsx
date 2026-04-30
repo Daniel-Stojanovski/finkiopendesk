@@ -27,15 +27,6 @@ const ForumDiscussionCards = () => {
 
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        if(isFilterActive) {
-            setCollapsed(prev => ({
-                ...prev,
-                professions: true
-            }));
-        }
-    }, [filters]);
-
     const toggleSection = (section: "professions" | "subjects") => {
         setCollapsed(prev => ({
             ...prev,
@@ -44,7 +35,7 @@ const ForumDiscussionCards = () => {
     };
 
     const fetchData = async (searchQuery: string) => {
-        const professionParams: any = { query: searchQuery || undefined };
+        const professionParams: any = { query: searchQuery || undefined, ...filters };
         const subjectParams: any = { query: searchQuery || undefined, ...filters };
 
         Object.entries(filters).forEach(([key, value]) => {
@@ -64,6 +55,21 @@ const ForumDiscussionCards = () => {
             setLoading(false);
         }
     };
+
+    const filteredProfessions = professionDiscussions.filter(profession => {
+        const matchesSearch =
+            !searchQuery ||
+            profession.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            profession.alternativeName?.toLowerCase().includes(searchQuery.toLowerCase());
+
+        const matchesProgramFilter =
+            !filters.program ||
+            profession.programs?.some(pp =>
+                pp.name === filters.program
+            );
+
+        return matchesSearch && matchesProgramFilter;
+    });
 
     const filteredSubjects = subjectDiscussions.filter(subject => {
         const matchesSearch =
@@ -100,8 +106,6 @@ const ForumDiscussionCards = () => {
 
     const activeSection = useSectionScroll(["Professions", "Subjects"]);
 
-    const isFilterActive = Object.values(filters).some(v => v !== null);
-
     return (
         <>
             <div id="discussions-grid">
@@ -118,14 +122,14 @@ const ForumDiscussionCards = () => {
                                 <div className="spinner-container">
                                     <Spinner size={2}/>
                                 </div>
-                            ) : professionDiscussions.length === 0 ? (
+                            ) : filteredProfessions.length === 0 ? (
                                 <p className="empty-message">
                                     {searchQuery
                                         ? "No discussions match the search."
                                         : "No discussions found."}
                                 </p>
                             ) : (
-                                professionDiscussions.map(profession => (
+                                filteredProfessions.map(profession => (
                                     <DiscussionCard
                                         key={profession.discussion.professionDiscussionId}
                                         type={"profession"}

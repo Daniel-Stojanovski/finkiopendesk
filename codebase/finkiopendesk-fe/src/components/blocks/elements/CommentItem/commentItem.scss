@@ -8,13 +8,10 @@
   &:hover {
     border-bottom: 1px solid var(--color-base-1);
 
-    sub {
-      background: var(--color-base-3);
+    &>.ci-header > .ci-reply-btn {
+      display: inline-block;
+      font-size: 12px;
     }
-  }
-
-  &:hover .ci-header > .ci-reply-btn {
-    display: inline-block;
   }
 
   &.active{
@@ -30,35 +27,33 @@
     max-width: 96%;
   }
 
-  sub {
-    background: var(--color-base-2);
-    color: var(--color-base-0);
-    margin-left: var(--size-1);
-    padding: 0 var(--size-1);
-    border-radius: var(--size-1);
-    width: 95%;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
   .ci-header{
     display: inline-flex;
     height: var(--size-4);
     align-items: center;
     flex-grow: 1;
-    font-size: 12px;
+
+    i {
+      font-size: 12px;
+    }
 
     .ci-user {
       display: inline-flex;
       padding-left: var(--size-1);
-      font-style: italic;
+      font-weight: bold;
       min-width: 0;
+      max-width: 90%;
 
-      span {
+      sub {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
         margin-left: var(--size-1);
         color: var(--color-base-2);
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
 

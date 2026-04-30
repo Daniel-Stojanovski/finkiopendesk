@@ -13,6 +13,7 @@ public class ProfessionDto {
     private String description;
     private ProfessionDiscussionDto discussion;
     private List<SubjectDto> recommendedSubjects;
+    private List<ProgramDto> programs;
 
     public static ProfessionDto fromEntity(Profession profession) {
         ProfessionDto dto = new ProfessionDto();
@@ -28,6 +29,12 @@ public class ProfessionDto {
         dto.setRecommendedSubjects(
             profession.getRecommendedSubjects().stream()
                 .map(SubjectDto::fromEntity)
+                .toList()
+        );
+
+        dto.setPrograms(
+            profession.getApplicablePrograms().stream()
+                .map(ProgramDto::fromEntity)
                 .toList()
         );
 

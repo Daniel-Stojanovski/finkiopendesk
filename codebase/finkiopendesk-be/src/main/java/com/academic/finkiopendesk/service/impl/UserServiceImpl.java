@@ -1,5 +1,6 @@
 package com.academic.finkiopendesk.service.impl;
 
+import com.academic.finkiopendesk.model.Program;
 import com.academic.finkiopendesk.model.User;
 import com.academic.finkiopendesk.repository.UserRepository;
 import com.academic.finkiopendesk.service.PasswordService;
@@ -74,6 +75,19 @@ public class UserServiceImpl implements UserService {
         validatePassword(rawPassword, user);
         validateUserData(user);
         return user;
+    }
+
+
+    @Override
+    public User setUserProgram(User user, Program program) {
+        user.setSelectedProgram(program);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User removeUserProgram(User user) {
+        user.setSelectedProgram(null);
+        return userRepository.save(user);
     }
 
 

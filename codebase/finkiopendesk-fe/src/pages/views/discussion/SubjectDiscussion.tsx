@@ -54,16 +54,21 @@ const SubjectDiscussion = () => {
                             <i className="bi bi-list" ></i>
                         </button>
                     )}
-                    <div className="discussion-header-title">
-                        <h3>{discussion?.name}</h3>
-                        {discussion?.description && (
-                            <p>{discussion.description}</p>
-                        )}
-                    </div>
+
+                    <h2 className="discussion-header-title">
+                        <span className="type-label">Subject</span>
+                        {discussion?.name}
+                    </h2>
+
+                    {/*<p className="discussion-header-tags">tags</p>*/}
+
                     <i className="bi bi-x-lg" onClick={() => navigate("/discussions")}></i>
                     {isViewSmall && (!isTabletOpen && <i className="bi bi-diagram-3" onClick={openTabletChannelSidebar}></i>)}
                 </div>
                 <div className="discussion-comments-view">
+                    {discussion?.description && (
+                        <h3 className="discussion-description">Welcome to the {discussion.description}</h3>
+                    )}
                     <CommentLoader comments={comments}
                                    replyingTo={selectedCommentId}
                                    setParentCommentId={setSelectedCommentId}

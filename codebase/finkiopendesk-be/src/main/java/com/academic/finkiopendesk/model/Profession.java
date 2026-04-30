@@ -46,4 +46,14 @@ public class Profession {
 
     @OneToOne(mappedBy = "profession")
     private ProfessionDiscussion discussion;
+
+    @OneToMany(mappedBy = "profession", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProfessionProgram> programs = new ArrayList<>();
+
+    public List<Program> getApplicablePrograms() {
+        return programs.stream()
+                .filter(ProfessionProgram::isApplicable)
+                .map(ProfessionProgram::getProgram)
+                .toList();
+    }
 }

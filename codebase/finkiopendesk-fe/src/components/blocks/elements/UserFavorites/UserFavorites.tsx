@@ -15,7 +15,7 @@ const UserFavorites: React.FC<UserFavoritesProps> = ({ userFavorites, sidebarCol
     if (!user) {
         return (
             <div id="user-favorites">
-                <h3>Favorites</h3>
+                <h3>Quick Access</h3>
                 <p className="empty-message">Log in to access</p>
             </div>
         );
@@ -23,7 +23,7 @@ const UserFavorites: React.FC<UserFavoritesProps> = ({ userFavorites, sidebarCol
 
     return (
         <div id="user-favorites">
-            <h3>Favorites</h3>
+            <h3>Quick Access</h3>
             <div id="uf-list-container">
                 {userFavorites && userFavorites.length > 0 ? (
                     <ul>

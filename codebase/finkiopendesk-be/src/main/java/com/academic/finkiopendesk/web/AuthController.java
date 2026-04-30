@@ -1,7 +1,10 @@
 package com.academic.finkiopendesk.web;
 
+import com.academic.finkiopendesk.model.Program;
 import com.academic.finkiopendesk.model.User;
+import com.academic.finkiopendesk.model.UserFavorite;
 import com.academic.finkiopendesk.service.EmailService;
+import com.academic.finkiopendesk.service.ProgramService;
 import com.academic.finkiopendesk.service.TokenService;
 import com.academic.finkiopendesk.service.UserService;
 import com.academic.finkiopendesk.web.dto.ActivationRequest;
@@ -12,6 +15,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @CrossOrigin(origins = {"http://localhost:5173", "http://localhost:8080"})
@@ -20,11 +24,13 @@ import java.util.UUID;
 public class AuthController {
 
     private final UserService userService;
+    private final ProgramService programService;
     private final TokenService tokenService;
     private final EmailService emailService;
 
-    public AuthController(UserService userService, TokenService tokenService, EmailService emailService) {
+    public AuthController(UserService userService, ProgramService programService, TokenService tokenService, EmailService emailService) {
         this.userService = userService;
+        this.programService = programService;
         this.tokenService = tokenService;
         this.emailService = emailService;
     }
@@ -82,6 +88,27 @@ public class AuthController {
         String userId = token.getToken().getSubject();
 
         return userService.findById(UUID.fromString(userId));
+    }
+
+    @PostMapping("/user/program/{programId}")
+    public ResponseEntity<?> setProgram(Authentication auth, @PathVariable String programId) {
+        JwtAuthenticationToken token = (JwtAuthenticationToken) auth;
+        UUID userId = UUID.fromString(token.getToken().getSubject());
+        User user = userService.findById(userId);
+        Program program = programService.findById(programId);
+
+        userService.setUserProgram(user, program);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/user/program")
+    public ResponseEntity<?> removeProgram(Authentication auth) {
+        JwtAuthenticationToken token = (JwtAuthenticationToken) auth;
+        UUID userId = UUID.fromString(token.getToken().getSubject());
+        User user = userService.findById(userId);
+
+        userService.removeUserProgram(user);
+        return ResponseEntity.ok().build();
     }
 
 }

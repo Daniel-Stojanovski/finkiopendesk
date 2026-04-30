@@ -1,4 +1,3 @@
-import React from "react";
 import './notificationsBox.scss';
 import type {NotificationEventDto} from "../../../../shared/dto/NotificationEventDto";
 import {useNavigate} from "react-router-dom";
@@ -48,7 +47,7 @@ const NotificationsEventItem: React.FC<NotificationsEventItemProps> = ({ data, c
             className={`notification-event ${!data.statusRead ? "unread" : ""}`}
             onClick={handleClick}
         >
-            <p>{data.message}</p>
+            <p><span>{!data.statusRead ? '•' : ''}</span> {data.message}</p>
         </div>
     );
 };

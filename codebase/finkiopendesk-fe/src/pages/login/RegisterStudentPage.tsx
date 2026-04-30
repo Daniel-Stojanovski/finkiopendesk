@@ -1,7 +1,7 @@
 import "./loginFormPages.scss"
 import { useSearchParams, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import {auth} from "../../shared/axios";
+import {authpublic} from "../../shared/axios";
 import {validatePassword} from "../../shared/hooks";
 import LogoImage from "../../logo/logo-compact-finkiopendesk-500x250.png";
 import {useAuth} from "../../shared/AuthContext";
@@ -32,9 +32,8 @@ const RegisterStudentPage = () => {
         }
 
         try {
-            const res = await auth.post('students/activate', { token, password });
+            const res = await authpublic.post('students/activate', { token, password });
             localStorage.setItem("token", res.data);
-
             await fetchUser();
 
             navigate("/careers");

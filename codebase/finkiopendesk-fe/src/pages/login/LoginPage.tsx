@@ -1,7 +1,7 @@
 import "./loginFormPages.scss"
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {auth} from "../../shared/axios";
+import {authpublic} from "../../shared/axios";
 import {useAuth} from "../../shared/AuthContext";
 import LogoImage from "../../logo/logo-compact-finkiopendesk-500x250.png";
 
@@ -34,12 +34,11 @@ const LoginPage = () => {
         setError(null);
 
         try {
-            const res = await auth.post('/login', {
+            const res = await authpublic.post('/login', {
                 email: loginForm.email,
                 password: loginForm.password
             })
             const token = res.data;
-
             localStorage.setItem("token", token);
             await fetchUser();
             navigate("/careers");

@@ -1,15 +1,14 @@
 @use '../../../shared/global' as *;
 
 #channel-sidebar {
-  padding: var(--size-1);
+  padding: 0 var(--size-2);
 
   ul {
     list-style: none;
-    padding-left: var(--size-2);
+    padding: 0;
     color: var(--color-base-2);
 
     li {
-      display: inline-block;
       background: var(--color-base-1);
       border-radius: var(--size-1);
       margin-bottom: var(--size-1);
@@ -18,7 +17,6 @@
       &:hover {
         background: var(--color-main-0);
         color: var(--color-main-1);
-        padding: var(--size-1) var(--size-3);
       }
     }
   }
@@ -66,7 +64,7 @@
     box-sizing: border-box;
     width: 220px;
     background-color: var(--color-base-0);
-    border-left: var(--color-base-3) 1px solid;
+    border-left: var(--color-base-2) 1px solid;
     z-index: 200;
   }
 

@@ -29,6 +29,10 @@ public class User {
     private boolean student;
 
     private boolean enabled;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "selected_program_id")
+    private Program selectedProgram;
 }
 
 

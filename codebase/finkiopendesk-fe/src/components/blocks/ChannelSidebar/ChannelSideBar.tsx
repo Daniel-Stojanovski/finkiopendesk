@@ -22,7 +22,8 @@ function loadChannels(channels: ChannelDto[]) {
                 ? (channels.map(channel => (
                     <span>
                         <li key={channel.channelId} onClick={() => navigate(`/discussion/cid/${channel.channelId}`)}>
-                            <i className="bi bi-tag"></i> {channel.name.split(" | ")?.[1]}
+                            <i className="bi bi-arrow-return-right"></i> #{channel.name.split(" | ")?.[1]}
+                            {/*<i className="bi bi-tag"></i> {channel.name.split(" | ")?.[1]}*/}
                         </li>
                     </span>)))
                 : (<p>No channels available</p>)

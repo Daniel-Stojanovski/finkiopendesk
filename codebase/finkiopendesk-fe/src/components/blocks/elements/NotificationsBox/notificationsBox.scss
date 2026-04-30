@@ -4,9 +4,11 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 400px;
   min-height: 0;
-  height: 400px;
+  //height: 400px;
+  height: 600px;
+  //max-height: 600px;
   top: 48px;
   right: var(--size-3);
   background-color: var(--color-base-0);
@@ -33,9 +35,8 @@
   }
 
   h3 {
-    margin: var(--size-2);
-    margin-bottom: 0;
-    padding-bottom: var(--size-2);
+    margin: auto;
+    padding: var(--size-3) var(--size-2);
     border-bottom: var(--color-base-2) 1px solid;
     flex-shrink: 0;
   }
@@ -43,6 +44,10 @@
   p {
     margin-left: var(--size-2);
     color: var(--color-base-3);
+
+    span {
+      color: var(--color-main-1);
+    }
   }
 
   &.visible {
@@ -72,18 +77,21 @@
     .ngh-box {
       display: flex;
       align-items: center;
+      height: var(--size-6);
       flex-grow: 1;
 
       .ngh-title {
         display: inline-flex;
         flex-grow: 1;
-        margin: var(--size-2) var(--size-1);
+        margin: 0;
       }
 
       .ngh-message {
-        margin: auto;
+        margin: 0;
+        padding: var(--size-2);
         font-size: 12px;
-        color: var(--color-base-3);
+        font-weight: bold;
+        color: var(--color-main-1) !important;
       }
     }
 
@@ -113,7 +121,7 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 400px;
   min-height: 0;
   height: auto;
   top: 48px;
@@ -150,17 +158,18 @@
 }
 
 .notification-event {
-  padding-left: var(--size-2);
   color: var(--color-base-3);
+  text-align: start;
 
   p {
     margin: 0;
-    padding: var(--size-1) 0;
+    padding: var(--size-2) 0;
   }
 
   &.unread{
-    background: $gradient-70-30-h;
-    color: var(--color-main-1);
+    p {
+      color: var(--color-main-1) !important;
+    }
 
     &:hover{
       background: var(--color-main-0);

@@ -9,6 +9,7 @@ import {DiscussionType} from "../../../shared/const/DiscussionTypeConst";
 import {useEffect, useState} from "react";
 import type {ChannelDto} from "../../../shared/dto/ChannelDto";
 import {api} from "../../../shared/axios";
+import {useOutletContext} from "react-router-dom";
 
 interface DiscussionCardProps extends DiscussionObjectDto {
     isFavorite: boolean;
@@ -17,7 +18,8 @@ interface DiscussionCardProps extends DiscussionObjectDto {
 const DiscussionCard: React.FC<DiscussionCardProps> = (props) => {
     const { user } = useAuth();
     const navigate = useNavigate();
-    const { toggleFavorite } = useUserData();
+    const { openInfoBox } = useOutletContext<any>();
+    const { toggleFavorite, selectedUserProgram } = useUserData();
 
     const [channels, setChannels] = useState<ChannelDto[]>([]);
 
@@ -60,28 +62,46 @@ const DiscussionCard: React.FC<DiscussionCardProps> = (props) => {
     return (
         <div className="discussion-card">
             <div className="dc-header">
-                { canUserContribute &&
-                    <i className={`favorite-button bi ${props.isFavorite ? "bi-star-fill active" : "bi-star"}`}
-                             onClick={() => toggleFavorite(targetId, props.type)}>
-                    </i>
-                }
-                <h3>{props.discussion.name}</h3>
+                <div className="dc-header-title">
+                    { canUserContribute &&
+                        <i className={`favorite-button bi ${props.isFavorite ? "bi-star-fill active" : "bi-star"}`}
+                           onClick={() => toggleFavorite(targetId, props.type)}>
+                        </i>
+                    }
+                    <h3>{props.discussion.name}</h3>
+                </div>
+
+                {props.type == DiscussionType.PROFESSION && (
+                    <div className="dc-tags">
+                        <span>Pursued in: </span>
+                        {(props.object as ProfessionDto).programs?.map(pp => (
+                            <p key={pp.programId} className={`tag-label ${selectedUserProgram?.name == pp.name ? 'preferred' : ''}`} onClick={() => openInfoBox(pp)}>#{pp.name}</p>
+                        ))}
+                    </div>
+                )}
 
                 {props.type == DiscussionType.SUBJECT && (
-                    channels.map(tag => (
-                        <p key={tag.channelId} className="tag-label" onClick={() => navigate(`/discussion/cid/${tag.channelId}`)}><i className="bi bi-tag"></i>{tag.name.split(' | ')[1]}</p>
-                    ))
+                    <div className="dc-tags">
+                        <span>Available as: </span>
+                        {channels.map(tag => (
+                            <p key={tag.channelId} className="tag-label" onClick={() => navigate(`/discussion/cid/${tag.channelId}`)}>
+                                <i className="bi bi-arrow-return-right hover-show"></i> #{tag.name.split(' | ')[1]}
+                            </p>
+                        ))}
+                    </div>
                 )}
 
             </div>
             {props.discussion.description && <p>{props.discussion.description}</p>}
 
-            <button onClick={goToDiscussion}>
-                {canUserContribute
-                    ? <>Enter Discussion <i className="bi bi-arrow-right"></i></>
-                    : <>View Discussion <i className="bi bi-eye"></i></>
-                }
-            </button>
+            <div className="dc-buttons">
+                <button onClick={goToDiscussion}>
+                    {canUserContribute
+                        ? <>Enter Discussion <i className="bi bi-arrow-right"></i></>
+                        : <>View Discussion <i className="bi bi-eye"></i></>
+                    }
+                </button>
+            </div>
         </div>
     );
 };

@@ -1,0 +1,123 @@
+@use '../../../../shared/global' as *;
+
+#info-box {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 500px;
+  height: 100%;
+  background: var(--color-base-0);
+  border-left: 1px solid var(--color-base-2);
+  padding: var(--size-1);
+  z-index: 2100;
+  color: var(--color-base-4);
+
+  display: flex;
+  flex-direction: column;
+
+  @include media(xs) {
+    width: 90%;
+  }
+
+  .info-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--size-1);
+    border-bottom: 1px solid var(--color-base-2);
+
+    &-title {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--size-1);
+
+      .type-label {
+        display: inline-flex;
+        gap: var(--size-1);
+        font-size: 18px;
+        margin: auto var(--size-1);
+        background: var(--color-main-0);
+        color: var(--color-main-1);
+        padding: var(--size-1) var(--size-2);
+        border-radius: var(--size-1);
+      }
+    }
+
+    &>i {
+      padding-right: var(--size-2);
+
+      &:hover {
+        color: var(--color-main-1);
+      }
+    }
+  }
+
+  .info-box-content {
+    padding: var(--size-3);
+    overflow-y: auto;
+
+    .name-label {
+      font-size: 14px;
+      margin: auto;
+      background: var(--color-main-0);
+      color: var(--color-main-1);
+      padding: var(--size-1) var(--size-2);
+      border-radius: var(--size-1);
+    }
+
+    .ibc-text {
+      color: var(--color-main-1);
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--size-1);
+        margin: 0;
+        margin-bottom: var(--size-1);
+        border-radius: var(--size-4);
+        border: var(--color-base-1) 1px solid;
+        color: var(--color-base-3);
+
+        &:hover {
+          border-color:var(--color-main-1);
+          color: var(--color-main-1);
+        }
+
+        p {
+          margin: 0;
+          padding-left: var(--size-2);
+        }
+
+        button {
+          color: var(--color-base-3);
+          padding: var(--size-2);
+          border: var(--color-base-1) 1px solid;
+          border-radius: var(--size-3);
+          text-decoration: none;
+
+          .rotate-90-r {
+            display: inline-block;
+            transform: rotate(90deg);
+          }
+
+          .scale-120 {
+            scale: 1.2;
+          }
+
+          &:hover {
+            background: var(--color-main-0);
+            border: var(--color-main-1) 1px solid;
+            color: var(--color-main-1);
+          }
+        }
+      }
+    }
+  }
+}

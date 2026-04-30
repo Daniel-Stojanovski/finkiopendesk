@@ -11,6 +11,8 @@ import type {NotificationGroupDto} from "../../shared/dto/NotificationGroupDto";
 import {isView, useBreakpoint} from "../../shared/hooks";
 import FilterBox from "../../components/blocks/elements/Filter/FilterBox";
 import type {FiltersDto} from "../../shared/dto/FiltersDto";
+import InfoBox from "../../components/blocks/elements/InfoBox/InfoBox";
+import type {ProgramDto} from "../../shared/dto/ProgramDto";
 
 const Layout: React.FC = () => {
     const { user } = useAuth();
@@ -21,6 +23,8 @@ const Layout: React.FC = () => {
     const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 
     const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [isInfoBoxOpen, setIsInfoBoxOpen] = useState(false);
+    const [infoObject, setInfoObject] = useState<ProgramDto | null>(null);
 
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -33,10 +37,17 @@ const Layout: React.FC = () => {
 
     const isViewMobile = (bp === "xs");
 
-    const showMainBackdrop =
+    const showMobileMainBackdrop =
         isViewMobile && (isMobileOpen || isFilterOpen);
 
+    // const showMainBackdrop =
+    //     !isViewMobile && (isMobileOpen || isFilterOpen);
+
+    const showGlobalBackdrop =
+        isInfoBoxOpen;
+
     const showContentBackdrop =
+        // !isViewMobile && (isFilterOpen || isInfoBoxOpen);
         !isViewMobile && isFilterOpen;
 
     const isDiscussionView = isView('/discussion/');
@@ -49,6 +60,11 @@ const Layout: React.FC = () => {
 
     const toggleFilters = () => {
         setIsFilterOpen(prev => !prev);
+    };
+
+    const openInfoBox = (data: ProgramDto) => {
+        setInfoObject(data);
+        setIsInfoBoxOpen(true);
     };
 
     useEffect(() => {
@@ -92,12 +108,21 @@ const Layout: React.FC = () => {
             />
 
             <div className="main">
-                {showMainBackdrop && (
+                {showMobileMainBackdrop && (
                     <div
                         className="main-backdrop"
                         onClick={() => {
                             setIsMobileOpen(false);
                             setIsFilterOpen(false);
+                        }}
+                    />
+                )}
+
+                {showGlobalBackdrop && (
+                    <div
+                        className="main-global-backdrop"
+                        onClick={() => {
+                            setIsInfoBoxOpen(false);
                         }}
                     />
                 )}
@@ -123,8 +148,9 @@ const Layout: React.FC = () => {
                     )}
 
                     <FilterBox isOpen={isFilterOpen} filters={filters} setFilters={setFilters} onClose={() => setIsFilterOpen(false)} filterTag={filterTag}/>
+                    <InfoBox isOpen={isInfoBoxOpen} onClose={() => setIsInfoBoxOpen(false)} object={infoObject as ProgramDto}/>
 
-                    <Outlet context={{ searchQuery, filters, setFilters, openSidebar: () => setIsMobileOpen(true) }} />
+                    <Outlet context={{ searchQuery, filters, setFilters, openInfoBox, openSidebar: () => setIsMobileOpen(true) }} />
                     <br/>
                 </div>
             </div>
