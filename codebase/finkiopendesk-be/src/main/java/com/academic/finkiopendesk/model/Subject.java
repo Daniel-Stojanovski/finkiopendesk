@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @JsonIdentityInfo(
@@ -37,4 +38,8 @@ public class Subject {
 
     @OneToMany(mappedBy = "subject")
     private Set<SubjectTag> subjectTags = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "subject")
+    private Set<ProgramSubject> programSubjects = new HashSet<>();
 }

@@ -65,7 +65,7 @@ const GuideProfessionView = () => {
         fetchData();
     }, [pid, user]);
 
-    const [selectedProgramOption, setSelectedProgramOption] = useState<string>("all");
+    // const [selectedProgramOption, setSelectedProgramOption] = useState<string>("all");
 
     return (
         <>
@@ -91,21 +91,20 @@ const GuideProfessionView = () => {
                     </div>
                 </div>
 
-                <div className="gpv-program-pills">
-                    <span><i className="bi bi-sliders2"></i></span>
-                    {/*<span><i className="bi bi-sliders2"></i> Program: </span>*/}
-                    <span className={`pill ${selectedProgramOption === "all" ? "active" : ""}`} onClick={() => setSelectedProgramOption("all")}>
-                        Basic
-                    </span>
+                {/*<div className="gpv-program-pills">*/}
+                {/*    <span><i className="bi bi-sliders2"></i></span>*/}
+                {/*    <span className={`pill ${selectedProgramOption === "all" ? "active" : ""}`} onClick={() => setSelectedProgramOption("all")}>*/}
+                {/*        Basic*/}
+                {/*    </span>*/}
 
-                    {profession?.programs?.map(p => (
-                        <span key={p.programId} className={`pill ${selectedProgramOption === p.name ? "active" : ""}`}
-                            onClick={() => setSelectedProgramOption(prev => prev === p.name ? "all" : p.name)}
-                        >
-                            {p.name}
-                        </span>
-                    ))}
-                </div>
+                {/*    {profession?.programs?.map(p => (*/}
+                {/*        <span key={p.programId} className={`pill ${selectedProgramOption === p.name ? "active" : ""}`}*/}
+                {/*            onClick={() => setSelectedProgramOption(prev => prev === p.name ? "all" : p.name)}*/}
+                {/*        >*/}
+                {/*            {p.name}*/}
+                {/*        </span>*/}
+                {/*    ))}*/}
+                {/*</div>*/}
 
                 <div className="gpv-tab-content">
                     {activeTab === "roadmap" ? (

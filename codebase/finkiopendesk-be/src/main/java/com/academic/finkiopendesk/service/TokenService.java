@@ -29,7 +29,8 @@ public class TokenService {
                 Decoders.BASE64.decode("q9H3FJY8cX0M1kZrQm2T8eP5VdK6A7bLwS4N0uR9yIs=")
         );
         this.loginKey = Keys.hmacShaKeyFor(
-                Decoders.BASE64.decode("s6AH218hsa09ha0i9zxT6LAS2vgd7aIoa9uXAW71zaX=")
+                java.util.Base64.getDecoder().decode("s6AH218hsa09ha0i9zxT6LAS2vgd7aIoa9uXAW71zaX=")
+//                Decoders.BASE64.decode("s6AH218hsa09ha0i9zxT6LAS2vgd7aIoa9uXAW71zaX=")
         );
     }
 

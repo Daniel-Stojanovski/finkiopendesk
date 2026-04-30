@@ -8,6 +8,7 @@ import {useAuth} from "../../../shared/AuthContext";
 import {useEffect, useState} from "react";
 import type {ChannelDto} from "../../../shared/dto/ChannelDto";
 import {useNavigate} from "react-router-dom";
+import {useUserData} from "../../../shared/UserDataContext";
 
 interface SubjectCardProps {
     type?: CardTypeKey;
@@ -15,13 +16,18 @@ interface SubjectCardProps {
     professionId?: string;
     voteCount?: number;
     userVote?: number;
-    isRecommended?: boolean;
     refreshVotes?: () => Promise<void>;
+    meta?: {
+        mandatoryPrograms: string[];
+        electivePrograms: string[];
+        otherPrograms: string[];
+    }
 }
 
-const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, voteCount = 0, userVote, isRecommended, refreshVotes }) => {
+const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, voteCount = 0, userVote, refreshVotes, meta }) => {
     const { user } = useAuth();
     const navigate = useNavigate();
+    const { selectedUserProgram } = useUserData();
 
     const canUserVote = user && user.student;
 
@@ -56,12 +62,30 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, 
     return (
         <div className={`subject ${vote ? "active"  : ""}`}>
             <div className="subject-content">
-                {(type == CardType.VOTE && isRecommended) && <i className="bi bi-bookmark-check-fill recommended"></i>}
-                <h3>{subject.name}</h3>
+                <div className="sc-header">
+                    <h3>{subject.name}</h3>
+                    <div className="sc-tags">
+                        {(meta?.mandatoryPrograms ?? []).length > 0 && (
+                            <span>Mandatory: {meta?.mandatoryPrograms.map((ps, i) => (
+                                <p key={i} className={`tag-label ${selectedUserProgram?.name == ps ? 'preferred' : ''}`}>#{ps}</p>
+                            ))}
+                            </span>
+                        )}
+
+                        {(meta?.electivePrograms ?? []).length > 0 && (
+                            <span>Elective: {meta?.electivePrograms.map((ps, i) => (
+                                <p key={i} className={`tag-label ${selectedUserProgram?.name == ps ? 'preferred' : ''}`}>#{ps}</p>
+                            ))}
+                            </span>
+                        )}
+                    </div>
+                </div>
                 {channels.map(tag => (
-                    <p key={tag.channelId} className="tag-label" onClick={() => navigate(`/discussion/cid/${tag.channelId}`)}><i className="bi bi-tag"></i>{tag.name.split(' | ')[1]}</p>
+                    <p key={tag.channelId} className="channel-label" onClick={() => navigate(`/discussion/cid/${tag.channelId}`)}><i className="bi bi-tag"></i>{tag.name.split(' | ')[1]}</p>
                 ))}
             </div>
+
+
 
             {type == CardType.VOTE &&
                 <div className="subject-state">
