@@ -16,7 +16,7 @@ CREATE TABLE program_subject (
 );
 
 INSERT INTO program_subject (program_id, subject_id, type) VALUES
---     ('e03760c0-6e69-4f7e-ab8e-5486ea85a934', '04b4b0d2-531c-438d-b600-8a34c6b59ef7', 'ELECTIVE'),
+    ('e03760c0-6e69-4f7e-ab8e-5486ea85a934', '04b4b0d2-531c-438d-b600-8a34c6b59ef7', 'ELECTIVE'),
     ('e03760c0-6e69-4f7e-ab8e-5486ea85a934', '06228892-c99c-4927-a629-90f6807504bc', 'ELECTIVE'),
     ('e03760c0-6e69-4f7e-ab8e-5486ea85a934', '07cae48f-be74-407d-89c1-78706caa7942', 'MANDATORY'),
     ('e03760c0-6e69-4f7e-ab8e-5486ea85a934', '097ec1ef-0e2d-459c-83d9-b4fd70945f7d', 'ELECTIVE'),

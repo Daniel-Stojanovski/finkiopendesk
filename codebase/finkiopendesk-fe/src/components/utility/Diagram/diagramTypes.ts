@@ -1,11 +1,14 @@
 export type SubjectNode = {
     id: string;
     label: string;
-    type: "MANDATORY" | "ELECTIVE" | "OTHER";
-    program: string;
-    subjectId?: string;
-    dependencies?: string[];
-}
+
+    instances?: {
+        program: string;
+        type: "MANDATORY" | "ELECTIVE" | "OTHER";
+    }[];
+
+    dependencyIds?: string[];
+};
 
 export interface Column {
     id: string;

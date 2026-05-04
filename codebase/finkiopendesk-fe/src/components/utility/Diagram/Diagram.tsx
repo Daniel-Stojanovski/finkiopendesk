@@ -29,24 +29,18 @@ const Diagram: React.FC<DiagramProps> = ({ columns }) => {
         return () => resizeObserver.disconnect();
     }, []);
 
-    const flatColumns: Column[] = useMemo(() => {
-        return [{
-            id: "Subjects",
-            nodes: columns.flatMap(col => col.nodes),
-        }];
-    }, [columns]);
-
     const config: LayoutConfig = useMemo(() => {
+        const columnCount = columns.length;
 
         const sidePadding = 20;
-        const horizontalGap = 0;
+        const horizontalGap = 60;
 
         const availableWidth = Math.max(
             0,
             containerWidth - sidePadding * 2
         );
 
-        const nodeWidth = Math.max(120, availableWidth);
+        const nodeWidth = Math.max(80, ((availableWidth - horizontalGap * 2) / columnCount));
 
         return {
             nodeWidth,
@@ -58,10 +52,9 @@ const Diagram: React.FC<DiagramProps> = ({ columns }) => {
         };
     }, [containerWidth]);
 
-    const nodes = useMemo(
-        () => layoutColumns(flatColumns, config),
-        [flatColumns, config]
-    );
+    const nodes = useMemo(() => {
+        return layoutColumns(columns, config);
+    }, [columns, config]);
 
     const edges = useMemo(
         () => generateEdges(nodes),
@@ -114,13 +107,20 @@ const Diagram: React.FC<DiagramProps> = ({ columns }) => {
                     })}
                 </svg>
 
-                <div className="column-title"
-                    style={{
-                        left: config.sidePadding,
-                        width: config.nodeWidth,
-                    }}>
-                    Subject Roadmap
-                </div>
+                {columns.map((col, i) => (
+                    <div
+                        key={col.id}
+                        className="column-title"
+                        style={{
+                            left:
+                                i * (config.nodeWidth + config.horizontalGap) +
+                                config.sidePadding,
+                            width: config.nodeWidth,
+                        }}
+                    >
+                        {col.id}
+                    </div>
+                ))}
 
                 {nodes.map(node => (
                     <div key={node.id}
@@ -131,14 +131,12 @@ const Diagram: React.FC<DiagramProps> = ({ columns }) => {
                             width: config.nodeWidth,
                             height: config.nodeHeight,
                         }}>
-                        {node.program && node.type && (
-                            <div className={`node-tag ${node.type.toLowerCase()}`}>
-                                {node.program}/
-                                {node.type === "MANDATORY"
-                                    ? "Mandatory"
-                                    : "Elective"}
+
+                        {node.instances?.map((inst, i) => (
+                            <div key={i} className={`node-tag ${inst.type.toLowerCase()}`}>
+                                {inst.program}/{inst.type === "MANDATORY" ? "Mandatory" : "Elective"}
                             </div>
-                        )}
+                        ))}
 
                         <div className="node-label">
                             {node.label}

@@ -12,6 +12,7 @@ import com.academic.finkiopendesk.repository.specification.ProgramSubjectSpecifi
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProgramSubjectServiceImpl implements ProgramSubjectService {
@@ -39,11 +40,22 @@ public class ProgramSubjectServiceImpl implements ProgramSubjectService {
 
         return relations.stream().map(ps -> {
             ProgramSubjectDto dto = new ProgramSubjectDto();
-
+            dto.setProgramSubjectId(ps.getProgramSubjectId());
             dto.setProgramId(ps.getProgram().getProgramId());
             dto.setProgramName(ps.getProgram().getName());
             dto.setType(ps.getType());
             dto.setSubject(SubjectDto.fromEntity(ps.getSubject()));
+
+            dto.setDependencies(
+                    ps.getDependencies().stream()
+                            .map(dep -> {
+                                ProgramSubjectDto d = new ProgramSubjectDto();
+                                d.setProgramSubjectId(dep.getProgramSubjectId());
+                                d.setSubject(SubjectDto.fromEntity(dep.getSubject()));
+                                return d;
+                            })
+                            .collect(Collectors.toSet())
+            );
 
             return dto;
         }).toList();
@@ -81,11 +93,22 @@ public class ProgramSubjectServiceImpl implements ProgramSubjectService {
 
         return relations.stream().map(ps -> {
             ProgramSubjectDto dto = new ProgramSubjectDto();
-
+            dto.setProgramSubjectId(ps.getProgramSubjectId());
             dto.setProgramId(ps.getProgram().getProgramId());
             dto.setProgramName(ps.getProgram().getName());
             dto.setType(ps.getType());
             dto.setSubject(SubjectDto.fromEntity(ps.getSubject()));
+
+            dto.setDependencies(
+                    ps.getDependencies().stream()
+                            .map(dep -> {
+                                ProgramSubjectDto d = new ProgramSubjectDto();
+                                d.setProgramSubjectId(dep.getProgramSubjectId());
+                                d.setSubject(SubjectDto.fromEntity(dep.getSubject()));
+                                return d;
+                            })
+                            .collect(Collectors.toSet())
+            );
 
             return dto;
         }).toList();

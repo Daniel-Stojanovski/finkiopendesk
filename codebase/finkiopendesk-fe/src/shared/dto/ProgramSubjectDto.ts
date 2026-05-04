@@ -6,4 +6,5 @@ export interface ProgramSubjectDto {
     programName: string;
     type: "MANDATORY" | "ELECTIVE" | "OTHER";
     subject: SubjectDto;
+    dependencies: ProgramSubjectDto[];
 }

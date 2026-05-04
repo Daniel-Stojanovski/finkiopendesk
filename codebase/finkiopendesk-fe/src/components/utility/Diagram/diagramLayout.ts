@@ -43,79 +43,49 @@ export function layoutColumns(
 export function generateEdges(nodes: PositionedNode[]): Edge[] {
     const edges: Edge[] = [];
 
-    const subjectMap: Record<string, string[]> = {};
+    const nodeIds = new Set(nodes.map(n => n.id));
 
-    nodes.forEach(node => {
-        if (!node.subjectId) return;
+    for (const node of nodes) {
+        for (const depId of node.dependencyIds ?? []) {
+            if (!depId) continue;
 
-        if (!subjectMap[node.subjectId]) {
-            subjectMap[node.subjectId] = [];
-        }
-
-        subjectMap[node.subjectId].push(node.id);
-    });
-
-    nodes.forEach(node => {
-        if (!node.dependencies?.length) return;
-
-        node.dependencies.forEach(depSubjectId => {
-            const fromNodes = subjectMap[depSubjectId];
-            const toNodeId = node.id;
-
-            if (!fromNodes) return;
-
-            fromNodes.forEach(fromNodeId => {
+            if (nodeIds.has(depId)) {
                 edges.push({
-                    from: fromNodeId,
-                    to: toNodeId,
+                    from: depId,
+                    to: node.id
                 });
-            });
-        });
-    });
+            }
+        }
+    }
 
-    const unique = new Map<string, Edge>();
-
-    edges.forEach(edge => {
-        const key = `${edge.from}->${edge.to}`;
-        unique.set(key, edge);
-    });
-
-    return Array.from(unique.values());
+    return edges;
 }
-
-// export function generateEdges(nodes: PositionedNode[]): Edge[] {
-//     const edges: Edge[] = [];
-//
-//     const nodeIds = new Set(nodes.map(n => n.id));
-//
-//     nodes.forEach(node => {
-//         node.dependencies?.forEach(dep => {
-//             if (!nodeIds.has(dep)) return;
-//             edges.push({ from: dep, to: node.id });
-//         });
-//     });
-//
-//     return edges;
-// }
 
 export function createPath(
     from: PositionedNode,
     to: PositionedNode,
     config: LayoutConfig
 ) {
-    const fromX = from.x + config.nodeWidth;
-    const fromY = from.y + config.nodeHeight / 2;
+    const fromCenterY = from.y + config.nodeHeight / 2;
+    const toCenterY = to.y + config.nodeHeight / 2;
 
-    const toX = to.x;
-    const toY = to.y + config.nodeHeight / 2;
+    const isLeftToRight = from.columnIndex < to.columnIndex;
+
+    const fromX = isLeftToRight
+        ? from.x + config.nodeWidth
+        : from.x;
+
+    const toX = isLeftToRight
+        ? to.x
+        : to.x + config.nodeWidth;
 
     const midX = (fromX + toX) / 2;
 
     return `
-        M ${fromX} ${fromY}
-        C ${midX} ${fromY},
-          ${midX} ${toY},
-          ${toX} ${toY}
+        M ${fromX} ${fromCenterY}
+        C ${midX} ${fromCenterY},
+          ${midX} ${toCenterY},
+          ${toX} ${toCenterY}
     `;
 }
 
