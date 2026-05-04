@@ -17,10 +17,28 @@ public class ProgramSubjectController {
         this.programSubjectService = programSubjectService;
     }
 
+//    @GetMapping("/pid/{professionId}")
+//    public List<ProgramSubjectDto> getSubjectsForProfession(
+//            @PathVariable String professionId
+//    ) {
+//        return programSubjectService.getSubjectsForProfession(professionId);
+//    }
     @GetMapping("/pid/{professionId}")
     public List<ProgramSubjectDto> getSubjectsForProfession(
-            @PathVariable String professionId
+            @PathVariable String professionId,
+            @RequestParam(required = false) String query,
+            @RequestParam(required = false) String program,
+            @RequestParam(required = false) String format,
+            @RequestParam(required = false) String hardness,
+            @RequestParam(required = false) String semesterType
     ) {
-        return programSubjectService.getSubjectsForProfession(professionId);
+        return programSubjectService.getSubjectsForProfessionFiltered(
+                professionId,
+                query,
+                program,
+                format,
+                hardness,
+                semesterType
+        );
     }
 }
