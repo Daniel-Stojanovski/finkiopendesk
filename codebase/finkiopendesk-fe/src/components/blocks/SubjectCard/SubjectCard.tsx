@@ -47,10 +47,13 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, 
 
     const handleVote = async (value: number) => {
         try {
+            const currentVote = userVote ?? 0;
+            const newVote = currentVote === value ? 0 : value;
+
             await backapi.post<VoteDto>("/subjects/vote", {
                 subjectId: subject.subjectId,
                 professionId: professionId,
-                vote: value != vote ? value : 0
+                vote: newVote
             });
 
             {refreshVotes && await refreshVotes()}

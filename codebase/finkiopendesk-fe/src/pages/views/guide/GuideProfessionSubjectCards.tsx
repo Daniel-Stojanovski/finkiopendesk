@@ -43,6 +43,10 @@ const GuideProfessionSubjectCards:React.FC<GuideProfessionSubjectCardsProps> = (
         }
     }
 
+    if (!profession?.professionId) {
+        return <Spinner size={4} />;
+    }
+
     useEffect(() => {
         if (!profession?.professionId) return;
 
@@ -107,6 +111,7 @@ const GuideProfessionSubjectCards:React.FC<GuideProfessionSubjectCardsProps> = (
                 key={subjectId}
                 type="VOTE"
                 subject={subject}
+                professionId={profession.professionId}
                 voteCount={votes.get(subjectId) ?? 0}
                 userVote={userVotes.get(subjectId) ?? 0}
                 meta={{
