@@ -17,7 +17,6 @@ interface GuideProfessionSubjectCardsProps {
     votes: Map<string, number>,
     userVotes: Map<string, number>,
     profession: ProfessionDto | null,
-    // subjects: SubjectDto[] | null,
     loading: boolean
 }
 

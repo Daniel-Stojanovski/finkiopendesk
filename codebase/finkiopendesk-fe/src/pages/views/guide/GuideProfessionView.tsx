@@ -6,7 +6,6 @@ import { useAuth } from "../../../shared/AuthContext";
 
 import GuideProfessionRoadmap from "./GuideProfessionRoadmap";
 import GuideProfessionSubjectCards from "./GuideProfessionSubjectCards";
-import type {SubjectDto} from "../../../shared/dto/SubjectDto";
 import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
 import type {VotesDataDto} from "../../../shared/dto/VoteDataDto";
 
@@ -15,7 +14,6 @@ const GuideProfessionView = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
 
-    const [subjects, setSubjects] = useState<SubjectDto[]>([]);
     const [profession, setProfession] = useState<ProfessionDto | null>(null);
     const [votes, setVotes] = useState<Map<string, number>>(new Map());
     const [userVotes, setUserVotes] = useState<Map<string, number>>(new Map());
@@ -41,7 +39,6 @@ const GuideProfessionView = () => {
 
             try {
                 await Promise.all([
-                    api.get<SubjectDto[]>(`/subjects/pid/${pid}`).then(res => setSubjects(res.data)),
                     api.get<ProfessionDto>(`/professions/${pid}`).then(res => setProfession(res.data)),
                     backapi.get<VotesDataDto[]>(`/votes/pid/${pid}`).then(res => setVotes(
                         new Map(res.data.map((v: VotesDataDto) => [v.subjectId, v.voteCount]))
@@ -109,13 +106,11 @@ const GuideProfessionView = () => {
                 <div className="gpv-tab-content">
                     {activeTab === "roadmap" ? (
                         <GuideProfessionRoadmap
-                            subjects={subjects}
                             profession={profession}
                             loading={loading}
                         />
                     ) : (
                         <GuideProfessionSubjectCards
-                            subjects={subjects}
                             votes={votes}
                             userVotes={userVotes}
                             profession={profession}
