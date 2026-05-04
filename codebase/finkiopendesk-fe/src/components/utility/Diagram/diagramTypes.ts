@@ -1,7 +1,9 @@
 export type SubjectNode = {
     id: string;
     label: string;
-    type?: "mandatory" | "elective";
+    type: "MANDATORY" | "ELECTIVE" | "OTHER";
+    program: string;
+    subjectId?: string;
     dependencies?: string[];
 }
 

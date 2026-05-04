@@ -1,56 +1,61 @@
 import '../views.scss';
 import Diagram from "../../../components/utility/Diagram/Diagram";
-import type {SubjectDto} from "../../../shared/dto/SubjectDto";
 import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
+import {useEffect, useMemo, useState} from "react";
+import {backapi} from "../../../shared/axios";
+import type {ProgramSubjectDto} from "../../../shared/dto/ProgramSubjectDto";
 
 interface GuideProfessionRoadmapProps {
-    subjects: SubjectDto[] | null;
     profession: ProfessionDto | null;
     loading: boolean;
 }
 
-const GuideProfessionRoadmap: React.FC<GuideProfessionRoadmapProps> = ({ subjects, profession, loading }) => {
+const GuideProfessionRoadmap: React.FC<GuideProfessionRoadmapProps> = ({ profession, loading }) => {
+
+    const [programSubjects, setProgramSubjects] = useState<ProgramSubjectDto[]>([]);
+
+    useEffect(() => {
+        if (!profession?.professionId) return;
+
+        const fetchSubjects = async () => {
+            try {
+                await backapi.get(`/program-subjects/pid/${profession.professionId}`)
+                    .then(res => setProgramSubjects(res.data));
+            } catch (e) {
+                console.error(e);
+            }
+        };
+
+        fetchSubjects();
+    }, [profession]);
+
+    const filteredProgramSubjects = useMemo(() => {
+        return programSubjects.filter(ps => ps.type === "MANDATORY" || ps.type === "ELECTIVE");
+    }, [programSubjects]);
 
     //DIAGRAM
-    const columns = [
-        {
-            id: "Year 1",
-            nodes: [
-                { id: "math1", label: "Math 1", type: "mandatory" as const},
-                { id: "cs1", label: "Intro CS" , type: "elective" as const},
-                { id: "cs2", label: "Intro CS" },
-                { id: "cs3", label: "Intro CS" },
-                { id: "cs4", label: "Intro CS" },
-            ],
-        },
-        {
-            id: "Year 2",
-            nodes: [
-                { id: "math2", label: "Math 2", dependencies: ["math1"] },
-                { id: "ds", label: "Data Structures", dependencies: ["cs1", "cs2", "cs3", "cs4"] },
-            ],
-        },
-        {
-            id: "Year 3",
-            nodes: [
-                {
-                    id: "algo1",
-                    label: "Algorithms",
-                    dependencies: ["math2", "ds"],
-                },
-            ],
-        },
-        {
-            id: "Year 4",
-            nodes: [
-                {
-                    id: "algo2",
-                    label: "Algorithms",
-                    dependencies: ["algo1"],
-                },
-            ],
-        },
-    ];
+    const columns = useMemo(() => {
+        if (!filteredProgramSubjects.length) return [];
+
+        const grouped: Record<string, ProgramSubjectDto[]> = {};
+
+        filteredProgramSubjects.forEach(ps => {
+            if (!grouped[ps.programId]) {
+                grouped[ps.programId] = [];
+            }
+            grouped[ps.programId].push(ps);
+        });
+
+        return Object.entries(grouped).map(([programId, subjects]) => ({
+            id: subjects[0]?.programName || programId,
+            nodes: subjects.map(ps => ({
+                id: `${ps.subject.subjectId}_${ps.programId}_${ps.type}`,
+                label: ps.subject.name,
+                type: ps.type,
+                program: ps.programName
+            }))
+        }));
+    }, [programSubjects]);
     //END DIAGRAM
 
     if (loading) return <p>Loading...</p>;

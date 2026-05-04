@@ -43,17 +43,60 @@ export function layoutColumns(
 export function generateEdges(nodes: PositionedNode[]): Edge[] {
     const edges: Edge[] = [];
 
-    const nodeIds = new Set(nodes.map(n => n.id));
+    const subjectMap: Record<string, string[]> = {};
 
     nodes.forEach(node => {
-        node.dependencies?.forEach(dep => {
-            if (!nodeIds.has(dep)) return;
-            edges.push({ from: dep, to: node.id });
+        if (!node.subjectId) return;
+
+        if (!subjectMap[node.subjectId]) {
+            subjectMap[node.subjectId] = [];
+        }
+
+        subjectMap[node.subjectId].push(node.id);
+    });
+
+    nodes.forEach(node => {
+        if (!node.dependencies?.length) return;
+
+        node.dependencies.forEach(depSubjectId => {
+            const fromNodes = subjectMap[depSubjectId];
+            const toNodeId = node.id;
+
+            if (!fromNodes) return;
+
+            fromNodes.forEach(fromNodeId => {
+                edges.push({
+                    from: fromNodeId,
+                    to: toNodeId,
+                });
+            });
         });
     });
 
-    return edges;
+    const unique = new Map<string, Edge>();
+
+    edges.forEach(edge => {
+        const key = `${edge.from}->${edge.to}`;
+        unique.set(key, edge);
+    });
+
+    return Array.from(unique.values());
 }
+
+// export function generateEdges(nodes: PositionedNode[]): Edge[] {
+//     const edges: Edge[] = [];
+//
+//     const nodeIds = new Set(nodes.map(n => n.id));
+//
+//     nodes.forEach(node => {
+//         node.dependencies?.forEach(dep => {
+//             if (!nodeIds.has(dep)) return;
+//             edges.push({ from: dep, to: node.id });
+//         });
+//     });
+//
+//     return edges;
+// }
 
 export function createPath(
     from: PositionedNode,
