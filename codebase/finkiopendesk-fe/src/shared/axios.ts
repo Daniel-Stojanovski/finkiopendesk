@@ -10,21 +10,21 @@ export const api = axios.create({
 });
 
 export const backapi = axios.create({
-    baseURL: "https://finkiopendesk.onrender.com/api",
+    baseURL: "https://finkiopendesk-be.onrender.com/api",
     headers: {
         "Content-Type": "application/json"
     }
 });
 
 export const authpublic = axios.create({
-    baseURL: "https://finkiopendesk.onrender.com/auth",
+    baseURL: "https://finkiopendesk-be.onrender.com/auth",
     headers: {
         "Content-Type": "application/json"
     }
 });
 
 export const authprivate = axios.create({
-    baseURL: "https://finkiopendesk.onrender.com/auth",
+    baseURL: "https://finkiopendesk-be.onrender.com/auth",
     headers: {
         "Content-Type": "application/json"
     }
