@@ -15,6 +15,3 @@ CREATE TABLE subject_dependency (
     CONSTRAINT pk_subject_dependency
         PRIMARY KEY (program_subject_id, dependant_id)
 );
-
-INSERT INTO subject_dependency (program_subject_id, dependant_id) VALUES
-    ('cad45bca-c091-49d3-98a7-6b2397673dfd','1bfca51a-079b-4640-b7d3-51c8a2e1e380');
