@@ -27,9 +27,11 @@ public class SubjectTag {
     private String subjectTagId;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "subject_subject_id")
     private Subject subject;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "tag_tag_id")
     private Tag tag;
 
     @OneToOne(mappedBy = "subjectTag", cascade = CascadeType.ALL)

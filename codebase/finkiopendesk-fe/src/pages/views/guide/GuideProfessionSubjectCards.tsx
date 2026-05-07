@@ -8,12 +8,8 @@ import Spinner from "../../../components/utility/Spinner/Spinner";
 import {useOutletContext} from "react-router-dom";
 import type {FiltersDto} from "../../../shared/dto/FiltersDto";
 import type {TagDto} from "../../../shared/dto/TagDto";
-// import {VotesDataDto} from "../../../shared/dto/VoteDataDto";
-// import {VoteDto} from "../../../shared/dto/VoteDto";
 
 interface GuideProfessionSubjectCardsProps {
-    // votes: VoteDto[],
-    // userVotes: VotesDataDto[],
     votes: Map<string, number>,
     userVotes: Map<string, number>,
     profession: ProfessionDto | null,
@@ -40,10 +36,6 @@ const GuideProfessionSubjectCards:React.FC<GuideProfessionSubjectCardsProps> = (
         } catch (err) {
             console.error(err);
         }
-    }
-
-    if (!profession?.professionId) {
-        return <Spinner size={4} />;
     }
 
     useEffect(() => {
@@ -90,6 +82,8 @@ const GuideProfessionSubjectCards:React.FC<GuideProfessionSubjectCardsProps> = (
         groupedBySubject.get(key)!.push(ps);
     });
 
+    if (loading || !profession?.professionId) return <Spinner size={4} />;
+
     const renderSubject = (subjectId: string, items: ProgramSubjectDto[]) => {
         const mandatoryPrograms = items
             .filter(i => i.type === "MANDATORY")
@@ -122,7 +116,6 @@ const GuideProfessionSubjectCards:React.FC<GuideProfessionSubjectCardsProps> = (
         );
     };
 
-    if (loading) return <Spinner size={4} />;
 
     const entries = Array.from(groupedBySubject.entries());
 

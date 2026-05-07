@@ -68,7 +68,9 @@ public class SubjectServiceImpl implements SubjectService {
     @Transactional(readOnly = true)
     public List<Channel> findChannelsBySubjectId(String subjectId) {
 
-        Subject subject = subjectRepository.findById(subjectId)
+//        Subject subject = subjectRepository.findById(subjectId)
+//                .orElseThrow(() -> new RuntimeException("Subject not found"));
+        Subject subject = subjectRepository.findByIdWithTagsAndChannels(subjectId)
                 .orElseThrow(() -> new RuntimeException("Subject not found"));
 
         return subject.getSubjectTags()

@@ -28,5 +28,14 @@ public interface SubjectRepository extends JpaSpecificationRepository<Subject, S
         WHERE d.subjectDiscussionId = :discussionId
     """)
     Optional<Subject> findByDiscussionId(String discussionId);
+
+    @Query("""
+        SELECT DISTINCT s
+        FROM Subject s
+        LEFT JOIN FETCH s.subjectTags st
+        LEFT JOIN FETCH st.channel c
+        WHERE s.subjectId = :subjectId
+    """)
+    Optional<Subject> findByIdWithTagsAndChannels(String subjectId);
 }
 

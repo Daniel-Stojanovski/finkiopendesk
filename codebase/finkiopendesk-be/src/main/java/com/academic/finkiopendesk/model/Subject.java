@@ -3,7 +3,9 @@ package com.academic.finkiopendesk.model;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,7 +39,8 @@ public class Subject {
     private SubjectDiscussion discussion;
 
     @OneToMany(mappedBy = "subject")
-    private Set<SubjectTag> subjectTags = new HashSet<>();
+    @Where(clause = "status_active = true")
+    private List<SubjectTag> subjectTags = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "subject")
