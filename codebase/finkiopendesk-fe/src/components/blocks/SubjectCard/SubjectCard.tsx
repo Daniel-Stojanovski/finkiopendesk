@@ -64,6 +64,21 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, 
 
     return (
         <div className={`subject ${vote ? "active"  : ""}`}>
+            {type == CardType.VOTE &&
+                <div className="subject-state">
+                    { canUserVote &&
+                        <i className={`bi ${vote === 1 ? "bi-caret-up-fill active" : "bi-caret-up"}`}
+                           onClick={() => handleVote(1)}></i>}
+                    <div className={`subject-state-data ${vote !== 0 ? "active bold" : ""}`}>
+                        {voteCount}
+                    </div>
+                    { !canUserVote && <sub>Votes</sub>}
+                    { canUserVote &&
+                        <i className={`bi ${vote === -1 ? "bi-caret-down-fill active" : "bi-caret-down"}`}
+                           onClick={() => handleVote(-1)}></i>}
+                </div>
+            }
+
             <div className="subject-content">
                 <div className="sc-header">
                     <h3>{subject.name}</h3>
@@ -83,27 +98,15 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, 
                         )}
                     </div>
                 </div>
-                {channels.map(tag => (
-                    <p key={tag.channelId} className="channel-label" onClick={() => navigate(`/discussion/cid/${tag.channelId}`)}><i className="bi bi-tag"></i>{tag.name.split(' | ')[1]}</p>
-                ))}
-            </div>
-
-
-
-            {type == CardType.VOTE &&
-                <div className="subject-state">
-                    { canUserVote &&
-                        <i className={`bi ${vote === 1 ? "bi-caret-up-fill active" : "bi-caret-up"}`}
-                            onClick={() => handleVote(1)}></i>}
-                    <div className={`subject-state-data ${vote !== 0 ? "active bold" : ""}`}>
-                        {voteCount}
+                <div className="sc-tags">
+                    <span>Available as: </span>
+                    <div className="sc-tags-container">
+                        {channels.map(tag => (
+                            <p key={tag.channelId} className="channel-label" onClick={() => navigate(`/discussion/cid/${tag.channelId}`)}><i className="bi bi-arrow-return-right"></i>#{tag.name.split(' | ')[1]}</p>
+                        ))}
                     </div>
-                    { !canUserVote && <sub>Votes</sub>}
-                    { canUserVote &&
-                        <i className={`bi ${vote === -1 ? "bi-caret-down-fill active" : "bi-caret-down"}`}
-                            onClick={() => handleVote(-1)}></i>}
                 </div>
-            }
+            </div>
         </div>
     );
 };

@@ -1,4 +1,5 @@
 export type VotesDataDto = {
     subjectId: string
-    voteCount: number
+    voteCount?: number
+    vote?: number
 }

@@ -31,6 +31,8 @@ export function layoutColumns(
             positioned.push({
                 ...node,
                 columnIndex: colIndex,
+                season: col.season,
+                level: col.level,
                 x: colIndex * (nodeWidth + horizontalGap) + sidePadding,
                 y: startY + i * (nodeHeight + verticalGap),
             });
@@ -43,18 +45,24 @@ export function layoutColumns(
 export function generateEdges(nodes: PositionedNode[]): Edge[] {
     const edges: Edge[] = [];
 
-    const nodeIds = new Set(nodes.map(n => n.id));
+    const nodeMap = new Map<string, PositionedNode>();
+    nodes.forEach(n => nodeMap.set(n.id, n));
 
     for (const node of nodes) {
         for (const depId of node.dependencyIds ?? []) {
-            if (!depId) continue;
+            const from = nodeMap.get(depId);
+            const to = node;
 
-            if (nodeIds.has(depId)) {
-                edges.push({
-                    from: depId,
-                    to: node.id
-                });
+            if (!from || !to) continue;
+
+            if (from.level && to.level && from.level === to.level) {
+                continue;
             }
+
+            edges.push({
+                from: depId,
+                to: node.id
+            });
         }
     }
 

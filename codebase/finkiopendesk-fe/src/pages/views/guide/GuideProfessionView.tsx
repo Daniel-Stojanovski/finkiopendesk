@@ -48,7 +48,7 @@ const GuideProfessionView = () => {
                 if (user?.userId) {
                     const userVotesRes = await backapi.get<VotesDataDto[]>(`/votes/pid/${pid}/${user.userId}`);
                     setUserVotes(
-                        new Map(userVotesRes.data.map((v: VotesDataDto) => [v.subjectId, v.voteCount]))
+                        new Map(userVotesRes.data.map((v: VotesDataDto) => [v.subjectId, v.vote]))
                     );
                 }
 
@@ -62,7 +62,13 @@ const GuideProfessionView = () => {
         fetchData();
     }, [pid, user]);
 
-    // const [selectedProgramOption, setSelectedProgramOption] = useState<string>("all");
+    const [selectedProgramOption, setSelectedProgramOption] = useState<string>("");
+
+    useEffect(() => {
+        if (!profession?.programs?.length) return;
+
+        setSelectedProgramOption(profession.programs[0].name);
+    }, [profession]);
 
     return (
         <>
@@ -88,26 +94,26 @@ const GuideProfessionView = () => {
                     </div>
                 </div>
 
-                {/*<div className="gpv-program-pills">*/}
-                {/*    <span><i className="bi bi-sliders2"></i></span>*/}
-                {/*    <span className={`pill ${selectedProgramOption === "all" ? "active" : ""}`} onClick={() => setSelectedProgramOption("all")}>*/}
-                {/*        Basic*/}
-                {/*    </span>*/}
+                {activeTab === "roadmap" &&
+                    <div className="gpv-program-pills">
+                        <span><i className="bi bi-sliders2"></i></span>
 
-                {/*    {profession?.programs?.map(p => (*/}
-                {/*        <span key={p.programId} className={`pill ${selectedProgramOption === p.name ? "active" : ""}`}*/}
-                {/*            onClick={() => setSelectedProgramOption(prev => prev === p.name ? "all" : p.name)}*/}
-                {/*        >*/}
-                {/*            {p.name}*/}
-                {/*        </span>*/}
-                {/*    ))}*/}
-                {/*</div>*/}
+                        {profession?.programs?.map(p => (
+                            <span key={p.programId} className={`pill ${selectedProgramOption === p.name ? "active" : ""}`}
+                                onClick={() => setSelectedProgramOption(prev => prev === p.name ? "" : p.name)}
+                            >
+                                {p.name}
+                            </span>
+                        ))}
+                    </div>
+                }
 
                 <div className="gpv-tab-content">
                     {activeTab === "roadmap" ? (
                         <GuideProfessionRoadmap
                             profession={profession}
                             loading={loading}
+                            selectedProgramOption={selectedProgramOption}
                         />
                     ) : (
                         <GuideProfessionSubjectCards

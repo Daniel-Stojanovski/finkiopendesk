@@ -61,7 +61,7 @@ const DiscussionCard: React.FC<DiscussionCardProps> = (props) => {
 
     return (
         <div className="discussion-card">
-            <div className="dc-header">
+            <div className={`${props.type == DiscussionType.PROFESSION ? 'dc-header-compact' : 'dc-header'}`}>
                 <div className="dc-header-title">
                     { canUserContribute &&
                         <i className={`favorite-button bi ${props.isFavorite ? "bi-star-fill active" : "bi-star"}`}
@@ -74,23 +74,26 @@ const DiscussionCard: React.FC<DiscussionCardProps> = (props) => {
                 {props.type == DiscussionType.PROFESSION && (
                     <div className="dc-tags">
                         <span>Pursued in: </span>
-                        {(props.object as ProfessionDto).programs?.map(pp => (
-                            <p key={pp.programId} className={`tag-label ${selectedUserProgram?.name == pp.name ? 'preferred' : ''}`} onClick={() => openInfoBox(pp)}>#{pp.name}</p>
-                        ))}
+                        <div className="dc-tags-container">
+                            {(props.object as ProfessionDto).programs?.map(pp => (
+                                <p key={pp.programId} className={`tag-label ${selectedUserProgram?.name == pp.name ? 'preferred' : ''}`} onClick={() => openInfoBox(pp)}>#{pp.name}</p>
+                            ))}
+                        </div>
                     </div>
                 )}
 
                 {props.type == DiscussionType.SUBJECT && (
                     <div className="dc-tags">
                         <span>Available as: </span>
-                        {channels.map(tag => (
-                            <p key={tag.channelId} className="tag-label" onClick={() => navigate(`/discussion/cid/${tag.channelId}`)}>
-                                <i className="bi bi-arrow-return-right hover-show"></i> #{tag.name.split(' | ')[1]}
-                            </p>
-                        ))}
+                        <div className="dc-tags-container">
+                            {channels.map(tag => (
+                                <p key={tag.channelId} className="tag-label" onClick={() => navigate(`/discussion/cid/${tag.channelId}`)}>
+                                    <i className="bi bi-arrow-return-right hover-show"></i> #{tag.name.split(' | ')[1]}
+                                </p>
+                            ))}
+                        </div>
                     </div>
                 )}
-
             </div>
             {props.discussion.description && <p>{props.discussion.description}</p>}
 

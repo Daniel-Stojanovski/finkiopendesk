@@ -48,9 +48,27 @@
   }
 
   .dc-header {
-    display: inline-flex;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
 
+  .dc-header-compact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 0;
+
+    .dc-tags {
+      padding-bottom: 0 !important;
+
+      span {
+        padding-left: var(--size-2);
+      }
+    }
+  }
+
+  .dc-header, .dc-header-compact {
     @include media(xs) {
       display: flex;
       flex-direction: column;
@@ -69,11 +87,14 @@
     }
 
     .dc-tags {
-      display: inline-flex;
+      display: flex;
+      min-width: 0;
+
+      padding-bottom: var(--size-2);
 
       span {
         margin: auto;
-        padding-left: var(--size-2);
+        padding-right: var(--size-1);
         color: var(--color-base-3);
         font-size: 12px;
 
@@ -82,32 +103,49 @@
         }
       }
 
-      .tag-label {
-        font-size: 10px;
-        margin: auto;
-        margin-left: var(--size-2);
-        padding: var(--size-1);
-        background: var(--color-base-1);
-        color: var(--color-base-2);
-        border-radius: var(--size-1);
+      &-container {
+        display: flex;
+        align-items: center;
 
-        &.preferred {
-          background: var(--color-main-0);
-          color: var(--color-main-1);
-        }
+        overflow-x: auto;
+        overflow-y: hidden;
 
-        &:hover {
-          background: var(--color-main-0);
-          border: var(--color-main-1) 1px solid;
-          color: var(--color-main-1);
+        flex: 1;
+        min-width: 0;
+
+        white-space: nowrap;
+        scrollbar-width: none;
+
+        .tag-label {
+          flex: 0 0 auto;
+          white-space: nowrap;
+
+          font-size: 10px;
+
+          margin: auto var(--size-1);
+          padding: var(--size-1);
+          background: var(--color-base-1);
+          color: var(--color-base-2);
+          border-radius: var(--size-1);
+
+          &.preferred {
+            background: var(--color-main-0);
+            color: var(--color-main-1);
+          }
+
+          &:hover {
+            background: var(--color-main-0);
+            border: var(--color-main-1) 1px solid;
+            color: var(--color-main-1);
+
+            i {
+              display: inline-block;
+            }
+          }
 
           i {
-            display: inline-block;
+            display: none;
           }
-        }
-
-        i {
-          display: none;
         }
       }
     }
@@ -122,5 +160,4 @@
       }
     }
   }
-
 }
