@@ -11,6 +11,7 @@ const Diagram: React.FC<DiagramProps> = ({ columns }) => {
 
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [containerWidth, setContainerWidth] = useState<number>(0);
+    const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
 
     useEffect(() => {
         const el = containerRef.current;
@@ -33,14 +34,30 @@ const Diagram: React.FC<DiagramProps> = ({ columns }) => {
         const columnCount = columns.length;
 
         const sidePadding = 20;
-        const horizontalGap = 60;
+        const horizontalGap = 50;
+
+        if (columnCount === 0 || containerWidth === 0) {
+            return {
+                nodeWidth: 80,
+                nodeHeight: 32,
+                horizontalGap,
+                verticalGap: 18,
+                sidePadding,
+                topPadding: 40,
+            };
+        }
 
         const availableWidth = Math.max(
             0,
             containerWidth - sidePadding * 2
         );
 
-        const nodeWidth = Math.max(80, ((availableWidth - horizontalGap * 2) / columnCount));
+        const totalGapWidth = horizontalGap * (columnCount - 1);
+
+        const nodeWidth = Math.max(
+            120,
+            (availableWidth - totalGapWidth) / columnCount
+        );
 
         return {
             nodeWidth,
@@ -50,7 +67,7 @@ const Diagram: React.FC<DiagramProps> = ({ columns }) => {
             sidePadding,
             topPadding: 40,
         };
-    }, [containerWidth]);
+    }, [containerWidth, columns.length]);
 
     const nodes = useMemo(() => {
         return layoutColumns(columns, config);
@@ -74,6 +91,20 @@ const Diagram: React.FC<DiagramProps> = ({ columns }) => {
         [nodes, config]
     );
 
+    const connectedNodeIds = useMemo(() => {
+        if (!selectedNodeId) return new Set<string>();
+
+        const connected = new Set<string>();
+        connected.add(selectedNodeId);
+
+        edges.forEach(edge => {
+            if (edge.from === selectedNodeId) connected.add(edge.to);
+            if (edge.to === selectedNodeId) connected.add(edge.from);
+        });
+
+        return connected;
+    }, [selectedNodeId, edges]);
+
     if (containerWidth === 0) {
         return <div ref={containerRef} id="diagram" />;
     }
@@ -90,21 +121,29 @@ const Diagram: React.FC<DiagramProps> = ({ columns }) => {
                     height={bounds.height}
                     className="svg-layer"
                 >
-                    {edges.map((edge, i) => {
-                        const from = nodeMap[edge.from];
-                        const to = nodeMap[edge.to];
+                    {edges
+                        .map((edge, i) => {
+                            const from = nodeMap[edge.from];
+                            const to = nodeMap[edge.to];
 
-                        if (!from || !to) return null;
+                            if (!from || !to) return null;
 
-                        return (
-                            <path key={i}
-                                d={createPath(from, to, config)}
-                                stroke="#888785"
-                                strokeWidth={1}
-                                fill="none"
-                            />
-                        );
-                    })}
+                            const isConnected =
+                                selectedNodeId &&
+                                (edge.from === selectedNodeId ||
+                                    edge.to === selectedNodeId);
+
+                            return (
+                                <path key={i}
+                                    d={createPath(from, to, config)}
+                                    stroke={selectedNodeId != null ? "#2a93d1" : "#888785"}
+                                    opacity={!selectedNodeId ? 0.15 : isConnected ? 1 : 0}
+                                    strokeWidth={1}
+                                    fill="none"
+                                />
+                            );
+                        }
+                    )}
                 </svg>
 
                 {columns.map((col, i) => (
@@ -118,31 +157,40 @@ const Diagram: React.FC<DiagramProps> = ({ columns }) => {
                             width: config.nodeWidth,
                         }}
                     >
-                        {col.id}
+                        {col.level} {col.season === "W" ? "Winter" : "Summer"}
                     </div>
                 ))}
 
-                {nodes.map(node => (
-                    <div key={node.id}
-                        className="node"
-                        style={{
-                            left: node.x,
-                            top: node.y,
-                            width: config.nodeWidth,
-                            height: config.nodeHeight,
-                        }}>
+                {nodes.map((node) => {
+                    const isSelected = selectedNodeId === node.id;
+                    const isConnected = connectedNodeIds.has(node.id);
 
-                        {node.instances?.map((inst, i) => (
-                            <div key={i} className={`node-tag ${inst.type.toLowerCase()}`}>
-                                {inst.program}/{inst.type === "MANDATORY" ? "Mandatory" : "Elective"}
+                    return (
+                        <div key={node.id}
+                            className="node"
+                            onClick={() => setSelectedNodeId(prev => prev === node.id ? null : node.id)}
+                            style={{
+                                left: node.x,
+                                top: node.y,
+                                width: config.nodeWidth,
+                                height: config.nodeHeight,
+                                opacity: !selectedNodeId ? 1 : isConnected ? 1 : 0.2,
+                                background: isSelected ? "#d8e8f2" : undefined,
+                                outline: isSelected || isConnected ? "2px solid #2a93d1" : undefined,
+                            }}>
+
+                            {node.instances?.map((inst, i) => (
+                                <div key={i} className={`node-tag ${inst.type.toLowerCase()}`}>
+                                    {inst.program}/{inst.type === "MANDATORY" ? "Mandatory" : "Elective"}
+                                </div>
+                            ))}
+
+                            <div className="node-label">
+                                {node.label}
                             </div>
-                        ))}
-
-                        <div className="node-label">
-                            {node.label}
                         </div>
-                    </div>
-                ))}
+                    )}
+                )}
             </div>
         </div>
     );

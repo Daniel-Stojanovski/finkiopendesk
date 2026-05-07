@@ -12,6 +12,8 @@ export type SubjectNode = {
 
 export interface Column {
     id: string;
+    level: "L1" | "L2" | "L3";
+    season: "W" | "S";
     nodes: SubjectNode[];
 }
 
@@ -19,6 +21,8 @@ export interface PositionedNode extends SubjectNode {
     x: number;
     y: number;
     columnIndex: number;
+    level?: "L1" | "L2" | "L3";
+    season?: "W" | "S";
 }
 
 export interface Edge {
