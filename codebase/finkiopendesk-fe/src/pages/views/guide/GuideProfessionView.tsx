@@ -15,8 +15,8 @@ const GuideProfessionView = () => {
     const navigate = useNavigate();
 
     const [profession, setProfession] = useState<ProfessionDto | null>(null);
-    const [votes, setVotes] = useState<Map<string, number>>(new Map());
-    const [userVotes, setUserVotes] = useState<Map<string, number>>(new Map());
+    const [votes, setVotes] = useState<Map<string, number | undefined>>(new Map());
+    const [userVotes, setUserVotes] = useState<Map<string, number | undefined>>(new Map());
     const [loading, setLoading] = useState(true);
 
     const location = useLocation();

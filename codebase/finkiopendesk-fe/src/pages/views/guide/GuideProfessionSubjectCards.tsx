@@ -10,8 +10,8 @@ import type {FiltersDto} from "../../../shared/dto/FiltersDto";
 import type {TagDto} from "../../../shared/dto/TagDto";
 
 interface GuideProfessionSubjectCardsProps {
-    votes: Map<string, number>,
-    userVotes: Map<string, number>,
+    votes: Map<string, number | undefined>,
+    userVotes: Map<string, number | undefined>,
     profession: ProfessionDto | null,
     loading: boolean
 }
