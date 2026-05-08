@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {useOutletContext} from "react-router-dom";
-import {api, backapi} from "../../../shared/axios";
+import {backapi} from "../../../shared/axios";
 import '../views.scss';
 import ProfessionCard from "../../../components/blocks/ProfessionCard/ProfessionCard";
 import type {ProfessionDto} from "../../../shared/dto/ProfessionDto";
@@ -15,7 +15,7 @@ const GuideProfessionCards = () => {
 
     useEffect(() => {
         if (!searchQuery?.trim()) {
-            api.get<ProfessionDto[]>("/professions").then(res => setProfessions(res.data));
+            backapi.get<ProfessionDto[]>("/professions").then(res => setProfessions(res.data));
             return;
         }
 

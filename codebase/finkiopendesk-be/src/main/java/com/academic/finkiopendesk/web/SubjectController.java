@@ -38,18 +38,6 @@ public class SubjectController {
                 .toList();
     }
 
-//    @GetMapping
-//    public List<SubjectDto> getSubjects(@RequestParam(required = false) String query) {
-//        if (query == null || query.isBlank()) {
-//            return subjectService.findAll().stream()
-//                    .map(SubjectDto::fromEntity)
-//                    .toList();
-//        }
-//        return subjectService.findAll(query).stream()
-//                .map(SubjectDto::fromEntity)
-//                .toList();
-//    }
-
     @GetMapping("/pid/{professionId}")
     public List<SubjectDto> getSubjectsByProfession(@PathVariable String professionId) {
         return subjectService.findSubjectsByProfessionId(professionId).stream()
@@ -63,21 +51,21 @@ public class SubjectController {
         return SubjectDiscussionDto.fromEntity(discussion);
     }
 
-    @GetMapping("channels/sid/{subjectId}")
+    @GetMapping("/channels/sid/{subjectId}")
     public List<ChannelDto> getChannelsBySubjectId(@PathVariable String subjectId) {
         return subjectService.findChannelsBySubjectId(subjectId).stream()
                 .map(ChannelDto::fromEntity)
                 .toList();
     }
 
-    @GetMapping("channels/sid/{subjectId}/active")
+    @GetMapping("/channels/sid/{subjectId}/active")
     public List<ChannelDto> getActiveChannelsBySubjectId(@PathVariable String subjectId) {
         return subjectService.findActiveChannelsBySubjectId(subjectId).stream()
                 .map(ChannelDto::fromEntity)
                 .toList();
     }
 
-    @GetMapping("channels/sid/{subjectId}/inactive")
+    @GetMapping("/channels/sid/{subjectId}/inactive")
     public List<ChannelDto> getInactiveChannelsBySubjectId(@PathVariable String subjectId) {
         return subjectService.findInactiveChannelsBySubjectId(subjectId).stream()
                 .map(ChannelDto::fromEntity)
