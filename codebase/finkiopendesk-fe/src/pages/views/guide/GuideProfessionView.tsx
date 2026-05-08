@@ -1,7 +1,7 @@
 import '../views.scss';
 import { useEffect, useState } from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import { api, backapi } from "../../../shared/axios";
+import { backapi } from "../../../shared/axios";
 import { useAuth } from "../../../shared/AuthContext";
 
 import GuideProfessionRoadmap from "./GuideProfessionRoadmap";
@@ -39,7 +39,7 @@ const GuideProfessionView = () => {
 
             try {
                 await Promise.all([
-                    api.get<ProfessionDto>(`/professions/${pid}`).then(res => setProfession(res.data)),
+                    backapi.get<ProfessionDto>(`/professions/${pid}`).then(res => setProfession(res.data)),
                     backapi.get<VotesDataDto[]>(`/votes/pid/${pid}`).then(res => setVotes(
                         new Map(res.data.map((v: VotesDataDto) => [v.subjectId, v.voteCount]))
                     ))
