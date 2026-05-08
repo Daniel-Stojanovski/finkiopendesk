@@ -3,10 +3,6 @@ export const CommentType = {
         value: "comment",
         message: "Message"
     },
-    // reply: {
-    //     value: "reply",
-    //     message: "Reply"
-    // },
     question: {
         value: "question",
         message: "Ask"

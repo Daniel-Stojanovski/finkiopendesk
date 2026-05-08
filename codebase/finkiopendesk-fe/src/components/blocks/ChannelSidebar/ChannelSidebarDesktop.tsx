@@ -10,7 +10,6 @@ const ChannelSidebarDesktop: React.FC<ChannelSidebarDesktopProps> = ({ channels 
             <div className="csb-desktop">
                 <div className="csb-header">
                     <div className="csb-header-title">
-                        {/*<i className="bi bi-diagram-3"></i>*/}
                         <h3>Channels</h3>
                     </div>
                 </div>

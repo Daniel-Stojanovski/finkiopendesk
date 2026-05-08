@@ -75,10 +75,6 @@ const CommentInput: React.FC<CommentInputProps> = ({ subjectId, professionId, ch
                    onChange={(e) => setMessage(e.target.value)}
                    onKeyDown={enterHandler}
             />
-            {/*<button className="cib-submit" onClick={handleSubmit}>*/}
-            {/*    {buttonPlaceholder}*/}
-            {/*    <i className="bi bi-arrow-right-short"></i>*/}
-            {/*</button>*/}
         </div>
     );
 };

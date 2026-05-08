@@ -8,7 +8,7 @@ import {useAuth} from "../../../shared/AuthContext";
 import {DiscussionType} from "../../../shared/const/DiscussionTypeConst";
 import {useEffect, useState} from "react";
 import type {ChannelDto} from "../../../shared/dto/ChannelDto";
-import {api} from "../../../shared/axios";
+import {backapi} from "../../../shared/axios";
 import {useOutletContext} from "react-router-dom";
 
 interface DiscussionCardProps extends DiscussionObjectDto {
@@ -26,7 +26,7 @@ const DiscussionCard: React.FC<DiscussionCardProps> = (props) => {
     useEffect(() => {
         try {
             if (props.type == DiscussionType.SUBJECT) {
-            api.get<ChannelDto[]>(`/subjects/channels/sid/${(props.object as SubjectDto).subjectId}/active`)
+            backapi.get<ChannelDto[]>(`/subjects/channels/sid/${(props.object as SubjectDto).subjectId}/active`)
                 .then(response => setChannels(response.data));
             }
         }

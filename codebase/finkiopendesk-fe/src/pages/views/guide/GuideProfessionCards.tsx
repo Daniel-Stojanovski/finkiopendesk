@@ -46,7 +46,6 @@ const GuideProfessionCards = () => {
         <>
             <div id="guide-profession-cards">
                 <div className="gpc-program-pills">
-                    {/*<span><i className="bi bi-sliders2"></i> Filter: </span>*/}
                     <span><i className="bi bi-sliders2"></i></span>
                     <span className={`pill ${selectedProgramOption === null ? "active" : ""}`} onClick={() => setSelectedProgramOption(null)}>
                         None

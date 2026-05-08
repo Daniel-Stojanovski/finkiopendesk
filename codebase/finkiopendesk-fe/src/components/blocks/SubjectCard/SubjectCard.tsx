@@ -1,6 +1,6 @@
 import './subjectCard.scss'
 import type {SubjectDto} from "../../../shared/dto/SubjectDto";
-import {api, backapi} from "../../../shared/axios";
+import {backapi} from "../../../shared/axios";
 import type {VoteDto} from "../../../shared/dto/VoteDto";
 import type {CardTypeKey} from "../../../shared/const/CardTypeConst";
 import {CardType} from "../../../shared/const/CardTypeConst";
@@ -35,7 +35,7 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ type, subject, professionId, 
 
     useEffect(() => {
         try {
-            api.get<ChannelDto[]>(`/subjects/channels/sid/${subject.subjectId}/active`)
+            backapi.get<ChannelDto[]>(`/subjects/channels/sid/${subject.subjectId}/active`)
                 .then(response => setChannels(response.data));
         }
         catch (err) {

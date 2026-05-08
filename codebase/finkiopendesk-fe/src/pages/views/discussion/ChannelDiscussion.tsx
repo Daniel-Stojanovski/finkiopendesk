@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {api} from "../../../shared/axios";
+import {backapi} from "../../../shared/axios";
 import '../views.scss';
 import {useOutletContext, useParams} from "react-router-dom";
 import type {ChannelDiscussionDto} from "../../../shared/dto/ChannelDiscussionDto";
@@ -26,11 +26,11 @@ const ChannelDiscussion = () => {
 
     useEffect(() => {
         if (!id) return;
-        api.get<ChannelDiscussionDto>(`/channels/cid/${id}`).then(response => setDiscussion(response.data));
+        backapi.get<ChannelDiscussionDto>(`/channels/cid/${id}`).then(response => setDiscussion(response.data));
     }, [id]);
 
     useEffect(() => {
-        api.get<CommentDto[]>(`/comments/cid/${id}`).then(response => setComments(response.data));
+        backapi.get<CommentDto[]>(`/comments/cid/${id}`).then(response => setComments(response.data));
     }, []);
 
     return (
@@ -47,8 +47,6 @@ const ChannelDiscussion = () => {
                         <span className="type-label">Channel / {discussion?.name.toString().split("|")[1]}</span>
                         {discussion?.name.toString().split("|")[0]}
                     </h2>
-
-                    {/*<p className="discussion-header-tags">tags</p>*/}
 
                     <i className="bi bi-arrow-left lg" onClick={() => navigate(-1)}></i>
                 </div>

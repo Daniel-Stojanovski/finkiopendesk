@@ -14,7 +14,6 @@ const ChannelSidebarTablet: React.FC<ChannelSidebarTabletProps> = ({ channels, i
             <div className="csb-tablet">
                 <div className="csb-header">
                     <div className="csb-header-title">
-                        {/*<i className="bi bi-diagram-3"></i>*/}
                         <h3>Channels</h3>
                     </div>
                     <i className="bi bi-x csb-header-icon" onClick={onClose}></i>

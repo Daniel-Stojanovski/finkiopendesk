@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {api} from "../../../shared/axios";
+import {backapi} from "../../../shared/axios";
 import '../views.scss';
 import {useOutletContext, useParams} from "react-router-dom";
 import type {ProfessionDiscussionDto} from "../../../shared/dto/ProfessionDiscussionDto";
@@ -26,11 +26,11 @@ const ProfessionDiscussion = () => {
 
     useEffect(() => {
         if (!id) return;
-        api.get<ProfessionDiscussionDto>(`/professions/pid/${id}`).then(response => setDiscussion(response.data));
+        backapi.get<ProfessionDiscussionDto>(`/professions/pid/${id}`).then(response => setDiscussion(response.data));
     }, [id]);
 
     useEffect(() => {
-        api.get<CommentDto[]>(`/comments/pid/${id}`).then(response => setComments(response.data));
+        backapi.get<CommentDto[]>(`/comments/pid/${id}`).then(response => setComments(response.data));
     }, []);
 
     return (
@@ -47,8 +47,6 @@ const ProfessionDiscussion = () => {
                         <span className="type-label">Profession</span>
                         {discussion?.name}
                     </h2>
-
-                    {/*<p className="discussion-header-tags">tags</p>*/}
 
                     <i className="bi bi-x-lg" onClick={() => navigate("/discussions")}></i>
                 </div>

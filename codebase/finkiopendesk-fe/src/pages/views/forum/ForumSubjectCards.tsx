@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {api} from "../../../shared/axios";
+import {backapi} from "../../../shared/axios";
 import '../views.scss'
 import SubjectCard from "../../../components/blocks/SubjectCard/SubjectCard";
 import type {SubjectDto} from "../../../shared/dto/SubjectDto";
@@ -8,7 +8,7 @@ const ForumSubjectCards = () => {
     const [subjects, setSubjects] = useState<SubjectDto[]>([]);
 
     useEffect(() => {
-        api.get<SubjectDto[]>("/subjects")
+        backapi.get<SubjectDto[]>("/subjects")
             .then(response => {
                 setSubjects(response.data);
             })

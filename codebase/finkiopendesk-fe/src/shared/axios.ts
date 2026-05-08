@@ -1,7 +1,5 @@
 import axios from "axios";
 
-// localStorage.removeItem("token")
-
 export const api = axios.create({
     baseURL: "/api",
     headers: {

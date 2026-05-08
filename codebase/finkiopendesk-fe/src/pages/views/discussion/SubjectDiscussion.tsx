@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {api} from "../../../shared/axios";
+import {backapi} from "../../../shared/axios";
 import '../views.scss';
 import {useOutletContext, useParams} from "react-router-dom";
 import type {SubjectDiscussionDto} from "../../../shared/dto/SubjectDiscussionDto";
@@ -34,15 +34,15 @@ const SubjectDiscussion = () => {
 
     useEffect(() => {
         if (!id) return;
-        api.get<SubjectDiscussionDto>(`/subjects/sid/${id}`).then(response => setDiscussion(response.data));
+        backapi.get<SubjectDiscussionDto>(`/subjects/sid/${id}`).then(response => setDiscussion(response.data));
     }, [id]);
 
     useEffect(() => {
-        api.get<ChannelDto[]>(`/subjects/channels/sid/${id}/active`).then(response => setChannels(response.data));
+        backapi.get<ChannelDto[]>(`/subjects/channels/sid/${id}/active`).then(response => setChannels(response.data));
     }, []);
 
     useEffect(() => {
-        api.get<CommentDto[]>(`/comments/sid/${id}`).then(response => setComments(response.data));
+        backapi.get<CommentDto[]>(`/comments/sid/${id}`).then(response => setComments(response.data));
     }, []);
 
     return (
@@ -59,8 +59,6 @@ const SubjectDiscussion = () => {
                         <span className="type-label">Subject</span>
                         {discussion?.name}
                     </h2>
-
-                    {/*<p className="discussion-header-tags">tags</p>*/}
 
                     <i className="bi bi-x-lg" onClick={() => navigate("/discussions")}></i>
                     {isViewSmall && (!isTabletOpen && <i className="bi bi-diagram-3" onClick={openTabletChannelSidebar}></i>)}

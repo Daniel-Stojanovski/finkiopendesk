@@ -40,14 +40,10 @@ const Layout: React.FC = () => {
     const showMobileMainBackdrop =
         isViewMobile && (isMobileOpen || isFilterOpen);
 
-    // const showMainBackdrop =
-    //     !isViewMobile && (isMobileOpen || isFilterOpen);
-
     const showGlobalBackdrop =
         isInfoBoxOpen;
 
     const showContentBackdrop =
-        // !isViewMobile && (isFilterOpen || isInfoBoxOpen);
         !isViewMobile && isFilterOpen;
 
     const isDiscussionView = isView('/discussion/');
