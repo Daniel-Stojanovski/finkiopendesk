@@ -1,33 +1,35 @@
 package com.academic.finkiopendesk.service;
 
 import com.academic.finkiopendesk.model.User;
-import jakarta.mail.internet.MimeMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
 
-    private final JavaMailSender mailSender;
+    private final String sendGridApiKey;
 
-    public EmailService(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
+    public EmailService(@Value("${spring.mail.password}") String sendGridApiKey) {
+        this.sendGridApiKey = sendGridApiKey;
     }
 
     public void sendFormalActivationEmail(User user, String token) {
-        String activationUrl = "https://finkiopendesk.onrender.com/register/activate?token=" + token;
 
-        try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        String activationUrl =
+                "https://finkiopendesk.onrender.com/register/activate?token=" + token;
 
-            helper.setFrom("opendeskproject.testing@gmail.com");
-            helper.setTo(user.getEmail());
-            helper.setSubject("Activate your FinkiOpenDesk Student account");
+        Email from = new Email("opendeskproject.testing@gmail.com");
+        Email to = new Email(user.getEmail());
+        String subject = "Activate your account";
 
-            String html = """
+        String html = """
             <html>
                 <body style="font-family: Arial, sans-serif;">
                     <p>Hello, %s</p>
@@ -51,11 +53,22 @@ public class EmailService {
             </html>
         """.formatted(user.getEmail().split("@")[0], activationUrl);
 
-            helper.setText(html, true);
+        Content content = new Content("text/html", html);
 
-            mailSender.send(message);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to send email", e);
+        Mail mail = new Mail(from, subject, to, content);
+
+        SendGrid sg = new SendGrid(sendGridApiKey);
+
+        try {
+            Request request = new Request();
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+
+            sg.api(request);
+
+        } catch (Exception ex) {
+            throw new RuntimeException("Failed to send email", ex);
         }
     }
 }
