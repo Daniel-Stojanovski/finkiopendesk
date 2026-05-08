@@ -4,7 +4,6 @@ import com.academic.finkiopendesk.model.User;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-//import org.springframework.mail.SimpleMailMessage;
 
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,7 @@ public class EmailService {
     }
 
     public void sendFormalActivationEmail(User user, String token) {
-        String activationUrl = "http://localhost:5173/register/activate?token=" + token;
+        String activationUrl = "https://finkiopendesk.onrender.com/register/activate?token=" + token;
 
         try {
             MimeMessage message = mailSender.createMimeMessage();
