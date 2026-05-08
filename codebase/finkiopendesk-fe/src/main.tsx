@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom';
+import {HashRouter} from 'react-router-dom';
 import App from './App.tsx'
 import {AuthProvider} from "./shared/AuthContext";
 import './shared/global.scss'
@@ -11,10 +11,10 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <BrowserRouter>
+        <HashRouter>
             <AuthProvider>
                 <App />
             </AuthProvider>
-        </BrowserRouter>
+        </HashRouter>
     </React.StrictMode>,
 )

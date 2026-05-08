@@ -23,7 +23,7 @@ public class EmailService {
     public void sendFormalActivationEmail(User user, String token) {
 
         String activationUrl =
-                "https://finkiopendesk.onrender.com/register/activate?token=" + token;
+                "https://finkiopendesk.onrender.com/#/register/activate?token=" + token;
 
         Email from = new Email("opendeskproject.testing@gmail.com");
         Email to = new Email(user.getEmail());
