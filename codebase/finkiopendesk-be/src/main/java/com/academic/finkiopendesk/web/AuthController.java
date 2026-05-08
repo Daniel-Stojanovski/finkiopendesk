@@ -2,7 +2,6 @@ package com.academic.finkiopendesk.web;
 
 import com.academic.finkiopendesk.model.Program;
 import com.academic.finkiopendesk.model.User;
-import com.academic.finkiopendesk.model.UserFavorite;
 import com.academic.finkiopendesk.service.EmailService;
 import com.academic.finkiopendesk.service.ProgramService;
 import com.academic.finkiopendesk.service.TokenService;
@@ -15,10 +14,9 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:8080"})
+@CrossOrigin(origins = {"https://finkiopendesk.onrender.com", "https://finkiopendesk-be.onrender.com"})
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
