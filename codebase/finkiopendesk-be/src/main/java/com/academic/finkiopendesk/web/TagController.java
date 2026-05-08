@@ -2,12 +2,14 @@ package com.academic.finkiopendesk.web;
 
 import com.academic.finkiopendesk.model.dto.TagDto;
 import com.academic.finkiopendesk.service.TagService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@CrossOrigin(origins = "https://finkiopendesk.onrender.com")
 @RestController
 @RequestMapping("/api/tags")
 public class TagController {
