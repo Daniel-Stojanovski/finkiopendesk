@@ -6,7 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-//import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -22,15 +22,14 @@ public class TokenService {
     private final Key loginKey;
 
     public TokenService(
-//            @Value("${ACTIVATION_TOKEN_SECRET}") String secret
+            @Value("${jwt.activation.secret}") String activationSecret,
+            @Value("${jwt.login.secret}") String loginSecret
     ) {
         this.activationKey = Keys.hmacShaKeyFor(
-//                Decoders.BASE64.decode(secret)
-                Decoders.BASE64.decode("q9H3FJY8cX0M1kZrQm2T8eP5VdK6A7bLwS4N0uR9yIs=")
+                Decoders.BASE64.decode(activationSecret)
         );
         this.loginKey = Keys.hmacShaKeyFor(
-                java.util.Base64.getDecoder().decode("s6AH218hsa09ha0i9zxT6LAS2vgd7aIoa9uXAW71zaX=")
-//                Decoders.BASE64.decode("s6AH218hsa09ha0i9zxT6LAS2vgd7aIoa9uXAW71zaX=")
+                java.util.Base64.getDecoder().decode(loginSecret)
         );
     }
 

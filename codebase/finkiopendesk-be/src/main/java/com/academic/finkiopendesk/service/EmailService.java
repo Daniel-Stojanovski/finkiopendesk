@@ -23,6 +23,7 @@ public class EmailService {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
+            helper.setFrom("opendeskproject.testing@gmail.com");
             helper.setTo(user.getEmail());
             helper.setSubject("Activate your FinkiOpenDesk Student account");
 
