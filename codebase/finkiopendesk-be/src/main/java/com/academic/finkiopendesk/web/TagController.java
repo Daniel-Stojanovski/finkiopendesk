@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://finkiopendesk.onrender.com")
+@CrossOrigin(origins = {"http://localhost:5173"})
 @RestController
 @RequestMapping("/api/tags")
 public class TagController {

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://finkiopendesk.onrender.com")
+@CrossOrigin(origins = {"http://localhost:5173"})
 @RestController
 @RequestMapping("/api/comments")
 public class CommentController {
