@@ -8,21 +8,21 @@ export const api = axios.create({
 });
 
 export const backapi = axios.create({
-    baseURL: "https://finkiopendesk-be.onrender.com/api",
+    baseURL: "http://localhost:8080/api",
     headers: {
         "Content-Type": "application/json"
     }
 });
 
 export const authpublic = axios.create({
-    baseURL: "https://finkiopendesk-be.onrender.com/auth",
+    baseURL: "http://localhost:8080/auth",
     headers: {
         "Content-Type": "application/json"
     }
 });
 
 export const authprivate = axios.create({
-    baseURL: "https://finkiopendesk-be.onrender.com/auth",
+    baseURL: "http://localhost:8080/auth",
     headers: {
         "Content-Type": "application/json"
     }

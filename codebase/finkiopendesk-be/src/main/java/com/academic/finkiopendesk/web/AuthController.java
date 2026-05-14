@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@CrossOrigin(origins = {"https://finkiopendesk.onrender.com", "https://finkiopendesk-be.onrender.com"})
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:8080"})
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
